@@ -1,0 +1,12 @@
+using System;using System.Collections.Generic;
+namespace ScoreModern.RecoveredFragments {
+ public static class StaffHeightLayout {
+  //2CF5:0347..0595, ordinary P4/P5 with zero P8/P10. The instruction
+  //055A..0567 stores P10 + cumulative physical gap +10000 before the later parameter update subtracts the marker.
+  //stream retains the unrounded physical difference until the P4 step store.
+  public static float[] Targets(float[] positions,float[] sizes,int maximum,int[] groups,float oldHeight,float newHeight,bool metric,float[] physicalPositions){
+   if(maximum<2||maximum>32||groups.Length==0||groups[0]<=0)throw new NotSupportedException("Height grouping leaves its verified positive staff domain.");var bounds=new List<int>();int total=0,last=groups[0];for(int i=0;i<32;i++){if(i<groups.Length&&groups[i]!=0)last=groups[i];if(last<1)throw new NotSupportedException("Nonpositive height groups are prevented.");total+=last;bounds.Add(Math.Min(maximum,total));if(total>=maximum)break;}if(total<maximum||bounds.Count<2)throw new NotSupportedException("Height grouping has no adjustable interval.");
+   float unit=metric?0.11112520098686218f:0.04374999925494194f;double physical=((double)newHeight-oldHeight)/(bounds.Count-1);float step=(float)(physical/unit),current=step,physicalStep=(float)physical,currentPhysical=physicalStep;if(Single.IsNaN(step)||Single.IsInfinity(step))throw new NotSupportedException("Height step leaves the finite domain.");var targets=(float[])positions.Clone();for(int group=0;group<bounds.Count-1;group++){for(int staff=bounds[group]+1;staff<=bounds[group+1];staff++){if(physicalPositions[staff]!=0){float packed=(float)((double)physicalPositions[staff]+currentPhysical+10000);if(!(packed>10000&&packed<10300))throw new NotSupportedException("Height P10 target reaches an unverified marker boundary.");physicalPositions[staff]=(float)((double)packed-10000);continue;}float size=sizes[staff];if(size==0)size=1;if(!(size>0)||Single.IsInfinity(size))throw new NotSupportedException("Height staff size leaves its verified positive domain.");targets[staff]=(float)((double)current/size+positions[staff]);if(Single.IsNaN(targets[staff])||Single.IsInfinity(targets[staff])||Math.Abs(targets[staff])>=300)throw new NotSupportedException("Height target reaches unverified packed staff controls.");}current=(float)((double)step+current);currentPhysical=(float)((double)physicalStep+currentPhysical);}return targets;
+  }
+ }
+}

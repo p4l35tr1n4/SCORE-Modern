@@ -1,0 +1,22 @@
+﻿using System;using System.Linq;using System.Globalization;using System.IO;
+namespace ScoreModern {
+ public sealed partial class Editor {
+  sealed class OriginalEditFilter {public bool Position,StaffAndFollowing;public float Horizontal;public int Staff;public int[] Codes;public bool Matches(Item i){return (StaffAndFollowing?i.Staff>=Staff:Position&&Staff==0||Staff>32||i.Staff==Staff)&&(Codes.Length==0||Codes.Contains(i.Code))&&(!Position||Math.Abs(i.P(3)-Horizontal)<=5);}}
+  OriginalEditFilter editFilter;
+  string pendingFilteredEdit;
+  void PromptOriginalFilteredEdit(string verb){pendingFilteredEdit=verb;selectionPending=false;command.Clear();Message(verb=="ED"?"Edit Items by Position.\r\nEnter position, staff# and code# or click on staff with mouse.":"Edit Items by Staff (and optional code number).\r\nEnter staff number, code number (optional) or click mouse on staff.");command.Focus();}
+  bool SubmitFilteredEdit(string text){if(pendingFilteredEdit==null)return false;string verb=pendingFilteredEdit;Message("");if(verb=="ST"&&String.IsNullOrWhiteSpace(text)){pendingFilteredEdit=null;editFilter=new OriginalEditFilter{Staff=0,Codes=new int[0]};NativeEditPositionGuide.Set(canvas,null);direction=1;if(lastEditedIndex>=0&&lastEditedIndex<score.Items.Count){editOriginal=null;BeginEdit(score.Items[lastEditedIndex]);}else{UpdateClassic();command.Focus();}return true;}StartOriginalFilteredEdit(verb,String.IsNullOrWhiteSpace(text)?"0":text.Trim());pendingFilteredEdit=null;return true;}
+  bool FilteredEditKey(System.Windows.Forms.KeyEventArgs key){if(pendingFilteredEdit==null)return false;if(key.KeyCode==System.Windows.Forms.Keys.Escape){key.SuppressKeyPress=true;pendingFilteredEdit=null;command.Clear();Message("");if(!NativeKeyboardOptions.FilterEscapeCancels&&lastEditedIndex>=0&&lastEditedIndex<score.Items.Count){mode=ScreenMode.Main;editFilter=null;NativeEditPositionGuide.Set(canvas,null);BeginEdit(score.Items[lastEditedIndex]);}else{UpdateClassic();command.Focus();}return true;}return false;}
+
+  int NextEditingIndex(int first,int step){for(int n=first;n>=0&&n<score.Items.Count;n+=step)if(editFilter==null||editFilter.Matches(score.Items[n]))return n;return -1;}
+  void StartOriginalFilteredEdit(string verb,string rest){
+   if(mode==ScreenMode.Edit&&canvas.EditModified){WaitForEditAcknowledgment();return;}
+   if(verb=="ED"&&rest.Length==0){Item sourceItem=canvas.Selected;if(sourceItem==null&&lastEditedIndex>=0&&lastEditedIndex<score.Items.Count)sourceItem=score.Items[lastEditedIndex];if(sourceItem==null){Message("Select an item before using bare ED.");return;}rest=sourceItem.P(3).ToString("R",CultureInfo.InvariantCulture)+" "+sourceItem.Staff+" 0";}
+   string[] words=rest.Replace(',',' ').Split(new[]{' '},StringSplitOptions.RemoveEmptyEntries);float[] v;try{v=words.Select(x=>Single.Parse(x,CultureInfo.InvariantCulture)).ToArray();}catch(FormatException){throw new InvalidDataException("Enter numeric selection controls.");}
+   if(v.Any(x=>Single.IsNaN(x)||Single.IsInfinity(x)))throw new InvalidDataException("Enter finite selection controls.");
+   var filter=new OriginalEditFilter();if(verb=="ED"){if(v.Length<1||v.Length>5)throw new NotSupportedException("Position selection accepts position, staff and up to three codes, or bare ED.");filter.Position=true;filter.Horizontal=v[0];filter.Staff=v.Length>1?(int)v[1]:0;filter.StaffAndFollowing=filter.Staff>=1000;if(filter.StaffAndFollowing)filter.Staff-=1000;filter.Codes=v.Length<3||v[2]==0?new int[0]:v.Skip(2).Select(x=>(int)x).Where(x=>x!=0).ToArray();}else{if(v.Length<1||v.Length>4)throw new NotSupportedException("Staff selection currently requires a staff and up to three codes.");filter.Staff=(int)v[0];filter.StaffAndFollowing=filter.Staff>=1000;if(filter.StaffAndFollowing)filter.Staff-=1000;filter.Codes=v.Length<2||v[1]==0?new int[0]:v.Skip(1).Select(x=>(int)x).Where(x=>x!=0).ToArray();}
+   if(filter.Staff<0||filter.Codes.Any(x=>x<1||x>18))throw new NotSupportedException("These staff/code selection controls still need verification.");
+   if(mode==ScreenMode.Edit&&canvas.Selected!=null)lastEditedIndex=score.Items.IndexOf(canvas.Selected);ItemTypeout(false);editFilter=filter;NativeEditPositionGuide.Set(canvas,filter.Position?(float?)filter.Horizontal:null);direction=1;int first=NextEditingIndex(0,1);if(first<0){bool menu=mode==ScreenMode.EditMenu;ExitEdit(false);if(menu)mode=ScreenMode.EditMenu;lastEditedIndex=-1;Message("");UpdateClassic();command.Focus();return;}editOriginal=null;BeginEdit(score.Items[first]);
+  }
+ }
+}

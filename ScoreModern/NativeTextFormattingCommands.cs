@@ -1,0 +1,34 @@
+﻿using System;using System.IO;
+namespace ScoreModern {public sealed partial class Editor {
+ float originalTextCenter=100,originalTextRight=200,originalTextJustifyLeft=0,originalTextJustifyRight=200;
+ // Original 2FAC:12C5..1321 and 0B8C..0BCA. P13/2 stores to
+ // binary32 before subtraction; CTN preserves the note anchor in P3
+ // and places the text centring displacement in P11.
+ bool ExecuteOriginalTextFormatting(string verb,string argument){
+  foreach(string prefix in new[]{"RMJ","RM","RIPX","RIP","LSI","LSC","LSP","LS"}){if(verb.Length>prefix.Length&&verb.StartsWith(prefix,StringComparison.Ordinal)&&(Char.IsDigit(verb[prefix.Length])||verb[prefix.Length]=='-'||verb[prefix.Length]=='+'||verb[prefix.Length]=='.')){argument=verb.Substring(prefix.Length)+(argument.Length>0?" "+argument:"");verb=prefix;break;}}
+  if(verb.Length>1&&verb[0]=='J'&&(Char.IsDigit(verb[1])||verb[1]=='-'||verb[1]=='+'||verb[1]=='.')){argument=verb.Substring(1)+(argument.Length>0?" "+argument:"");verb="J";}
+  if(verb!="RM"&&verb!="RMJ"&&verb!="CT"&&verb!="CTN"&&verb!="PT"&&verb!="JR"&&verb!="J"&&verb!="LS"&&verb!="LSI"&&verb!="LSC"&&verb!="LSP"&&verb!="CD"&&verb!="RIP"&&verb!="RIPX")return false;
+  var item=canvas.Selected;if(verb=="CD"){var dashValues=LayoutNumbers(argument);if(dashValues.Length>1)throw new NotSupportedException("CD accepts one numeric argument.");CenterOriginalTextDashes(dashValues);return true;}if(item==null||item.Code!=16)return true;
+  var values=LayoutNumbers(argument);if(verb=="RM"||verb=="RMJ"){if(values.Length>3)throw new NotSupportedException("RM accepts three numeric arguments.");ReflowOriginalText(verb,values);return true;}if(values.Length>(verb.StartsWith("LS",StringComparison.Ordinal)?3:verb=="J"?2:1))throw new NotSupportedException(verb+" has too many numeric arguments.");
+  if(verb=="RIP"||verb=="RIPX"){RippleOriginalText(verb,values);return true;}
+  if(verb.StartsWith("LS",StringComparison.Ordinal)){OriginalTextLineSpacing(verb,values);return true;}
+  if(verb=="PT"){
+   canvas.LayoutScore();int pointStaff=(int)item.P(2);if(pointStaff<1||pointStaff>32)throw new NotSupportedException("PT staff size leaves the original table.");float pointScale=canvas.PageDocument.Tables.Scales[pointStaff];if(pointScale==0)throw new NotSupportedException("PT zero staff-size division is prevented.");float pointRequested=values.Length==0?0:values[0];
+   if(BitConverter.ToInt32(BitConverter.GetBytes(pointRequested),0)==0){float size=item.P(6);if(BitConverter.ToInt32(BitConverter.GetBytes(size),0)==0)size=1;float point=(float)(((double)size%100)*pointScale/1.84375);float factor=(float)((double)pointScale/25);pendingEditAcknowledgement=true;Message("*** Point size ="+ExportFixed(point,2).PadLeft(7)+"    Staff size ="+ExportFixed(factor,2).PadLeft(5)+Environment.NewLine+"Press any key to continue.");return true;}
+   int hundreds=CenterWord(item.P(6))/100*100;float value=(float)((double)pointRequested*1.84375/pointScale+hundreds);EditOriginalParameters(new[]{6f,value,7f,0f});return true;
+  }
+  if(verb=="J"){
+   canvas.LayoutScore();int justifyStaff=(int)item.P(2);if(justifyStaff<1||justifyStaff>32)throw new NotSupportedException("J text staff scale leaves the original table.");float justifyScale=canvas.PageDocument.Tables.Scales[justifyStaff];var layout=canvas.TextLayout.PrepareMetricLayout(item,item.Text,justifyScale,0);if(layout.Tokens.Exists(token=>token.TabX.HasValue)){pendingEditAcknowledgement=true;Message("*** Cannot justify when tabs present."+Environment.NewLine+"Press any key to continue.");return true;}if(layout.Tokens.Exists(token=>token.Code<0))throw new NotSupportedException("J text control combination needs original verification.");int spaces=layout.Tokens.FindAll(token=>token.Code==94).Count;
+   if(spaces==0){pendingEditAcknowledgement=true;Message("*** No spaces.  Cannot justify line."+Environment.NewLine+"Press any key to continue.");return true;}
+   float left=values.Length==0?0:values[0],right=values.Length<2?0:values[1];if(BitConverter.ToInt32(BitConverter.GetBytes(left),0)==0)left=originalTextJustifyLeft;if(BitConverter.ToInt32(BitConverter.GetBytes(right),0)==0)right=originalTextJustifyRight;
+   float gap=canvas.TextLayout.OriginalRightEdgeGap(item,justifyScale);float change=(float)(((double)gap+right-left-item.P(13))/spaces),factor=(float)((double)layout.Parameters.Horizontal*justifyScale/25);double divisor=(double)factor*layout.Parameters.Spacing;if(divisor==0)throw new NotSupportedException("J text zero-size division is prevented.");float extra=(float)((double)change/divisor+item.P(10));if(Single.IsNaN(extra)||Single.IsInfinity(extra))throw new NotSupportedException("J text spacing exceeds the verified finite domain.");originalTextJustifyLeft=left;originalTextJustifyRight=right;EditOriginalParameters(new[]{3f,left,10f,extra});return true;
+  }
+  if(verb=="JR"){float right=values.Length==0?0:values[0];if(BitConverter.ToInt32(BitConverter.GetBytes(right),0)==0)right=originalTextRight;canvas.LayoutScore();int rightStaff=(int)item.P(2);if(rightStaff<1||rightStaff>32)throw new NotSupportedException("JR staff scale leaves the original table.");float gap,width;try{width=canvas.TextLayout.OriginalRightAlignmentWidth(item,canvas.PageDocument.Tables.Scales[rightStaff],out gap);}catch(OriginalTextTabSpacingException error){pendingEditAcknowledgement=true;Message(error.Message+Environment.NewLine+"Press any key to continue.");return true;}float position=(float)((double)right+gap-width);originalTextRight=right;EditOriginalParameters(scor4Interface?new[]{3f,position,11f,0f}:new[]{3f,position});return true;}
+  float half=(float)((double)item.P(13)/2);
+  if(verb=="CT"){float position=values.Length==0?0:values[0];if(BitConverter.ToInt32(BitConverter.GetBytes(position),0)==0)position=originalTextCenter;originalTextCenter=position;float origin=(float)((double)position-half);EditOriginalParameters(scor4Interface?new[]{3f,origin,11f,0f}:new[]{3f,origin});return true;}
+  float requested=values.Length==0?0:values[0];if(requested<0||requested>32767)throw new NotSupportedException("CTN staff leaves the verified signed16 domain.");int staff=(int)requested;if(staff==0)staff=(int)item.P(2);Item nearest=null;float distance=99999;
+  foreach(var other in score.Items){if(Object.ReferenceEquals(item,other)||(int)other.P(2)!=staff||(int)other.P(1)>2)continue;float d=(float)Math.Abs((double)other.P(3)-item.P(3));if(d<distance){distance=d;nearest=other;}}
+  if(nearest==null)throw new NotSupportedException("CTN without an eligible note/rest is not verified.");
+  canvas.LayoutScore();int ownStaff=(int)item.P(2);if(ownStaff<1||ownStaff>32)throw new NotSupportedException("CTN staff scale leaves the original table.");float scale=canvas.PageDocument.Tables.Scales[ownStaff];float offset=(float)((double)scale*.06400000303983688-half);EditOriginalParameters(new[]{3f,nearest.P(3),11f,offset});return true;
+ }
+}}

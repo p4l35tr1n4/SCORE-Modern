@@ -1,0 +1,77 @@
+# SCORE preferences
+
+## In SCORE Modern
+
+Windows settings live in `ScoreModern.ini` beside the program. The SCORE tab edits preference overrides and preserves the supplied PREF.SCR. Explicit folder selections take priority over mapped SCORE resource paths. DOS drive and directory restrictions below describe the original program.
+
+## SCORE reference
+
+> Source: Tom’s Help, edited by Thomas M. Brodhead.
+
+Consult the SCORE User's Guide for the settings for SCREEN, MIDI, and IRQ. 1/8
+
+```text
+The original SCORE library directory (\LIB\) is usually found on disk C:.
+   However, it may be useful to have special libraries for certain projects
+   or there may be some reasons to use different names for these directories.
+   Example: To change drive name only to D, type: LIBR D   To change directory
+   name to LB2 on drive E, type: LIBR E:\LB2\. Use three letters for DOS directory names.
+```
+
+AFTC, AFTB, AFTK, and AFTM are used to alter the minimum space set by the the Justify command after a clef (AFTC), a bar line (AFTB), a meter number (AFTM), or a key signature (AFTK) to the next note or rest. The minimum space created by these commands will be an absolute value, regardless of the staff size. (The default minimum spaces vary with staff size. At size 1, the space after a clef = 1.8, after a bar = 2.5, after a key sig. = 2.8, after a meter = c.3.7.) (The spacing of the LIneup command is independent of these commands.)
+
+GUITar is used to set the file name and path for the guitar chord grid data file. The default for this is X:\LIB\GUITAR.DAT, where "X" is the drive letter for the \LIB directory. However any name and path may be used for a file containing this data. Thus you may have specially prepared chord data for each project. See the Upgrade information for details regarding this data file.
+
+CODE9 is used to set the file name and path for the user-created Code 9 terms file. The default for this is X:\LIB\CODE9.DAT, where "X" is the drive letter for the \LIB directory. However any name and path may be used used for a file containing this data. Thus you may have specially prepared Code 9 terms files for each project. See the Upgrade information for details regarding this data file.
+
+```text
+REST sets the type font for numbered whole rests. The default value is 6
+   (for the Music Number font, as used with meter numbers). Any font number
+   that is valid for CODE 10 numbers may be used here. For example, to use
+   Helvetica Bold type: REST 1005   See the CODE 10 help for details.
+   (The Reference Manual has an error on page 118.  Bodoni Bold and Bodoni
+   Bold Italic use the font numbers 7 and 8.)
+```
+
+The BEAM tilt factor sets limits on the amount a beam will tilt at the input stage. The default factor is 10. This causes the difference in the heights of the ends of the beam (P4, P5) to be about 2 scale steps when the end points are about 10 horizontal space units apart. For steeper beams use a higher number (perhaps 12 or 14); for generally shallower beams use 7 or 8. (All the tilts may be adjusted in Edit Mode at any time after the initial input.)
+
+BMTH controls the basic beam thickness with Laser printer output. The default here is -1. That is, all beams will have one pixel removed from their normal width. This default is set with 300 dpi printers in mind. When printing on 600 dpi or 1200 dpi machines you may want to set BMTH to -2 or -3 to get somewhat lighter beams. Also it is sometimes desireable to decrease beam thickness when printing orchestral scores where the staff size must be rather small. This variable is independent of a beam's P17, which is a factor that applies only locally to a single beam. (Use this to adjust the thickness of grace note beams, etc.)
+
+COLOr x,y,z sets the screen colors on VGA color displays.  X = foreground, Y = background, Z = text.  The default values are 0, 7, 0 (black graphics lines, white background, black text lines). For a brighter white use 0, 15, 0.  For white lines on black background use 15, 0, 15. For colors similar to those used by the DOS editor, use 14, 1, 14 (yellow lines on blue background.)  For more information see User Guide, page xxxii.
+
+DASH sets the width of dashes that are used to separate syllables in lyrics under notes. The default size is 1.29.  The dashes may be changed in Edit Mode, but if the CD (center dash) is used it will cause the dashes to revert to the size given in the preference DASH statement.
+
+XDASh can limit the number of dashes that will appear between syllables. The default of zero puts no limit on the number. In this case the number of dashes is determined by the distance between the syllables.  If XDASH is set to 1, then only 1 dash will appear, no matter how far apart the syllables may be.  Other numbers may be used, but in any case, very close syllables will never have more than 1 dash. (The CD command will always follow the current restriction set by XDASh.)
+
+DYNAmics (p, pp, f, fff, etc.) may be automatically displaced to left of notes at Input time by giving a value to this variable. The default is zero.  DYNA -1 will displace marks 1 step to the left of a designated note, etc. A value of -.5 is good for most cases. (This variable does not affect the position of any marks put in with the Nx feature. At Input time, Nx will put in Code 9 library item "x" under the designated note.)
+
+INCHes/METRic:  When the word INCHes or METRic appears in the preference file the mode of measurements is established. (The measurement system may be changed at any time by typing INCHes or METRic time while in SCORE Command Mode.)
+
+MIDK sets the position of the special keys used on the MIDI keyboard for step-time note input.  The default for this is C2.  If you have an extended keyboard range you should normally set this to C1, thus using the lowest octave of the keyboard for the special keys. (See the Upgrade information for details on MIDI input.)
+
+OUTPut sets the output line for printing on PostScript laser devices.  Use 1 for LPT1 (parallel), 2 for LPT2, 3 for serial (COM 1).  If OUTPut is left at zero, you will be prompted for the output device at print time.
+
+DESC: = 1 = <escape> key is disabled while printing. = 0 = <escape> key is enabled, allowing pause and escape from printing process. (See PRINT help for more details.)
+
+PROCedures sets the limit on the number of lines of code reserved for creating PostScript procedures at print time.  The default value is 2000.  If your laser printer has less the 2 megabytes of memory and you have down-loaded some extra fonts, it may be necessary to cut down on this limit. On the other hand, if your printer has much more memory, it may be possible to increase this value to as much as 5000.  If this value is increased, the tendency is that very full pages, with many different Code 9 symbols will print a little faster.
+
+READ allows you to read in any preference file that you may have created for some special purpose.  Any name may be used for such a file (see below).
+
+SAVE allows you to save whatever changes you may have made to the preference list during the current work session.  You may use any name for this saved file, however it is recommended that you use the name PREF. followed by some unique, distinguishing 3-letter extension. In this way preference files may be easily located in disk directories.  It is best that the name PREF.SCR be reserved for the preference file you will most often be using.
+
+RESOlution is used to give SCORE the proper dpi (dots/per/inch) inform- ation about the laser printing device being used. This value is necessary for the calculations made regarding the number of pixels used for basic line widths.  The default is 300.
+
+SETStroke is used to invoke special PostScript code that adjusts line placement on PostScript Level 1 printers.  When printing on 300 dpi Level 1 printers some lines may appear thicker than others unless SETStroke is set to 1. When SETStroke is active, compensation is made for internal round-off errors.  In many cases the setting of 1 will produce noticeably better copy -- however, the print time may be increased by as much as 40%. (According to current information, Level 2 PostScript takes care of this problem automatically.)
+
+```text
+MOUSE = 0 = mouse works as described in Manual Additions booklet, page 4.01.
+      = 1 =   "     "   "     "       " Users Guide, page 15.
+```
+
+SLUR is used to set the basic thickness of slurs.  The default value is 1. .8 will produce somewhat thinner slurs.  When in Edit Mode, P13 may be used to adjust the thickness of individual slurs.
+
+TIES can be used to set the position given ties at Input time. The default setting is zero, which means that a tie will appear between the specified notes unless they are very close together - in which case the tie will appear above or below the notes.
+
+If TIES is set to 1, then the tie will always go above or below the notes involved.
+
+If TIES is set to -1, then the tie will always go between the notes involved.

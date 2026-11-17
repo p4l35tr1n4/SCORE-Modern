@@ -1,0 +1,11 @@
+﻿using System;using System.IO;using System.Text;using System.Text.RegularExpressions;using System.Linq;using System.Collections.Generic;using System.Windows.Forms;using System.Drawing;
+namespace ScoreModern {
+ public sealed partial class Editor {
+  internal void QueuePscOfferAfterFontSelection(){QueueMissingPscOffer();}
+  readonly HashSet<string> pscOffers=new HashSet<string>();
+  IEnumerable<int> MissingExternalPscIds(){var ids=new SortedSet<int>();if(score==null)return ids;foreach(var item in score.Items.Where(x=>x.Code==16)){for(int p=0;p<item.Text.Length;p++){int id,length;if(ScoreText.FontControl(item.Text,p,out id,out length)){id%=100;if(id>=35&&id<=89&&canvas.TextLayout.ExternalFontName(id)==null)ids.Add(id);p+=length-1;}}var forced=RecoveredFragments.TextConverterFontState.Begin(unchecked((short)(int)item.P(8)),0);if(forced.Forced&&forced.MetricFace>=35&&forced.MetricFace<=89&&canvas.TextLayout.ExternalFontName(forced.MetricFace)==null)ids.Add(forced.MetricFace);}return ids;}
+  void QueueMissingPscOffer(){if(Program.CheckMode||!IsHandleCreated||String.IsNullOrEmpty(NativeTupletFonts.DirectoryPath))return;var ids=MissingExternalPscIds().ToArray();if(ids.Length==0)return;if(fontMetricsSnapshot==null||fontMetricsSnapshot.Folder!=NativeTupletFonts.DirectoryPath){QueueFontMetricsPreload();return;}string key=source+"|"+current+"|"+NativeTupletFonts.DirectoryPath+"|"+String.Join(",",ids)+"|"+fontMetricsSnapshot.Stamp;if(!pscOffers.Add(key))return;BeginInvoke(new Action(()=>Safe(()=>{if(IsDisposed||!MissingExternalPscIds().Any())return;var names=AvailableType1Names();if(names.Length==0)return;if(MessageBox.Show(this,"Missing SCORE metric assignment(s): "+String.Join(", ",ids)+". Type 1 fonts were found in the selected font folder. Create a PSC by explicitly choosing which font belongs to an ID? A matching AFM is required; existing files will be preserved.","Create missing font metrics?",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)ShowPscGenerator(ids[0]);})));}
+  string[] AvailableType1Names(){return fontMetricsSnapshot==null?new string[0]:fontMetricsSnapshot.Fonts.Select(x=>x.Name).Distinct(StringComparer.Ordinal).OrderBy(x=>x,StringComparer.Ordinal).ToArray();}
+  internal void ShowPscGenerator(int? requested){Safe(()=>ShowFontAllocationWindow(requested));}
+ }
+}

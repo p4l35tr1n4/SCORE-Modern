@@ -1,0 +1,4 @@
+using System;using System.IO;using ScoreModern.RecoveredFragments;
+class InputMarkTextProof {
+ static int Main(string[] a){try{var parsed=InputMarkText.Parse(a[0]);byte[] tokens=File.ReadAllBytes(a[1]),common=File.ReadAllBytes(a[2]);int count=BitConverter.ToInt16(tokens,0);if(parsed.Values.Length!=count)throw new Exception("Token count");for(int i=0;i<count;i++){if(BitConverter.ToInt32(BitConverter.GetBytes(parsed.Values[i]),0)!=BitConverter.ToInt32(tokens,2+i*4))throw new Exception("Token "+(i+1)+": "+parsed.Values[i]+" != "+BitConverter.ToSingle(tokens,2+i*4));int flag=common.Length>=65536?BitConverter.ToInt16(common,0xe6dc+i*2):0;if(Math.Abs(parsed.Values[i])>=10000&&parsed.Opposite[i]!=flag)throw new Exception("Opposite flag "+(i+1));}Console.WriteLine("PASS "+count+" original mark text token words and descriptor opposite-side flags");return 0;}catch(Exception e){Console.Error.WriteLine(e);return 1;}}
+}

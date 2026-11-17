@@ -1,0 +1,7 @@
+using System;using System.Collections.Generic;using System.Globalization;using System.Linq;using ScoreModern.RecoveredFragments;
+namespace ScoreModern {public sealed partial class Editor {
+ InputMacroContext inputMotives=new InputMacroContext();
+ bool ExecuteOriginalMotives(string text){if(mode!=ScreenMode.Main)return false;var parts=text.Trim().Split(new[]{' ','\t'},2,StringSplitOptions.RemoveEmptyEntries);if(parts.Length==0)return false;string verb=parts[0].ToUpperInvariant();if(verb!="MC"&&verb!="MCL"&&verb!="MSEE")return false;RequireNoLetterArguments(verb,parts.Length==1?"":parts[1]);if(verb!="MSEE"){inputMotives.Clear();Message("*** All MOTIVES cleared.");return true;}var lines=new List<string>();int count=0;foreach(var entry in inputMotives.Entries){count++;lines.Add("Motive "+entry.Key+" =");// Original values have ten-column fields with the first carriage-control blank consumed.
+ // Native text keeps one logical row, following the user's full-width policy.
+ string values=String.Concat(entry.Value.Select(value=>ExportFixed(value,3).PadLeft(10)));lines.Add(values.Length==0?"":values.Substring(1));}lines.Add((26-inputMotives.StoredDefinitionCount).ToString()+" motive letters remain.");if(ShowCommandList("Stored motives",new[]{lines.ToArray()}))return true;lines.Add("Press any key to continue.");pendingEditAcknowledgement=true;Message(String.Join(Environment.NewLine,lines));return true;}
+}}

@@ -1,0 +1,12 @@
+using System;using System.Collections.Generic;using System.Linq;using System.Threading.Tasks;using System.Windows.Forms;
+namespace ScoreModern {public sealed partial class Editor {
+ ComboBox CreateMidiPreferenceSelector(List<Action> refreshers){
+  var combo=new ComboBox{DropDownStyle=ComboBoxStyle.DropDownList,Anchor=AnchorStyles.Left,Margin=new Padding(2,1,2,1),AccessibleName="MIDI input device"};
+  bool updating=false,loading=false;var devices=WindowsMidiInput.Devices();string signature="";
+  Action fill=()=>{string selected=NativeSettings.Read(MidiDeviceSetting);updating=true;try{combo.BeginUpdate();combo.Items.Clear();combo.Items.Add("Disabled");foreach(var d in devices)combo.Items.Add(d);var match=devices.Where(d=>d.Identity==selected).ToList();if(match.Count==1)combo.SelectedItem=match[0];else if(!String.IsNullOrEmpty(selected)){var missing=new WindowsMidiInput.Device{Name="Unavailable: "+selected.Split('/').Last(),Identity=selected,Id=UInt32.MaxValue};combo.Items.Add(missing);combo.SelectedItem=missing;}else combo.SelectedIndex=0;signature=String.Join("|",devices.Select(d=>d.Id+":"+d.Identity));}finally{combo.EndUpdate();updating=false;}};
+  fill();combo.SelectedIndexChanged+=(s,e)=>{if(updating)return;Safe(()=>{var choice=combo.SelectedItem as WindowsMidiInput.Device;string identity=choice==null?null:choice.Identity;if(identity==NativeSettings.Read(MidiDeviceSetting))return;if(choice!=null&&devices.Count(d=>d.Identity==identity)!=1)throw new InvalidOperationException("Choose a connected MIDI port with a unique identity.");NativeSettings.WriteAllText(MidiDeviceSetting,identity);CloseMidiInput();if(musicInput!=null&&musicInput.Transaction!=null)OpenMidiInput(NativePreferences.Read(source));});};
+  Action poll=()=>{if(loading||combo.IsDisposed||!combo.IsHandleCreated)return;loading=true;Task.Run(()=>WindowsMidiInput.Devices()).ContinueWith(task=>{if(combo.IsDisposed)return;try{combo.BeginInvoke(new Action(()=>{loading=false;if(task.IsFaulted||combo.IsDisposed)return;string next=String.Join("|",task.Result.Select(d=>d.Id+":"+d.Identity));if(next==signature)return;devices=task.Result;fill();}));}catch(InvalidOperationException){}});};
+  combo.DropDown+=(s,e)=>poll();var timer=new Timer{Interval=15000};timer.Tick+=(s,e)=>poll();timer.Start();combo.Disposed+=(s,e)=>{timer.Stop();timer.Dispose();};
+  refreshers.Add(()=>{string current=NativeSettings.Read(MidiDeviceSetting);var shown=combo.SelectedItem as WindowsMidiInput.Device;if((shown==null?null:shown.Identity)!=current)fill();});return combo;
+ }
+}}

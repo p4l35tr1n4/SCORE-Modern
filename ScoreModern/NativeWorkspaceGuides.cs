@@ -1,0 +1,45 @@
+using System;using System.Drawing;using System.Globalization;using System.Windows.Forms;using System.Drawing.Drawing2D;
+namespace ScoreModern {
+ public static class NativeWorkspaceGuides {
+  public static bool Rulers=NativeSettings.Read("rulers")=="on",Gap=NativeSettings.Read("notation-gap")=="on",StaffOne=NativeSettings.Read("ruler-staff")=="1",Crosshair=NativeSettings.Read("ruler-crosshair")!="off";
+  public static string Units=NativeSettings.Read("ruler-units")??"inches";
+  public static float GapPoints=ReadGap();
+  public static bool PageGap=NativeSettings.Read("page-gap")=="on";
+  public static float PageGapPoints=Number("page-gap-points",6,0,720),RulerHeight=Number("ruler-height",48,40,160),RulerWidth=Number("ruler-width",36,24,160);
+  public static Color RulerColor=NativeWindowsColors.ReadColor("ruler-background",Color.FromArgb(244,244,244));
+  static float Number(string key,float fallback,float min,float max){float value;return Single.TryParse(NativeSettings.Read(key),NumberStyles.Float,CultureInfo.InvariantCulture,out value)&&value>=min&&value<=max?value:fallback;}
+  static void Amount(ContextMenuStrip menu,string title,string key,float current,float min,float max,Action<float> apply){using(var d=new ScoreDialog(key){Text=title,AutoSize=true,AutoSizeMode=AutoSizeMode.GrowAndShrink,StartPosition=FormStartPosition.CenterParent}){var panel=new FlowLayoutPanel{AutoSize=true,Padding=new Padding(12)};var value=new NumericUpDown{Minimum=(decimal)min,Maximum=(decimal)max,DecimalPlaces=1,Value=(decimal)current,Width=150};var ok=new Button{Text="Apply",DialogResult=DialogResult.OK};panel.Controls.Add(value);panel.Controls.Add(ok);d.Controls.Add(panel);d.AcceptButton=ok;if(d.ShowDialog(menu.FindForm())==DialogResult.OK)Change(key,value.Value.ToString(CultureInfo.InvariantCulture),()=>apply((float)value.Value));}}
+  static float ReadGap(){float v;return Single.TryParse(NativeSettings.Read("notation-gap-points"),NumberStyles.Float,CultureInfo.InvariantCulture,out v)&&v>=0&&v<=720?v:12;}
+  static void Change(string key,string value,Action change){NativeSettings.WriteAllText(key,value);change();foreach(Form form in Application.OpenForms){var editor=form as Editor;if(editor!=null)editor.RefreshPageFrame();}}
+  public static void AddMenu(ContextMenuStrip menu){
+   var group=new ToolStripMenuItem("Workspace guides");menu.Items.Add(group);
+   var gap=new ToolStripMenuItem("Gap around outermost notation");gap.Click+=(s,e)=>Change("notation-gap",Gap?"off":"on",()=>Gap=!Gap);group.DropDownItems.Add(gap);
+   var amount=new ToolStripMenuItem("Notation gap size (points)...");amount.Click+=(s,e)=>{using(var dialog=new ScoreDialog("NotationGap"){Text="Notation boundary gap",AutoSize=true,AutoSizeMode=AutoSizeMode.GrowAndShrink,MinimumSize=new Size(330,0),StartPosition=FormStartPosition.CenterParent}){var table=new FlowLayoutPanel{AutoSize=true,FlowDirection=FlowDirection.TopDown,WrapContents=false,Dock=DockStyle.Fill,Padding=new Padding(12)};table.Controls.Add(new Label{AutoSize=true,Text="Screen workspace only; print and EPS are unchanged.\nMinimum gap outside the outermost drawn notation (1 point = 1/72 inch)."});var value=new NumericUpDown{DecimalPlaces=1,Minimum=0,Maximum=720,Value=(decimal)GapPoints,Width=130};table.Controls.Add(value);var buttons=new FlowLayoutPanel{AutoSize=true};var ok=new Button{Text="Apply",DialogResult=DialogResult.OK,AutoSize=true};var cancel=new Button{Text="Cancel",DialogResult=DialogResult.Cancel,AutoSize=true};buttons.Controls.Add(ok);buttons.Controls.Add(cancel);table.Controls.Add(buttons);dialog.Controls.Add(table);dialog.AcceptButton=ok;dialog.CancelButton=cancel;if(dialog.ShowDialog(menu.FindForm())==DialogResult.OK)Change("notation-gap-points",value.Value.ToString(CultureInfo.InvariantCulture),()=>GapPoints=(float)value.Value);}};group.DropDownItems.Add(amount);
+   var page=new ToolStripMenuItem("Gap around page");page.Click+=(s,e)=>Change("page-gap",PageGap?"off":"on",()=>PageGap=!PageGap);group.DropDownItems.Add(page);
+   group.DropDownItems.Add("Page gap size (points)...",null,(s,e)=>Amount(menu,"Page gap (points; screen only)","page-gap-points",PageGapPoints,0,720,v=>PageGapPoints=v));
+   group.DropDownItems.Add("Horizontal ruler height (logical pixels)...",null,(s,e)=>Amount(menu,"Horizontal ruler height (96 DPI pixels)","ruler-height",RulerHeight,40,160,v=>RulerHeight=v));
+   group.DropDownItems.Add("Vertical ruler width (logical pixels)...",null,(s,e)=>Amount(menu,"Vertical ruler width (96 DPI pixels)","ruler-width",RulerWidth,24,160,v=>RulerWidth=v));
+   group.DropDownItems.Add("Ruler background colour...",null,(s,e)=>{using(var d=new ColorDialog{Color=RulerColor,FullOpen=true})if(d.ShowDialog(menu.FindForm())==DialogResult.OK)Change("ruler-background",d.Color.ToArgb().ToString("X8"),()=>RulerColor=d.Color);});
+   menu.Opening+=(s,e)=>page.Checked=PageGap;
+   var rulers=new ToolStripMenuItem("Show margin rulers");rulers.Click+=(s,e)=>Change("rulers",Rulers?"off":"on",()=>Rulers=!Rulers);group.DropDownItems.Add(rulers);
+   foreach(string unit in new[]{"inches","centimetres","points","SCORE units"}){string chosen=unit;var item=new ToolStripMenuItem("Ruler units: "+unit);item.Click+=(s,e)=>Change("ruler-units",chosen,()=>Units=chosen);group.DropDownItems.Add(item);menu.Opening+=(s,e)=>item.Checked=Units==chosen;}
+   var selected=new ToolStripMenuItem("SCORE vertical ruler: selected staff (otherwise staff 1)");selected.Click+=(s,e)=>Change("ruler-staff","selected",()=>StaffOne=false);group.DropDownItems.Add(selected);
+   var first=new ToolStripMenuItem("SCORE vertical ruler: always staff 1");first.Click+=(s,e)=>Change("ruler-staff","1",()=>StaffOne=true);group.DropDownItems.Add(first);
+   var cross=new ToolStripMenuItem("Ruler mouse-position lines");cross.Click+=(s,e)=>Change("ruler-crosshair",Crosshair?"off":"on",()=>Crosshair=!Crosshair);group.DropDownItems.Add(cross);
+   menu.Opening+=(s,e)=>{gap.Checked=Gap;rulers.Checked=Rulers;selected.Checked=!StaffOne;first.Checked=StaffOne;cross.Checked=Crosshair;amount.Text="Notation gap size (points): "+GapPoints.ToString("0.#",CultureInfo.InvariantCulture)+"...";};
+  }
+  public static PointF RawAt(Canvas canvas,PointF pixel){float x=pixel.X/canvas.RenderScale,y=(pixel.Y+canvas.CropTop)/canvas.RenderScale;if(NativeNotationView.IsDosViewport)return new PointF((x-NativeDosViewport.OriginX)*NativeDosViewport.Divisor,(NativeDosViewport.OriginY-y-97)*NativeDosViewport.Divisor);x-=canvas.CameraOffset.X+canvas.ScreenOrigin.X;y-=canvas.CameraOffset.Y+canvas.ScreenOrigin.Y;var p=canvas.PageDocument.Projection;return new PointF((x-p.OffsetX)*30,(p.OffsetY-y)*30);}
+  public static PointF Coordinates(Canvas canvas,PointF pixel){var raw=RawAt(canvas,pixel);if(Units=="SCORE units"){int staff=!StaffOne&&canvas.Selected!=null?Math.Max(1,Math.Min(32,canvas.Selected.Staff)):1;float scale=canvas.PageDocument.Tables.Scales[staff],basis=canvas.PageDocument.Tables.Bases[staff];NativeNotationContext context;if(!StaffOne&&canvas.Selected!=null&&canvas.PageDocument.Contexts.TryGetValue(canvas.Selected,out context)){scale=context.Scale;basis=context.RawBase;}return new PointF(raw.X/150,(raw.Y-basis)/(scale*7));}float factor=Units=="centimetres"?2.54f:Units=="points"?72:1;var projection=canvas.PageDocument.Projection;return new PointF((raw.X+projection.OffsetX*30)/4000*factor,(raw.Y+(canvas.PageHeight-projection.OffsetY)*30)/4000*factor);}
+  internal static double Tick(double span,float pixels,float dpi){double desired=Math.Abs(span)*70*dpi/Math.Max(1,pixels);if(!(desired>0)||Double.IsInfinity(desired))return 1;double power=Math.Pow(10,Math.Floor(Math.Log10(desired))),fraction=desired/power;return power*(fraction<=1?1:fraction<=2?2:fraction<=5?5:10);}
+  internal static float GuideScale(Canvas c){return Math.Max(c.DisplayDpi,c.FindForm()==null?1:c.FindForm().ClientSize.Width/1920f);}
+  internal static Rectangle Visible(Canvas c){if(c.Parent==null)return c.ClientRectangle;var p=c.PointToClient(c.Parent.PointToScreen(Point.Empty));return Rectangle.Intersect(c.ClientRectangle,new Rectangle(p,c.Parent.ClientSize));}
+  public static void Draw(Canvas canvas,Graphics g,Point? pointer){}
+ }
+ public sealed partial class Canvas {
+  internal bool WorkspacePoint(Point point){if(UsesOriginalZoomFrame)return point.X>=ViewWidth*RenderScale||point.Y>=ViewHeight*RenderScale;if(NativeNotationView.IsDosViewport||!ScreenFraming||PageDocument==null)return false;var raw=NativeWorkspaceGuides.RawAt(this,point);var world=PageDocument.Projection.Point(raw.X,raw.Y);return !screenPaper.Contains(world)&&!screenInk.Contains(world);}
+  bool WorkspaceMouse(MouseEventArgs e){if(Scor4DragScreen||!WorkspacePoint(e.Location))return false;if(e.Button==MouseButtons.Right&&Parent!=null&&Parent.ContextMenuStrip!=null)Parent.ContextMenuStrip.Show(PointToScreen(e.Location));return true;}
+  internal Point? guidePointer;internal Action GuidesChanged;
+  internal void NotifyGuides(){if(GuidesChanged!=null)GuidesChanged();}
+  internal void GuidePointer(Point? next){guidePointer=next;NotifyGuides();}
+ }
+}
