@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  // Original drawing requests accumulate word-coordinate subpaths until the
  // per-item printer drain. Cached glyph requests print independently.

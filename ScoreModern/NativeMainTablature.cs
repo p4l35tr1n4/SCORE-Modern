@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Globalization;using System.Collections.Generic;using System.Text.RegularExpressions;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
+using System;using System.Linq;using System.Globalization;using System.Collections.Generic;using System.Text.RegularExpressions;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {public sealed partial class Editor {
  enum TabCommandStage{None,Source,Destination,Rhythm,Clef}TabCommandStage tabCommandStage;readonly short[] tabPackedTuning=new short[3];bool tabRhythmLine,tabSourceBass,tabHasCollection;int tabSourceStaff,tabDestinationStaff,tabStrings;List<Item> tabOrderedPrefix;List<float[]> tabSourceNotes;List<short> tabSourceFrequencies;float[] tabSourceRecord;
  readonly short?[] originalTabFrequencyWords=new short?[200];

@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;
 namespace ScoreModern {
  public static class NativePrintedTextHeads {
   static float F(double value){return (float)value;}

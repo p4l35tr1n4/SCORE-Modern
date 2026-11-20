@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Windows.Forms;
+using System;using System.IO;using System.Windows.Forms;
 namespace ScoreModern {
  // Effective overrides preserve individual preferences while this preset is on.
  public static class NativeScoreBehaviour {

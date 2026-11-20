@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed class NativeNoteDetailPlan {public float Scale,HeadWidth,StemX,StemStart,StemEnd,LedgerLeft,LedgerRight,LedgerY,LedgerIncrement,DotX,DotY,DotScale;public float SlashX1,SlashY1,SlashX2,SlashY2,NoteX,NoteY,StaffStep,SignedStemLength;public int LedgerCount,DotCount,Pitch,StemKind;public bool Stem,Slash;}
  public static class NativeNoteDetails {

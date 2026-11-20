@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed class NativePageProjection {
   // Standard Letter profile observed in the original F6 menu and emitted EPS:
@@ -8,7 +8,7 @@ namespace ScoreModern {
   public Matrix Matrix(){return new Matrix(1/30f,0,0,-1/30f,OffsetX,OffsetY);}
  }
  public sealed class NativeNotationContext {
-  public Score SourceScore;public short StaffLedgerWidthControl,PreviousCompoundMeterNumerator;public int Staff;public float RawBase,PreviousCompoundMeterX;public float[] StaffBases,StaffScales;public PageItemContext Prepared;public NativePageProjection Projection;
+  public bool Scor4;public Score SourceScore;public short StaffLedgerWidthControl,PreviousCompoundMeterNumerator;public int Staff;public float RawBase,PreviousCompoundMeterX;public float[] StaffBases,StaffScales;public PageItemContext Prepared;public NativePageProjection Projection;
   public float Scale{get{return Prepared.Scale;}}
   public float Vertical(float value){return (float)((double)value*Scale*7+RawBase);}
   public PointF Point(float x,float y){return Projection.Point(x,y);}

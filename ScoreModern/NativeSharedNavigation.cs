@@ -1,4 +1,4 @@
-﻿using System;using System.Globalization;using System.Windows.Forms;
+using System;using System.Globalization;using System.Windows.Forms;
 namespace ScoreModern { public sealed partial class Editor {
  bool SharedNavigationKey(Keys keys){
   if(pendingFilteredEdit!=null||musicInput!=null||originalTextDraft!=null||originalTextSetupActive||inlineTextActive||letterHelpPages!=null||canvas.BlockItemEditing||selectionPending||groupCommand!=null||pendingDiskFilename!=null||pendingDriveChange||pendingLetterLoad!=null||pendingLetterSave!=null||pendingDiskDelete!=null||drawExportStage!=DrawExportStage.None||pendingParameterExport||pendingAppendPath!=null||commandFileStage!=CommandFileStage.None||commandFileInputQuestion||tabCommandStage!=TabCommandStage.None||pageHeightStage!=PageHeightStage.None)return false;

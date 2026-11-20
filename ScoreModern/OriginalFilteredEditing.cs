@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Globalization;using System.IO;
+using System;using System.Linq;using System.Globalization;using System.IO;
 namespace ScoreModern {
  public sealed partial class Editor {
   sealed class OriginalEditFilter {public bool Position,StaffAndFollowing;public float Horizontal;public int Staff;public int[] Codes;public bool Matches(Item i){return (StaffAndFollowing?i.Staff>=Staff:Position&&Staff==0||Staff>32||i.Staff==Staff)&&(Codes.Length==0||Codes.Contains(i.Code))&&(!Position||Math.Abs(i.P(3)-Horizontal)<=5);}}

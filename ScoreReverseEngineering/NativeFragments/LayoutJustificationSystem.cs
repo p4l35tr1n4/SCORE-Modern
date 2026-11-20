@@ -5,6 +5,7 @@ namespace ScoreModern.RecoveredFragments {
   public bool OriginalQuarterToneWidths=true;
   public float? PositionJoinTolerance;
   public bool StandaloneJust;
+  public bool Scor4NumberJustification;
   public bool Page4RoundScaleNumerator;
   public readonly float[] Selected=new float[200],Auxiliary=new float[200],Minimum=new float[200],Positions=new float[200],OldMinimum=new float[200],OldPositions=new float[200],MergedPositions=new float[200],MergedMinimum=new float[200];
   public readonly short[] SelectedReferences=new short[200];
@@ -25,7 +26,7 @@ namespace ScoreModern.RecoveredFragments {
    var spacing=new LayoutItemSpacing(work.Spacing,words,starts,work.Selected,work.SelectedReferences,work.Auxiliary,work.Minimum,work.Positions);
    float threshold=(float)((double)right-0.2f);
    for(int staff=bottom;staff<=top;staff++) {
-    short count=spacing.Apply((short)staff,scales[staff],bottom,ref cursor,left,right,afterSymbol,work.OriginalQuarterToneWidths,work.PositionJoinTolerance,work.StandaloneJust);
+    short count=spacing.Apply((short)staff,scales[staff],bottom,ref cursor,left,right,afterSymbol,work.OriginalQuarterToneWidths,work.PositionJoinTolerance,work.StandaloneJust,work.Scor4NumberJustification);
     if(count!=0)oldCount=LayoutJustificationMerge.Append(work.OldPositions,work.OldMinimum,work.Positions,work.Minimum,work.MergedPositions,work.MergedMinimum,oldCount,count,right,threshold,0.1f);
    }
    int first=0;if((double)work.OldPositions[1]-work.OldPositions[0]<=0.1f){first=1;oldCount--;}

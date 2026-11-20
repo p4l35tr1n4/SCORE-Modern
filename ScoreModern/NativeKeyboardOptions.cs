@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Windows.Forms;
+using System;using System.Drawing;using System.Windows.Forms;
 namespace ScoreModern {
  public static class NativeKeyboardOptions {
   static bool clearHome=NativeSettings.Read("keyboard-home")=="clear",fivePercent=NativeSettings.Read("keyboard-main-pan")=="5",recallR=NativeSettings.Read("keyboard-recall-r")=="on";

@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;
 namespace ScoreModern {
  public struct BarlinePoint {public float X,Y;public int Operation;public BarlinePoint(float x,float y,int op){X=x;Y=y;Operation=op;}}
  public sealed class PrintedBarlinePlan {public float X,Bottom,Top,Scale,Horizontal,Vertical;public int Kind;public readonly List<BarlinePoint> Points=new List<BarlinePoint>();}

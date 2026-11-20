@@ -1,4 +1,4 @@
-﻿using System;using ScoreModern.RecoveredFragments;
+using System;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeItemMotion {
   static bool Nonzero(Item item,int n){return BitConverter.ToInt32(BitConverter.GetBytes(item.P(n)),0)!=0;}

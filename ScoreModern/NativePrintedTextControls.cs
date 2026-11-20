@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Text;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Text;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed partial class ScoreText {
   // Original converter DS:0270 and printer DS:2378 (codes95..161).

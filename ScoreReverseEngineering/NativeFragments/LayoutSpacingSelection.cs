@@ -24,14 +24,15 @@ namespace ScoreModern.RecoveredFragments {
   // Original 2DCE:000A..026E. Its horizontal comparisons use signed high
   // words and unsigned low words, not x87 numeric comparisons. Preserve that
   // ordering even for negative coordinates and signed zero.
-  public static LayoutSpacingSelectionResult Collect(float[] words,int[] starts,short staff,short firstStaff,short cursor,float left,float right,float tolerance,float one,float clefLimit,float spanningLimit,float barLimit,float drawingLimit,int capacity) {
+  public static LayoutSpacingSelectionResult Collect(float[] words,int[] starts,short staff,short firstStaff,short cursor,float left,float right,float tolerance,float one,float clefLimit,float spanningLimit,float barLimit,float drawingLimit,int capacity) {return Collect(words,starts,staff,firstStaff,cursor,left,right,tolerance,one,clefLimit,spanningLimit,barLimit,drawingLimit,capacity,false);}
+  public static LayoutSpacingSelectionResult Collect(float[] words,int[] starts,short staff,short firstStaff,short cursor,float left,float right,float tolerance,float one,float clefLimit,float spanningLimit,float barLimit,float drawingLimit,int capacity,bool scor4Numbers) {
    float low=(float)((double)left-tolerance),high=(float)((double)right+tolerance);
    var positions=new List<float>();var records=new List<short>();int stopped=starts.Length+1;
    for(int i=0;i<starts.Length;i++) {
     int w=starts[i],start=w-1;if(start<0||start+2>=words.Length)throw new NotSupportedException("Original spacing record leaves its buffer.");
     int count=Word(words[start]);if(count<2||start+count>=words.Length)throw new NotSupportedException("Original spacing record extent is invalid.");
     Func<int,float> p=delegate(int n){return n<=count?words[start+n]:0;};
-    int code=Word(p(1));if(code>4&&code!=14) {
+    int code=Word(p(1));if(code>4&&code!=14&&!(scor4Numbers&&code==10&&count>=16&&p(16)==1)) {
      if(code<17)continue;
      // Original 2CB5:075D inspects the stored parameter count and P14/P15
      // bit patterns. It does not classify by drawing appearance or name.

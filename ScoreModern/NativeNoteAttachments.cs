@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;
+using System;using System.Collections.Generic;using System.Drawing;
 namespace ScoreModern {
  public static class NativeNoteAttachments {
   static float F(double v){return (float)v;}static bool Present(float v){return BitConverter.ToInt32(BitConverter.GetBytes(v),0)!=0;}

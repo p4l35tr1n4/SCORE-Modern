@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace ScoreModern{
  public sealed partial class ScoreText{
   // Original relative020F converter: ASCII lookup, repeated controls, and its

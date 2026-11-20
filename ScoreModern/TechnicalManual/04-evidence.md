@@ -15,3 +15,8 @@ Read each result at the boundary it measured. A match at a stored coordinate wor
 To reproduce an output comparison, retain the exact input bytes, selected LIB and external font versions, active PREF and PRINT settings, operation sequence, mode, and zoom or print parameters. For module-level investigation, start with the source's declared arguments. Follow the caller to determine which staff table, scratch state, and original arithmetic environment supplied them. Compare values at each indicated store or narrowing operation, including their raw bits. Preserve overlay-relative address labels as evidence labels.
 
 Open boundaries include the unobserved WinScore large word-count variant, unverified or corrupt buffer histories, full x87 status/exception equivalence for the mathematical projections, hardware-dependent BIOS/raster side effects outside measured contexts, and executable paths or control combinations without recovery evidence. F5 playback, physical MIDI timing, and native Windows display extensions have their own scopes. The current layout and drawing modules contain guards at those boundaries. The appendices identify exact recovered literals and implementation code. Data supplied by an external font or a user drawing varies by installation and must come from that installation when reproducing its output.
+
+
+## SCOR4 shared-DLL release verification
+
+See [the verification report](../SCOR4-IMPLEMENTATION-VERIFICATION.md) for original vertex/record comparisons, unchanged classic pixels, both-application integration and explicit limits.

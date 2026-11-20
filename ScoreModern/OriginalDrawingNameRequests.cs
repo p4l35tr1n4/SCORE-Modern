@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Text;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Text;using System.Windows.Forms;
 namespace ScoreModern {
  public sealed partial class Editor {
   Item externalDrawingNameItem;Score externalDrawingLoad;string externalDrawingLoadPath;bool externalDrawingOldBlock,externalDrawingReturnDisk;Action externalDrawingRedrawContinuation;ScreenMode externalDrawingRedrawMode;

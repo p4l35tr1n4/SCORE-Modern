@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Collections.Generic;using System.Linq;
+using System;using System.IO;using System.Collections.Generic;using System.Linq;
 namespace ScoreModern {
  public sealed class TextCacheRefreshResult {public int Updated,TerminatorWrites;public readonly List<string> Unresolved=new List<string>();}
  public static class NativeTextCache {

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Windows.Forms;using System.Threading.Tasks;
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Windows.Forms;using System.Threading.Tasks;
 namespace ScoreModern {public sealed partial class Editor {
  FontAllocationSnapshot fontMetricsSnapshot;FontAllocationWindow fontAllocationWindow;Timer fontMetricsTimer;bool fontMetricsLoading;string fontMetricsRequestedKey;volatile bool fontMetricsDirty=true;readonly List<FileSystemWatcher> fontMetricsWatchers=new List<FileSystemWatcher>();
  void QueueFontMetricsPreload(){

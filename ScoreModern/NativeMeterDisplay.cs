@@ -4,7 +4,7 @@ namespace ScoreModern {
  public static class NativeMeterDisplay {
   static float F(double value){return (float)value;}
   internal static bool ValidSize(float size){return !Single.IsNaN(size)&&!Single.IsInfinity(size)&&Math.Abs(size)<=32767;}
-  public static List<NativeMeterNumber> Prepare(Item item,NativeNotationContext page,bool printed=false){
+  public static List<NativeMeterNumber> Prepare(Item item,NativeNotationContext page,bool printed=false,bool scor4=false){
    if(item.Code!=18||page==null)return null;float numerator=item.P(5),denominator=item.P(6),size=item.P(7);
    if(numerator<0||numerator>=90||denominator<0||denominator>=100)return null;numerator=(short)(int)numerator;denominator=(short)(int)denominator;bool zeroMeter=numerator==0&&denominator==0;if(zeroMeter)denominator=1;
    if(!ValidSize(size))return null;if(BitConverter.ToInt32(BitConverter.GetBytes(size),0)==Int32.MinValue)return null;
@@ -12,7 +12,7 @@ namespace ScoreModern {
    bool separateDenominator=item.P(9)==-1;
    for(int n=9;n<=12;n++)if(!ValidSize(item.P(n)))return null;
    for(int n=8;n<=20;n++)if(n!=9&&n!=10&&n!=11&&n!=12&&n!=13&&n!=14&&n!=15&&n!=16&&item.P(n)!=0)return null;if(!VerifiedJustificationControl(item.P(14)))return null;
-   if(!VerifiedReservedControl(item.P(16)))return null;
+   if(!ScoreModern.RecoveredFragments.ScoreVersionControls.MeterThicknessSupported(scor4,item.P(16)))return null;
    if(!ValidFont(item.P(13))||Single.IsNaN(item.P(15))||Single.IsInfinity(item.P(15)))return null;
    float origin=F((double)page.Prepared.X+item.P(15)*150);
    size=F((size==0?1:(double)size)*1.25);float centered=F((double)page.Scale*size*7.599999904632568+origin),topX=!separateDenominator&&numerator<10&&denominator>=10?centered:origin,bottomX=denominator<10&&numerator>=10?centered:origin;var result=new List<NativeMeterNumber>();
@@ -29,12 +29,13 @@ namespace ScoreModern {
   public static bool Draw(Graphics g,Item item,NativeNotationContext page,ScoreText text,DrawingLibrary library){
    if(text==null)return false;
    if(item.P(8)!=0)return DrawCompound(g,item,page,text,library);
-   var numbers=Prepare(item,page,!NativeNotationView.UsesDat);if(numbers==null)return false;
+   var numbers=Prepare(item,page,!NativeNotationView.UsesDat,NativeLibraryLocation.IsScor4(text.RootDirectory));if(numbers==null)return false;
    foreach(var number in numbers)DrawNumber(g,item,page,text,number);
    return true;
   }
-  // The paired DOS F6 and DAT fixtures preserve P16 with these values
-  // without changing either the ordinary or compound numeric drawing.
+  // SCORE 3.11 paired F6/DAT fixtures preserve these P16 values without
+  // changing ordinary/compound numeral geometry. SCOR4 separately uses P16
+  // as a printer line-width adjustment; that override is not yet applied here.
   internal static bool VerifiedReservedControl(float value){
    return value==0||value==-2||value==2||value==1.25f||value==-1.25f||value==.5f||value==-1;
   }
@@ -52,12 +53,12 @@ namespace ScoreModern {
     float font=item.P(13)==0?94:item.P(13);
     var body=Item.Make(16,item.P(2),item.P(3),item.P(4),1,number.Size,0,font,0,0,0,1,0);text.Set(body,number.Number.ToString(CultureInfo.InvariantCulture),page.Scale);
     var eps=NativeEpsExport.For(g);if(eps!=null)eps.Comment("SCORE meter number "+number.Number+" x "+number.X.ToString("R",CultureInfo.InvariantCulture)+" y "+number.Y.ToString("R",CultureInfo.InvariantCulture)+" size "+number.Size.ToString("R",CultureInfo.InvariantCulture)+" font "+font.ToString("R",CultureInfo.InvariantCulture));
-    RenderResourceAudit.Record("meter numeral",number.Number.ToString(CultureInfo.InvariantCulture),font==94?NativeLibraryLocation.FileFor(text.RootDirectory,"MUSI0.DRW"):"FM"+((int)font-1000).ToString("00",CultureInfo.InvariantCulture)+".PSC","recovered numeric meter branch; signed-word digit selection");text.Draw(g,body,body.Text,0,0,page.Scale/5,page.Scale,context);
+    RenderResourceAudit.Record("meter numeral",number.Number.ToString(CultureInfo.InvariantCulture),font==94?NativeLibraryLocation.FileFor(text.RootDirectory,"MUSI0.DRW"):"FM"+((int)font-1000).ToString("00",CultureInfo.InvariantCulture)+".PSC","recovered numeric meter branch; signed-word digit selection");short selector=ScoreModern.RecoveredFragments.ScoreVersionControls.MeterThicknessSelector(NativeLibraryLocation.IsScor4(text.RootDirectory),item.P(16));using(selector!=0?NativePrintContext.OverrideLineWidth(selector):null)text.Draw(g,body,body.Text,0,0,page.Scale/5,page.Scale,context);
   }
   static bool DrawCompound(Graphics g,Item i,NativeNotationContext p,ScoreText text,DrawingLibrary library){
    if(i.Code!=18||p==null||library==null)return false;
    for(int field=3;field<=20;field++)if(Single.IsNaN(i.P(field))||Single.IsInfinity(i.P(field))||Math.Abs(i.P(field))>32767)return false;
-   if(!VerifiedReservedControl(i.P(16)))return false;
+   if(!ScoreModern.RecoveredFragments.ScoreVersionControls.MeterThicknessSupported(NativeLibraryLocation.IsScor4(text.RootDirectory),i.P(16)))return false;
    if(!VerifiedCompoundP17(i.P(17)))return false;
    for(int field=18;field<=20;field++)if(i.P(field)!=0)return false;
    if(!ValidFont(i.P(13))||!VerifiedJustificationControl(i.P(14)))return false;

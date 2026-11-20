@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Text;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  internal sealed class PostScriptFontRun {
   public string Name;public short Word,RequestedWord;public float X,Y,EmX,EmY,Letter,Space,Rotation,PivotX,PivotY;public bool PageCoordinates=true,ReencodedUgrave;

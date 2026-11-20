@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Globalization;
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Globalization;
 namespace ScoreModern {
  public sealed partial class Editor {
   internal void CheckNotationMatrixCase(string directory){

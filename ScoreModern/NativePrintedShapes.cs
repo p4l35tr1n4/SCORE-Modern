@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Globalization;
+using System;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Globalization;
 namespace ScoreModern {
  public static class NativePrintedShapes {
   static float F(double v){return (float)v;}

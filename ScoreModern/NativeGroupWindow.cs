@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 namespace ScoreModern {public sealed partial class Editor {
  int postGroupGraphicsTop=-1;
  // Original mode17: 1F1E:03FE decrements the lower text row when>=5;

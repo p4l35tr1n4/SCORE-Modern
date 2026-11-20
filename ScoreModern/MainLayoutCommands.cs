@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Globalization;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using System.Globalization;using System.Windows.Forms;
 using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed partial class Editor {
@@ -108,7 +108,7 @@ namespace ScoreModern {
    bool scor4LineupAndJustify=scor4Interface&&groupCommand=="LJ";
    if(scor4Interface&&IsLineupGroup&&(!justifyAfter||scor4LineupAndJustify)&&!noRhythm)
     RepositionScor4LineupText(prepared.Rows,words,starts,prepared.Bottom,prepared.Top);
-   if(justifyAfter){layoutWorkspace.OriginalQuarterToneWidths=NativeEditCompatibility.OriginalQuarterToneWidths;var calculation=LayoutJustificationSystem.Apply(words,starts,prepared.Bottom,prepared.Top,prepared.Left,prepared.Right,layoutScales,aft,32,2800,layoutWorkspace);
+   if(justifyAfter){layoutWorkspace.Scor4NumberJustification=scor4Interface;layoutWorkspace.OriginalQuarterToneWidths=NativeEditCompatibility.OriginalQuarterToneWidths;var calculation=LayoutJustificationSystem.Apply(words,starts,prepared.Bottom,prepared.Top,prepared.Left,prepared.Right,layoutScales,aft,32,2800,layoutWorkspace);
     if(calculation.Gaps.CompressedMinimums){layoutTranscript.Add("*** Not enough space to justify ideally.");layoutTranscript.Add(((double)calculation.Gaps.MinimumTotal).ToString(".000",CultureInfo.InvariantCulture).PadLeft(8)+((double)calculation.Gaps.Width).ToString(".000",CultureInfo.InvariantCulture).PadLeft(9));}}
    var next=new List<Item>();for(int i=0;i<starts.Length;i++){var row=new float[prepared.Rows[i].Length];Array.Copy(words,starts[i],row,0,row.Length);var item=Item.Make(row);Buffer.BlockCopy(words,(starts[i]-1)*4,item.Bytes,0,4);next.Add(item);}
    if(groupCommand=="RIP"){ContinueRippleLineup(next);return;}

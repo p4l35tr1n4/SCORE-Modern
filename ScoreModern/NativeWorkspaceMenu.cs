@@ -1,7 +1,17 @@
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ScoreModern {
  public sealed partial class Editor {
+  void ShowWorkspaceMenu(){
+   var menu=viewport.ContextMenuStrip;
+   if(menu==null)return;
+   Point point=viewport.PointToClient(Cursor.Position);
+   if(!viewport.ClientRectangle.Contains(point))
+    point=new Point(viewport.ClientSize.Width/2,viewport.ClientSize.Height/2);
+   menu.Show(viewport,point);
+  }
+
   void InstallWorkspaceMenu(){
    var menu=new ContextMenuStrip();
    menu.Items.Add("Open...",null,(s,e)=>Safe(Open));
@@ -15,23 +25,28 @@ namespace ScoreModern {
    var scorlas=menu.Items.Add("SCORLAS...",null,(s,e)=>Safe(ShowScorlas));
    var just=menu.Items.Add("JUST...",null,(s,e)=>Safe(ShowNativeJust));
    var draw=menu.Items.Add("DRAW...",null,(s,e)=>Safe(ShowNativeDraw));
+   menu.Items.Add("FONTCONV...",null,(s,e)=>ShowPscGenerator(null));
    var symbols=menu.Items.Add("Symbol Browser...",null,(s,e)=>Safe(ShowLibrarySymbolBrowser));
    var tmbSeparator=new ToolStripSeparator();
    menu.Items.Add(tmbSeparator);
    var tmbEntries=new System.Collections.Generic.Dictionary<string,ToolStripItem>();
    foreach(string name in TmbUtility.Names){
     string caption=name=="ES"?"EDITSCOR (ES)":name;
-    tmbEntries.Add(name,menu.Items.Add(caption,null,(s,e)=>Safe(()=>{
+    var entry=menu.Items.Add(caption+(name=="BEAM"?"":"..."),null,(s,e)=>Safe(()=>{
      foreach(var tool in TmbUtility.Read())
       if(tool.Name==name&&tool.Enabled){RunTmbUtility(tool);break;}
-    })));
+    }));
+    entry.Name=caption;
+    tmbEntries.Add(name,entry);
    }
-   var separator=new ToolStripSeparator();var preferences=new ToolStripMenuItem("Preferences...",null,(s,e)=>Safe(ShowPreferences));menu.Items.Add(separator);menu.Items.Add(preferences);
-   menu.Opening+=(s,e)=>{
+   var separator=new ToolStripSeparator();var preferences=new ToolStripMenuItem("Preferences...",null,(s,e)=>Safe(ShowPreferences)){ShortcutKeyDisplayString="Alt+P"};menu.Items.Add(separator);menu.Items.Add(preferences);
+   System.Action refresh=()=>{
     menu.Items.Remove(separator);menu.Items.Remove(preferences);menu.Items.Add(separator);menu.Items.Add(preferences);
     while(recent.DropDownItems.Count>0)recent.DropDownItems[0].Dispose();
     foreach(string path in NativeRecentFiles.Visible()){
-     var entry=new ToolStripMenuItem(System.IO.Path.GetFileName(path).Replace("&","&&")){ToolTipText=path};
+     string id="recent:"+path;
+     var entry=new ToolStripMenuItem(System.IO.Path.GetFileName(path).Replace("&","&&")){
+      Name=id,ToolTipText=path,ShortcutKeyDisplayString=ContextShortcutDisplay(id)};
      entry.Click+=(sender,args)=>Safe(()=>LoadFile(path));
      recent.DropDownItems.Add(entry);
     }
@@ -48,6 +63,15 @@ namespace ScoreModern {
     tmbSeparator.Visible=anyTmb;
     just.Text=scor4Interface?"JUST4...":"JUST...";
     page.Enabled=scorlas.Enabled=just.Enabled=draw.Enabled=symbols.Enabled=mode==ScreenMode.Main&&musicInput==null&&groupCommand==null&&resourceEntry==null;
+   };
+   InitializeContextShortcuts(menu,refresh);
+   menu.Opening+=(s,e)=>{
+    refresh();
+    var preferencesKey=Keys.Alt|Keys.P;
+    bool preferencesKeyReassigned=ShortcutActive(preferencesKey)&&contextShortcuts.ContainsValue(preferencesKey);
+    foreach(var pair in shortcutMenuItems)
+     ((ToolStripMenuItem)pair.Value).ShortcutKeyDisplayString=ContextShortcutDisplay(pair.Key,
+      pair.Value==preferences&&!preferencesKeyReassigned?"Alt+P":"");
    };
    NativeInterfaceText.AttachMenu(this,menu);
    canvas.ContextMenuStrip=null;

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;
+using System;using System.IO;using System.Linq;
 namespace ScoreModern {public sealed partial class Editor {
  sealed class RippleDeletionPlan {internal Item Source,Target,Prepared;internal bool Create,Forward,NoOp;}
  RippleDeletionPlan pendingRippleDeletion;bool originalRippleDeletedHistory;

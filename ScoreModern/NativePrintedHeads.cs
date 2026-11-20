@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Globalization;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Globalization;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativePrintedHeads {
   internal static bool Parenthesized(Item item){

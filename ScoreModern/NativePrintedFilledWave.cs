@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;using System.Text;
+using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;using System.Drawing;using System.Drawing.Drawing2D;using System.Globalization;using System.Text;
 namespace ScoreModern {
  public static class NativePrintedFilledWave {
   // Original SCORE.EXE REAL4 algorithm tables, offsets168194/168434;35 entries.

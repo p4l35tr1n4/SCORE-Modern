@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Drawing;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Drawing;using System.Windows.Forms;
 namespace ScoreModern {
  public sealed partial class Editor {
   internal void CheckIntegratedUi(string output){Directory.CreateDirectory(output);byte[] before=score.Encode();var oldMode=NativeNotationView.Mode;bool oldRulers=NativeWorkspaceGuides.Rulers,oldPage=NativeWorkspaceGuides.PageGap;float oldHeight=NativeWorkspaceGuides.RulerHeight,oldWidth=NativeWorkspaceGuides.RulerWidth;bool oldStrict=NativeScoreBehaviour.Enabled;NativeScoreBehaviour.Set(true,false);var oldPalette=NativeScreenPalette.Read(source);NativeScoreBehaviour.Set(oldStrict,false);string[] keys={"colour-notation","colour-background","colour-text","colour-edit"};string[] saved=keys.Select(NativeSettings.Read).ToArray();try{

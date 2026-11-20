@@ -11,9 +11,9 @@ namespace ScoreModern.RecoveredFragments {
   static void Put(SlurVectorBuffer b,SlurSampleResult sample,SlurThicknessResult thick,bool printed){short[] x=printed?thick.X:sample.X,y=printed?thick.Y:sample.Y;b.X[b.Base&32767]=unchecked((short)(printed?0x8046:0x8045));for(int j=0;j<x.Length;j++){b.X[(b.Base+j+1)&32767]=x[j];b.Y[(b.Base+j)&32767]=y[j];}b.End=unchecked((short)(b.Base+x.Length+1));b.CurveEnd=unchecked((short)(b.Base+sample.Count));b.SampleCount=sample.Count;}
   public static SlurGeometryResult Build(float[] parameters,SlurOriginContext context,bool printed,float configuredControl,SlurVectorBuffer caller,bool rejectInvalidTrims){
    if(parameters==null||parameters.Length<21)throw new ArgumentException("Missing slur parameters.");
-   float[] p=(float[])parameters.Clone();bool straight=W(p[9])==99;
+   float[] p=(float[])ScoreVersionControls.SlurParameters(context.Scor4,parameters).Clone();bool straight=W(p[9])==99;
    if(rejectInvalidTrims&&(p[14]<0||p[14]>1||p[15]<0||p[15]>1||(p[15]!=0&&p[14]>p[15])))throw new ArgumentException("Slur trim must be an ordered interval within 0..1.");
-   bool widthPrefix=printed&&(straight?W(p[13])!=0:W(p[11])==0);var b=caller??new SlurVectorBuffer{End=printed?(straight?1:(widthPrefix?2:1)):20};int root=b.End;b.Base=root;b.X[0]=unchecked((short)root);if(widthPrefix){int prefix=straight?root:root-1;b.X[prefix]=unchecked((short)0x80a6);b.Y[prefix-1]=unchecked((short)(straight?W(p[13])*2:-1));if(straight){b.Base=root+1;b.X[0]=unchecked((short)b.Base);}}var o=SlurOrigins.Prepare(p,context);int number=W(p[16]),split=number;float gap=0;
+   bool widthPrefix=printed&&(straight?W(p[13])!=0:W(p[11])==0);var b=caller??new SlurVectorBuffer{End=printed?(straight?1:(widthPrefix?2:1)):20};int root=b.End;b.Base=root;b.X[0]=unchecked((short)root);if(widthPrefix){int prefix=straight?root:root-1;b.X[prefix]=unchecked((short)0x80a6);b.Y[prefix-1]=unchecked((short)(straight?W(p[13])*2:-1));if(straight){b.Base=root+1;b.X[0]=unchecked((short)b.Base);}}var o=SlurOrigins.Prepare(p,context);if(ScoreVersionControls.SlurEndpointOverride(context.Scor4,p)){p[16]=p[17]=p[18]=0;}int number=W(p[16]),split=number;float gap=0;
    if(!straight&&number>0&&W(p[11])!=0){number=-number;split=number;}
    if(straight){
     Distance(o,p,P(o.EffectiveStartFraction)||P(o.StopFraction));int at=b.Base;b.X[at]=unchecked((short)0x8045);

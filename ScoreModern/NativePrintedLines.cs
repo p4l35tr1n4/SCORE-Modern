@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;
+using System;using System.Collections.Generic;using System.Drawing;
 namespace ScoreModern {
  public static class NativePrintedLines {
   public static bool Draw(Graphics g,Item item,NativeNotationContext page){
@@ -28,7 +28,7 @@ namespace ScoreModern {
     for(int n=11;n<=20;n++)if(n!=11&&n!=12&&n!=13&&n!=14&&item.P(n)!=0)return false;
    }else{
     if(Math.Abs(item.P(10))>32767||Single.IsNaN(item.P(10)))return false;
-    for(int n=15;n<=20;n++)if(item.P(n)!=0)return false;
+    if(!NativeDatLines.SupportedStraightAuxiliary(item))return false;
    }
    var points=new List<BarlinePoint>();
    var geometry=item.Clone();

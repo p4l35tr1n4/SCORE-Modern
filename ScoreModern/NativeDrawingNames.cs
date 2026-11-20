@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Windows.Forms;
+using System;using System.IO;using System.Text;using System.Windows.Forms;
 namespace ScoreModern {
  public static class NativeDrawingNames {
   static bool documented;

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;
+using System;using System.IO;
 namespace ScoreModern {public sealed partial class Editor {
  float originalTextCenter=100,originalTextRight=200,originalTextJustifyLeft=0,originalTextJustifyRight=200;
  // Original 2FAC:12C5..1321 and 0B8C..0BCA. P13/2 stores to

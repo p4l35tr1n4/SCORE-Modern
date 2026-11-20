@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Drawing;using System.Windows.Forms;
+using System;using System.IO;using System.Drawing;using System.Windows.Forms;
 namespace ScoreModern {
  public static class NativePageFraming {
   public static bool FollowPrint{get;private set;}

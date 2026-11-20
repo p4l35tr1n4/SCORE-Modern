@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;
+using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;
 namespace ScoreModern {
  internal static class NativePostScriptBounds {
   internal const string Program=@"

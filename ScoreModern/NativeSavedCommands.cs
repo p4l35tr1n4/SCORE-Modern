@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Linq;
+using System;using System.Collections.Generic;using System.Linq;
 namespace ScoreModern {public sealed partial class Editor {
  readonly string[] originalSavedCommands=new string[3];bool replayingSavedCommand;
  bool ExecuteOriginalSavedCommands(string text){

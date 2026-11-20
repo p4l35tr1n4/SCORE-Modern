@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Text.RegularExpressions;using System.Linq;using System.Collections.Generic;using System.Windows.Forms;using System.Drawing;
+using System;using System.IO;using System.Text;using System.Text.RegularExpressions;using System.Linq;using System.Collections.Generic;using System.Windows.Forms;using System.Drawing;
 namespace ScoreModern {
  public sealed partial class Editor {
   internal void QueuePscOfferAfterFontSelection(){QueueMissingPscOffer();}

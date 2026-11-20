@@ -13,7 +13,7 @@ Open **Preferences → Windows → Display & text** and choose the notation disp
 
 ## Set up the workspace
 
-Use **Preferences → Windows → Workspace** to enable rulers, set their units, or adjust their colours and spacing. Use **Alt+D** to make more room for command text and **Ctrl+Alt+D** to give space back to the score. Use **Compact text** to reduce the space between text rows. Font family and explicit text size are separate choices.
+Use **Preferences → Windows → Workspace** to enable rulers, set their units, or adjust their colours and spacing. Enable **Denser ruler ticks** for short, unlabelled subdivisions. The rulers use finer intervals as you zoom in and coarser intervals as you zoom out. Use **Alt+D** to make more room for command text and **Ctrl+Alt+D** to give space back to the score. Use **Compact text** to reduce the space between text rows. Font family and explicit text size are separate choices.
 
 When item hover markers are enabled, moving over the visible item shows its click-point and number. In Main mode both left and right clicks on the page can select an item. Right-click outside the page for Windows actions such as **PAGE…**, **DRAW…** or **Preferences…**.
 

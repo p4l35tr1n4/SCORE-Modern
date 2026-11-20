@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeDatOrnaments {
   // Code7 relative13E8:0003..0BEE. Requests were measured at the original
@@ -32,7 +32,7 @@ namespace ScoreModern {
     context.Prepared.X=origin;points.AddRange(NativeLibrarySymbols.ScanGlyph(Item.Make(9,i.P(2),i.P(3),i.P(4),48,factor,factor),context,library));
     if((short)(int)i.P(6)!=0){context.Prepared.X=i.P(8)!=0?F((double)i.P(8)*150):origin;var line=Item.Make(4,i.P(2),i.P(8)!=0?i.P(8):i.P(3),i.P(4),i.P(4),i.P(6),0,0,0,i.P(10),i.P(11),i.P(12),i.P(13));points.AddRange(NativeDatLines.Straight(line,context));}return points;
    }
-   if(type==1){var harp=Harp(i,p,printedHarp);foreach(var part in harp)points.AddRange(part);return points;}
+   if(type==1){var harp=Harp(i,p,printedHarp,library!=null&&NativeLibraryLocation.IsScor4(library.Root));foreach(var part in harp)points.AddRange(part);return points;}
    if(type==21||type==22){
     foreach(int n in new[]{10,13,14,15,16,17,18,19,20})if(i.P(n)!=0)throw new NotSupportedException("DAT pedal-line auxiliary controls need verification.");
     float lift=i.P(9)==0?2:i.P(9),x=p.Prepared.X,y=p.Prepared.Y,step=F((double)p.Scale*6);Action<float,float,short> add=(xx,yy,op)=>points.Add(new PrimitiveTextPoint{X=xx,Y=yy,Operation=op});short start=1;if(i.P(11)!=0){NativeDatLines.Hook(points,x,y,i.P(11),F((double)p.Scale*7),ref start);if(i.P(11)>=100)start=1;}add(x,y,start);
@@ -41,7 +41,8 @@ namespace ScoreModern {
    }
    throw new NotSupportedException("DAT ornament subtype needs verification: "+type);
   }
-  internal static List<PrimitiveTextPoint>[] Harp(Item i,NativeNotationContext p,bool printed){
+  internal static List<PrimitiveTextPoint>[] Harp(Item i,NativeNotationContext p,bool printed,bool scor4=false){
+   if(scor4){float offset=ScoreVersionControls.HarpOffset(true,i.P(15));i=i.Clone();i.Set(3,F((double)i.P(3)+i.P(15)));i.Set(15,0);p=new NativeNotationContext{SourceScore=p.SourceScore,Staff=p.Staff,RawBase=p.RawBase,Prepared=p.Prepared,Projection=p.Projection};p.Prepared.X=F((double)p.Prepared.X+offset);}
    for(int n=3;n<=20;n++)if(Single.IsNaN(i.P(n))||Single.IsInfinity(i.P(n)))throw new NotSupportedException("Nonfinite harp controls require original fault verification.");
    foreach(int n in new[]{6,13,14,16,17,18,19,20})if(i.P(n)!=0)throw new NotSupportedException("DAT harp auxiliary controls need verification.");
    float size=i.P(5)==0?1:i.P(5),ratio=F((double)size*p.Scale/25),pitch=i.P(4),low=F((double)pitch-size*4),high=F((double)pitch+size*4);

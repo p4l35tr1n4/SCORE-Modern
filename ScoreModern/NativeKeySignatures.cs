@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;
+using System;using System.Collections.Generic;using System.Drawing;
 namespace ScoreModern {
  public static class NativeKeySignatures {
   static float F(double x){return (float)x;}

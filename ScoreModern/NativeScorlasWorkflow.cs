@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -162,7 +162,7 @@ namespace ScoreModern {
    StorePage();string content=NativeScorlasStatistics.Create(root,batchPages,settings);
    using(var dialog=new ScoreDialog("scorlas-statistics"){Text="SCORLAS statistics",ClientSize=new Size(800,500),Font=SystemFonts.MessageBoxFont,StartPosition=FormStartPosition.CenterParent})
    using(var font=new Font("Consolas",10)){
-    var text=new TextBox{Dock=DockStyle.Fill,Multiline=true,ReadOnly=true,WordWrap=false,ScrollBars=ScrollBars.Both,Font=font,Text=content};var menu=new ContextMenuStrip();menu.Items.Add("Copy",null,(s,e)=>text.Copy());menu.Items.Add("Select all",null,(s,e)=>text.SelectAll());menu.Items.Add(new ToolStripSeparator());menu.Items.Add("Save as...",null,(s,e)=>{using(var save=new SaveFileDialog{Title="Save SCORLAS statistics",Filter="Text (*.txt)|*.txt|All files (*.*)|*.*",DefaultExt="txt",RestoreDirectory=true})if(save.ShowDialog(dialog)==DialogResult.OK)Try(()=>File.WriteAllText(save.FileName,content,System.Text.Encoding.GetEncoding(437,System.Text.EncoderFallback.ExceptionFallback,System.Text.DecoderFallback.ExceptionFallback)));});text.ContextMenuStrip=menu;dialog.Controls.Add(text);dialog.Disposed+=(s,e)=>menu.Dispose();dialog.ShowDialog(this);
+    var text=new TextBox{Dock=DockStyle.Fill,Multiline=true,ReadOnly=true,WordWrap=false,ScrollBars=ScrollBars.Both,Font=font,Text=content};var menu=new ContextMenuStrip();menu.Items.Add("Copy",null,(s,e)=>text.Copy());menu.Items.Add("Select all",null,(s,e)=>text.SelectAll());menu.Items.Add(new ToolStripSeparator());menu.Items.Add("Save as...",null,(s,e)=>{using(var save=new SaveFileDialog{Title="Save SCORLAS statistics",Filter="Text (*.txt)|*.txt|All files (*.*)|*.*",DefaultExt="txt",RestoreDirectory=true})if(save.ShowDialog(dialog)==DialogResult.OK)Try(()=>File.WriteAllText(save.FileName,content,System.Text.Encoding.GetEncoding(437,System.Text.EncoderFallback.ExceptionFallback,System.Text.DecoderFallback.ExceptionFallback)));});text.ContextMenuStrip=menu;dialog.Controls.Add(text);dialog.Disposed+=(s,e)=>menu.Dispose();dialog.AddTextOutputCloseButton();dialog.ShowDialog(this);
    }
   }
   void ExportBatch(){

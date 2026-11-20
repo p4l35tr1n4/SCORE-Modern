@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace ScoreModern.RecoveredFragments {
  public sealed class SlurSampleResult {
   public short[] X,Y;public int Count;public float Step,FinalX,FinalIncrement,Exponent,HalfSteps,Height;public SlurOriginState Origin;

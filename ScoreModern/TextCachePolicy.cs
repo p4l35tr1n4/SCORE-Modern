@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Windows.Forms;
+using System;using System.IO;using System.Windows.Forms;
 namespace ScoreModern {
  public static class TextCachePolicy {
   static bool configuredMarkModified;public static bool MarkModified{get{return !NativeScoreBehaviour.Enabled&&configuredMarkModified;}set{configuredMarkModified=value;}}

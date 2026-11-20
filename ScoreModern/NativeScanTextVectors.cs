@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed partial class ScoreText {
   public bool ShowActualDatFonts;

@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeDatRestAttachments {
   static float F(double x){return (float)x;}

@@ -1,4 +1,4 @@
-﻿using System;using ScoreModern.RecoveredFragments;using System.Collections.Generic;
+using System;using ScoreModern.RecoveredFragments;using System.Collections.Generic;
 namespace ScoreModern {
  public static class NativeDatKeys {
   static float F(double x){return (float)x;}static short W(float x){return unchecked((short)(int)Math.Truncate(x));}static bool Present(float x){return BitConverter.ToInt32(BitConverter.GetBytes(x),0)!=0;}

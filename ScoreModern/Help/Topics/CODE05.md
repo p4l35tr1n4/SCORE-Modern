@@ -171,3 +171,6 @@ CV = Creates default curvature for slurs and ties
 ```
 
 Global commands: CRV = CR all items on page in staff range specified at prompts
+
+
+**Verified original taper:** SCORE 3.11 and SCOR4 use the measured fixed 85% thickening ramp and ignore P19. The speculative P19 description in Tom’s reference is retained as historical documentation. Adjustable taper is an SMX extension, not original SCOR4 behavior.

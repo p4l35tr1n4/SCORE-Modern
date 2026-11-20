@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;
+using System;using System.Collections.Generic;
 namespace ScoreModern {public sealed partial class Editor {
  // Original 323E:0415..060A and 2D55:0643..06C5. This is an
  // ordered text-record operation, not a visual-neighbour search.

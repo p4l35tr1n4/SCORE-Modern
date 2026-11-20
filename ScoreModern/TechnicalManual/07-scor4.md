@@ -4,7 +4,7 @@ The supplied `SCOR4.EXE` identifies itself as SCORE 4.01. References to SCORE 4.
 
 ## Profile and resources
 
-SCORE Modern Core 0.3.60 private build 2105 retains SCORE 3.11 as the default. The SCOR4 profile changes menu dispatch, the startup title, `VER`, and the routing for recovered version-specific operations. It has an independent LIB folder and resource scope. Using that folder for all resources enables the supplied `S*.SET` presets and `PREF-4.SCR` when present. An unset SCOR4 LIB inherits the classic library. The Windows file and folder dialog choices and the F6 print-menu preference apply to both profiles.
+SCORE Modern Core retains SCORE 3.11 as the default. The SCOR4 profile changes menu dispatch, the startup title, `VER`, and the routing for recovered version-specific operations. It has an independent LIB folder and resource scope. Using that folder for all resources enables the supplied `S*.SET` presets and `PREF-4.SCR` when present. An unset SCOR4 LIB inherits the classic library. The Windows file and folder dialog choices and the F6 print-menu preference apply to both profiles.
 
 The original `VER` shows the 4.01 header on a blank document and on the tested older file. A file saved in SCORE 4 adds creator and date information. Core includes its own build line. The two-row original interface uses F1–F10 and Alt+F1–F10. Controls such as F9 and F10 dispatch according to the active bank. The menu data and help give the labels and documented intent. Saved records and debugger captures establish what a button did in the tested context.
 
@@ -73,3 +73,52 @@ DRAW4 produced 388 vector rows from the `SCORE` glyph. Core's ASCII vector outpu
 | Fixture details and original comparisons | [SCOR4 batch ledger](../../SCOR4-UI-BATCH.md) |
 
 Record comparisons count notation records and use the configured handling of original count-byte writes. The six trailer words carry metadata and are outside those comparisons. The physical reference click selected item 6 at zoom 2. Right-click, middle-click, and drag comparisons used controlled guest mouse states and matching Windows routes. Physical delivery for those other gestures, exact accordion DAT pixels, untested utility modes, and guarded parameter combinations remain outside the verified results. MIDI playback was outside the SCOR4 work.
+
+
+## Shared DLL SCOR4 engraving and spacing controls (20 November 2026)
+
+Both Core and SMX use **ScoreModern.dll 0.3.61.1** for these original version-dependent semantics. The active SCORE profile selects the interpretation; loading a MUS file does not silently switch profiles. The DLL has no global profile state: callers supply the version explicitly. Five-point slurs and adjustable SMX taper remain EXE extensions.
+
+### Named drawing displacement: Code 11 P11
+
+Commercial SCOR4 adds P11 to the nominal horizontal position in SCORE units. The raw displacement is `f32(150 × P11)`, independent of staff scale. Apply it to the drawing origin **before** the DRW point transform and 16-bit coordinate conversion; the displaced origin is also the rotation pivot. SCORE 3.11 ignores P11. Native screen vectors, vector display, bounds measurement and EPS use the same preparation.
+
+### Harp-pedal diagrams: Code 7, P7=1, P15
+
+In SCORE 3.11, P15 displaces the bottom of the central vertical line while the other endpoint and the rest of the diagram remain at their original positions, producing a slant. In commercial SCOR4, `f32(150 × P15)` translates the entire diagram horizontally: both lines, end brackets and all seven pedal parallelograms. Do not apply both interpretations. P10 remains the parallelogram shear control.
+
+### Time-signature outlines: Code 18 P16
+
+SCOR4 uses the signed word obtained by truncating P16 as a per-meter printer line-width adjustment. With base width `b` pixels and resolution `r` dpi, the existing printer helper supplies `u = f32(4000/r + .01)` and the raw width is `f32((b + trunc(P16)) × u)`, clamped at zero when negative. Printer serialization uses the existing four-decimal SCORE width formatting. At 600 dpi and a four-pixel base, P16=-2 produces `13.3533 lw`, versus `26.7067 lw` for P16=0. Restore prior/default width after the meter. The contour coordinates do not change. The original comparison confirms the adjustment with SETSTROKE off and on, and for common-time as well as numeric meter symbols. DAT screen contours remain unchanged; WYSIWYG/vector and EPS show the print treatment. Substituted filled PostScript font faces retain their normal font rendering; width changes affect stroked numeral outlines, not font metrics.
+
+P16 does not itself alter justification in the new rendering code. Original LJ’s separate raw-record spacing behavior is retained; Tom recommends applying thinning after native LJ or using TMB LJ.
+
+### Explicit slur endpoints: Code 5 P16=1
+
+In SCOR4 the mode overrides P8 completely, including a P8 that would otherwise select a tuplet or ending bracket. The item follows the slur/slide dispatch. Its left raw origin is `f32(leftOrigin + 150 × P17)` and its right raw endpoint is `f32(150 × P6 + 150 × P18)`. The displacement is in horizontal SCORE units, not staff steps. P17/P18 are not number offsets in this mode and P16 is not a label 1. P4/P5, curvature, flattening, trims and the original fixed taper retain their usual geometry roles. A zero/zero displacement still enables the mode and bypasses P8. The implementation operates on working parameters and preserves stored values during rendering.
+
+SCORE 3.11 retains the original P8 interpretation and P16 number meaning. A file-open notice therefore describes this as a version-dependent control rather than asserting the file’s creator version. Exact original tests cover ordinary slurs and P8=1/3 bypasses; unusual reversed endpoints and invalid-buffer combinations remain subject to the existing guards and compatibility policies.
+
+### Number justification: Code 10 P16=1
+
+SCOR4 includes the record in the spacing selection. Let `s = f32(staffUnits × 1/25)` be the existing collector’s staff scale, and let `d=P15`. The normalized allowances are:
+
+- `left = f32(f32(.2) − d/s)`
+- `right = f32(4 + d/s)`
+
+The division remains extended until the final binary32 assignments; do not round `d/s` to binary32 first. Existing coincidence grouping, maximum allowances, staff scaling, gap redistribution and coordinate remapping then apply. The tested routine does **not** multiply these allowances by P6 size or derive them from font outlines. Original tests with P6=1/2 and P5=3/13 confirm the same allowance; Tom’s “single-digit” description is narrower than the observed behavior. Main J, JUST4 and PAGE4 all select this branch. SCORE 3.11 selection remains unchanged.
+
+### Integration contracts
+
+`ScoreVersionControls` supplies the shared version controls. Set `SlurOriginContext.Scor4=true` for SCOR4 geometry. Set `LayoutJustificationWorkspace.Scor4NumberJustification=true` for SCOR4 number spacing; leave it false for SCORE 3.11. Explicit overloads of `LayoutSpacingSelection.Collect` and `LayoutItemSpacing.Apply` carry the corresponding flag. The old public signatures remain available and delegate to classic behavior, preserving binary callers. Assembly version remains `0.0.0.0`; identify the release by file/informational version and hash.
+
+Build one canonical DLL, then pass `-CoreDllPath <path>` to each application’s Build.ps1. This ensures the two packages contain the exact same binary, including its module identity.
+
+### Verification scope
+
+Original-executable EPS and saved-score fixtures were collected in an isolated DOSBox-X copy; no installed score/library was modified and no physical printer job was sent. Tests compare named-drawing and harp vertices, slur outline vertices, and complete J output positions; exercise DAT/vector rendering, strict EPS, automatic bounds, Main J, JUST4 and PAGE4; and retain classic pixel and corpus regressions. See the accompanying release verification report for final counts and artifact hashes. This is verification of the documented/tested domains, not a claim of exhaustive equivalence for all parameter combinations.
+
+
+### Unused Code4 auxiliary fields
+
+Original SCOR4 EPS comparisons confirm P8 is unused for hairpins and P15 is unused for straight lines, including signed and fractional values. These retained fields must not block native rendering or automatic bounds measurement. Core/SMX preserve them in the score. This correction is included in Core 0.3.67 and SMX 0.5.81.

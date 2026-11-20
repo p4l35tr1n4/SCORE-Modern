@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Globalization;using System.Linq;
+using System;using System.Collections.Generic;using System.Globalization;using System.Linq;
 namespace ScoreModern.RecoveredFragments {
  public sealed class InputEditInverseResult {public string Header,Positions;public string[] Lines;public List<float[]> Prefix,Selected;public float Left,Right;public int Staff,InitialClef;}
  public static class InputEditInverse {

@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;
+using System;using System.Collections.Generic;using System.Drawing;
 namespace ScoreModern {
  public static class NativePrintedRests {
   static float F(double value){return (float)value;}

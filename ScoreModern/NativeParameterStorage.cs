@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using ScoreModern.RecoveredFragments;
 namespace ScoreModern {public sealed partial class Editor {

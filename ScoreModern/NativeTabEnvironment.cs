@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Globalization;using System.Windows.Forms;
+using System;using System.Drawing;using System.Globalization;using System.Windows.Forms;
 namespace ScoreModern {
  public static class NativeTabEnvironment {
   static bool reject=NativeSettings.Read("tab-quarter-tones")=="reject";

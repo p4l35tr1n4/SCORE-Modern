@@ -1,4 +1,4 @@
-﻿using System;using System.Windows.Forms;
+using System;using System.Windows.Forms;
 namespace ScoreModern {public sealed partial class Editor {
  string lastSharedLine="";
  void RecordSharedLine(string value){if(musicInput!=null||originalTextSetupActive||originalGroupFlipQuestion||mode==ScreenMode.EditGroupMenu&&groupCommand==null)return;lastSharedLine=value;((NativeCommandBox)command).ScoreInsert=false;}

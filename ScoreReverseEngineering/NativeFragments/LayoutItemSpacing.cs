@@ -12,7 +12,8 @@ namespace ScoreModern.RecoveredFragments {
   float Raw(int word,int p){int i=word-1+p;if(i<0||i>=words.Length)throw new NotSupportedException("Spacing record word leaves its buffer.");return words[i];}
   static void Bound(int i,float[] a){if(i<0||i>=a.Length)throw new NotSupportedException("Original spacing table leaves its buffer.");}
   void Symbol(LayoutSymbolSpacingResult r){F(0xd4d4,r.Left);F(0xd4a6,r.Right);F(0xafac,r.Scratch);if(r.ResetParameter10Scratch)F(0xb9de,0);}
-  public short Apply(short staff,float staffScale,float firstStaff,ref short cursor,float left,float right,float[] afterSymbol,bool originalQuarterToneWidths=true,float? positionJoinTolerance=null,bool standaloneJust=false) {
+  public short Apply(short staff,float staffScale,float firstStaff,ref short cursor,float left,float right,float[] afterSymbol,bool originalQuarterToneWidths=true,float? positionJoinTolerance=null,bool standaloneJust=false) {return Apply(staff,staffScale,firstStaff,ref cursor,left,right,afterSymbol,originalQuarterToneWidths,positionJoinTolerance,standaloneJust,false);}
+  public short Apply(short staff,float staffScale,float firstStaff,ref short cursor,float left,float right,float[] afterSymbol,bool originalQuarterToneWidths,float? positionJoinTolerance,bool standaloneJust,bool scor4Numbers) {
    if(afterSymbol==null||afterSymbol.Length!=4)throw new ArgumentException("Explicit AFTC/AFTB/AFTK/AFTM values are required.");
    if(standaloneJust&&originalQuarterToneWidths){
     // The old JUST.EXE adjacent descriptors differ from SCORE.EXE's.
@@ -20,7 +21,7 @@ namespace ScoreModern.RecoveredFragments {
     Buffer.BlockCopy(BitConverter.GetBytes(0x4c2d1a94u),0,data,0x388e,4);
    }
    W(0xd4de,0);W(0xd484,0);F(0xd4e4,(double)left-F(0x7748));F(0xd4e0,(double)right+F(0x7748));W(0xd4f6,Word(firstStaff));W(0xd4f8,staff);
-   var choice=LayoutSpacingSelection.Collect(words,starts,staff,W(0xd4f6),cursor,left,right,F(0x7748),F(0x774c),F(0x7754),F(0x7758),F(0x775e),F(0x7750),selected.Length);
+   var choice=LayoutSpacingSelection.Collect(words,starts,staff,W(0xd4f6),cursor,left,right,F(0x7748),F(0x774c),F(0x7754),F(0x7758),F(0x775e),F(0x7750),selected.Length,scor4Numbers);
    W(0xd484,choice.Positions.Length);Array.Copy(choice.Positions,selected,choice.Positions.Length);Array.Copy(choice.RecordWords,refs,choice.RecordWords.Length);
    if(choice.Positions.Length<2)return 0;
    LayoutSpacingSelection.Sort(selected,refs,W(0xd484));F(0xd4d8,(double)staffScale*F(0x7762));points[0]=F(0xd4e4);gaps[0]=0;short count=1;F(0xd492,0);W(0xd4dc,0);W(0xd48a,0);
@@ -36,6 +37,7 @@ namespace ScoreModern.RecoveredFragments {
      else if(kind==2){int n=W(0xd4f4);var r=LayoutRestSpacing.Apply(F(0xd48e),F(0xb9ce),F(0xb9ca),F(0xb9c6),F(0xd4d4),(short)n,n>=9?Raw(w,9):0,n>=10?Raw(w,10):0,n>=15?Raw(w,15):0);F(0xd48e,r.Multiplier);F(0xd4a6,r.Right);F(0xd4d4,r.Left);if(r.Parameter10Scratch.HasValue)F(0xafac,r.Parameter10Scratch.Value);}
      else if(kind==3)Clef(i,w,previous,count);
      else if(kind==4){F(0xd4d4,F(0x7796));if(previous==14)F(0xd4d4,F(0x77aa));if(previous==3||previous>16)F(0xd4d4,0);F(0xd4a6,F(0x779a));if(Raw(w,0)>=F(0x77ae)){F(0xd4c0,(double)Raw(w,15)/F(0xd4d8));F(0xd4d4,(double)F(0xd4d4)-F(0xd4c0));F(0xd4a6,(double)F(0xd4c0)+F(0x779a));}}
+     else if(kind==10&&scor4Numbers){var r=ScoreVersionControls.NumberSpacing(Raw(w,6),Raw(w,15),F(0xd4d8));Symbol(r);}
      else if(kind==17){var r=LayoutSymbolSpacing.Key((short)previous,F(0xb9d2),F(0xb9ca),standaloneJust);Symbol(r);F(0xafb0,r.ScaleScratch);}
      else {int n=W(0xd4f4);var window=new float[words.Length-w];Array.Copy(words,w,window,0,window.Length);var r=LayoutSymbolSpacing.Meter((short)previous,gaps[count-1],window,(short)n,standaloneJust);Symbol(r);gaps[count-1]=r.Minimum;if(n>=8)F(0xafb0,r.ScaleScratch);if(W(0xd48a)==W(0xd484))F(0xd4a6,(double)F(0xd4a6)-F(0x77b2));}
     }

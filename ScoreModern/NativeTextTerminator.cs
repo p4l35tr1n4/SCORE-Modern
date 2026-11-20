@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  // Original converter 0A33:0090..0096 appends one space after the

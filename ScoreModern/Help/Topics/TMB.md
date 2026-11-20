@@ -18,3 +18,5 @@ Open a score and leave item editing before running a utility. Right-click the wo
 | VJ | Report the height or set a target height using the score's units |
 
 Core stages a temporary copy of the current score and the utility files. When the utility returns a changed, valid score, Core loads it as an unsaved edit. Use **Undo** to restore your earlier score, or save to keep the result. The utility log is available in the progress dialog and appears again for an error or unchanged result.
+
+Enable **Keep utility output open until dismissed** in the TMB utilities tab to review the output after a successful score reload. This checkbox saves immediately. Press **Esc** or choose **Close** to dismiss the window. The **Command output** section of **Preferences → Windows → Display & text** controls its text and background colours.

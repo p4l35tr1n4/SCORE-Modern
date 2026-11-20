@@ -1,132 +1,121 @@
 # ScoreModern.dll public member index
 
-Generated from SCORE Modern 0.3.60 RC1 build 1950. Reflection displays CLR type names. Use the routine sources for argument semantics and limits. Inherited members and compiler-generated accessors are omitted. Enum names and values are shown explicitly.
+Generated from shared DLL file version 0.3.61.1. Old spacing overloads retain SCORE 3.11 defaults; explicit SCOR4 flags opt into version-specific behavior. See Chapter 07 for semantics, units and precision.
 
 Assembly: ScoreModern, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 
-Exported types: 337
+Exported types: 338
 
-## AutomaticPrintOffset
+## ScoreModern.RecoveredFragments.AutomaticPrintOffset
 
 ```text
-ScoreModern.RecoveredFragments.AutomaticPrintOffset
 static System.Int32 FromMinimumWord(System.Int16 minimumY)
 static System.Int32 SelectBottom(System.Int32 preliminary)
 ```
 
-## BeamAppearance
+## ScoreModern.RecoveredFragments.BeamAppearance
 
 ```text
-ScoreModern.RecoveredFragments.BeamAppearance
-Printed = 0
-DosScreen = 1
+static ScoreModern.RecoveredFragments.BeamAppearance DosScreen = 1
+static ScoreModern.RecoveredFragments.BeamAppearance Printed = 0
+System.Int32 value__
 ```
 
-## BeamBufferEdit
+## ScoreModern.RecoveredFragments.BeamBufferEdit
 
 ```text
-ScoreModern.RecoveredFragments.BeamBufferEdit
 static ScoreModern.RecoveredFragments.SignedDivide16State Execute(ScoreModern.RecoveredFragments.IPointBufferMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## BeamGeometry
+## ScoreModern.RecoveredFragments.BeamGeometry
 
 ```text
-ScoreModern.RecoveredFragments.BeamGeometry
 static System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.BeamShape] Build(System.Single[] p, ScoreModern.RecoveredFragments.BeamGeometryContext c, ScoreModern.RecoveredFragments.BeamAppearance appearance)
 static System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.BeamShape] Build(System.Single[] p, ScoreModern.RecoveredFragments.BeamGeometryContext c, ScoreModern.RecoveredFragments.BeamAppearance appearance, ScoreModern.RecoveredFragments.BeamReference& reference)
 ```
 
-## BeamGeometryContext
+## ScoreModern.RecoveredFragments.BeamGeometryContext
 
 ```text
-ScoreModern.RecoveredFragments.BeamGeometryContext
-.ctor()
-Single LeftVertical
-Single Scale
+System.Single LeftVertical
+System.Single Scale
 System.Func`2[System.Single,System.Single] Vertical
+BeamGeometryContext()
 ```
 
-## BeamReference
+## ScoreModern.RecoveredFragments.BeamReference
 
 ```text
-ScoreModern.RecoveredFragments.BeamReference
-Boolean Cue
-Single Dx
-Single Dy
-Single LeftX
-Single LeftY
-Single StaffScale
+System.Boolean Cue
+System.Single Dx
+System.Single Dy
+System.Single LeftX
+System.Single LeftY
+System.Single StaffScale
 ```
 
-## BeamShape
+## ScoreModern.RecoveredFragments.BeamShape
 
 ```text
-ScoreModern.RecoveredFragments.BeamShape
-.ctor()
-Int32 Group
+System.Int32 Group
 ScoreModern.RecoveredFragments.BeamVertex[] Vertices
+BeamShape()
 ```
 
-## BeamStemAdjustment
+## ScoreModern.RecoveredFragments.BeamStemAdjustment
 
 ```text
-ScoreModern.RecoveredFragments.BeamStemAdjustment
-static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Boolean force, ScoreModern.RecoveredFragments.PageCoordinates tables, System.Int32 maximumStaff, System.Int32 onlyBeam, System.Collections.Generic.ISet`1[System.Int32] selectedBeams)
+static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Boolean force, ScoreModern.RecoveredFragments.PageCoordinates tables, System.Int32 maximumStaff, System.Int32 onlyBeam = -1, System.Collections.Generic.ISet`1[System.Int32] selectedBeams = null)
+static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Boolean force, ScoreModern.RecoveredFragments.PageCoordinates tables, System.Int32 maximumStaff, System.Int32 onlyBeam, System.Collections.Generic.ISet`1[System.Int32] selectedBeams, System.Boolean page4)
+static System.Collections.Generic.List`1[System.Single[]] ApplyScor4Selected(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 selected, System.Boolean french, System.Boolean includeOpposite, System.Int32 onlyNote = -1)
+static System.Collections.Generic.List`1[System.Single[]] ConfigureScor4Selected(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 selected, System.Boolean includeOpposite)
 ```
 
-## BeamVertex
+## ScoreModern.RecoveredFragments.BeamVertex
 
 ```text
-ScoreModern.RecoveredFragments.BeamVertex
-.ctor(System.Single x, System.Single y)
-Single X
-Single Y
+System.Single X
+System.Single Y
+BeamVertex(System.Single x, System.Single y)
 ```
 
-## BiosKeyReader
+## ScoreModern.RecoveredFragments.BiosKeyReader
 
 ```text
-ScoreModern.RecoveredFragments.BiosKeyReader
 static System.Void Execute(ScoreModern.RecoveredFragments.IBiosKeyContext context, System.UInt16 asciiSegment, System.UInt16 asciiOffset, System.UInt16 scanSegment, System.UInt16 scanOffset)
 ```
 
-## BufferedBeamLinePipeline
+## ScoreModern.RecoveredFragments.BufferedBeamLinePipeline
 
 ```text
-ScoreModern.RecoveredFragments.BufferedBeamLinePipeline
 static ScoreModern.RecoveredFragments.LineDriverBodyResult Execute(ScoreModern.RecoveredFragments.IByteOrResultMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state, System.UInt16 driverSegment)
 ```
 
-## BufferedCoordinateDecode
+## ScoreModern.RecoveredFragments.BufferedCoordinateDecode
 
 ```text
-ScoreModern.RecoveredFragments.BufferedCoordinateDecode
 static ScoreModern.RecoveredFragments.SignedDivide16State Execute(ScoreModern.RecoveredFragments.IPointBufferMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## BufferedDrawControl
+## ScoreModern.RecoveredFragments.BufferedDrawControl
 
 ```text
-ScoreModern.RecoveredFragments.BufferedDrawControl
 static ScoreModern.RecoveredFragments.BufferedDrawWords DecodeMarker(ScoreModern.RecoveredFragments.IBufferedDrawMemory m, System.UInt16 ds, System.UInt16 ax)
 static ScoreModern.RecoveredFragments.BufferedDrawWords SelectRasterPath(ScoreModern.RecoveredFragments.IBufferedDrawMemory m, System.UInt16 ds)
 static ScoreModern.RecoveredFragments.BufferedDrawWords UpdatePosition(ScoreModern.RecoveredFragments.IBufferedDrawMemory m, System.UInt16 ds, System.UInt16 ax)
 ```
 
-## BufferedDrawWords
+## ScoreModern.RecoveredFragments.BufferedDrawWords
 
 ```text
-ScoreModern.RecoveredFragments.BufferedDrawWords
-UInt16 AX
-Boolean Branch
-UInt16 CX
+System.UInt16 AX
+System.Boolean Branch
+System.UInt16 CX
 ```
 
-## BufferedPointCaller
+## ScoreModern.RecoveredFragments.BufferedPointCaller
 
 ```text
-ScoreModern.RecoveredFragments.BufferedPointCaller
 static ScoreModern.RecoveredFragments.BufferedPointCallerResult Enter(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.BufferedPointCallerResult Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.IBufferedPointFpuEffects fpu, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 converterSegment)
 static ScoreModern.RecoveredFragments.BufferedPointCallerResult ExecuteCapacityAtComparison(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityCallEffects effects, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 stringSegment, System.UInt16 followupSegment)
@@ -135,999 +124,895 @@ static ScoreModern.RecoveredFragments.BufferedPointCallerResult ExecuteThroughRe
 static ScoreModern.RecoveredFragments.BufferedPointCallerResult ExecuteWithCapacityEffects(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.IBufferedPointFpuEffects fpu, ScoreModern.RecoveredFragments.ICapacityCallEffects effects, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 converterSegment, System.UInt16 stringSegment, System.UInt16 followupSegment)
 ```
 
-## BufferedPointCallerResult
+## ScoreModern.RecoveredFragments.BufferedPointCallerResult
 
 ```text
-ScoreModern.RecoveredFragments.BufferedPointCallerResult
 ScoreModern.RecoveredFragments.BufferedPointOutcome Outcome
-UInt16 RequestedCalleeOffset
-Boolean RetfExecuted
+System.UInt16 RequestedCalleeOffset
+System.Boolean RetfExecuted
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## BufferedPointOutcome
+## ScoreModern.RecoveredFragments.BufferedPointOutcome
 
 ```text
-ScoreModern.RecoveredFragments.BufferedPointOutcome
-Completed = 0
-CapacityHandlerRequired = 1
-NormalPathReady = 2
-ExternalControlTransfer = 3
+static ScoreModern.RecoveredFragments.BufferedPointOutcome CapacityHandlerRequired = 1
+static ScoreModern.RecoveredFragments.BufferedPointOutcome Completed = 0
+static ScoreModern.RecoveredFragments.BufferedPointOutcome ExternalControlTransfer = 3
+static ScoreModern.RecoveredFragments.BufferedPointOutcome NormalPathReady = 2
+System.Int32 value__
 ```
 
-## CapacityCallKind
+## ScoreModern.RecoveredFragments.CapacityCallKind
 
 ```text
-ScoreModern.RecoveredFragments.CapacityCallKind
-StringOutput = 0
-Followup = 1
+static ScoreModern.RecoveredFragments.CapacityCallKind Followup = 1
+static ScoreModern.RecoveredFragments.CapacityCallKind StringOutput = 0
+System.Int32 value__
 ```
 
-## CapacityCharacterNativeEffects
+## ScoreModern.RecoveredFragments.CapacityCharacterNativeEffects
 
 ```text
-ScoreModern.RecoveredFragments.CapacityCharacterNativeEffects
-.ctor(ScoreModern.RecoveredFragments.ICapacityInterruptEffects effects)
+CapacityCharacterNativeEffects(ScoreModern.RecoveredFragments.ICapacityInterruptEffects effects)
 ScoreModern.RecoveredFragments.SignedDivide16State CallCharacter(ScoreModern.RecoveredFragments.ICapacityStringMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## CapacityCharacterOutput
+## ScoreModern.RecoveredFragments.CapacityCharacterOutput
 
 ```text
-ScoreModern.RecoveredFragments.CapacityCharacterOutput
 static ScoreModern.RecoveredFragments.CapacityDeviceResult Execute(ScoreModern.RecoveredFragments.ICapacityStringMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.ICapacityStringMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## CapacityDeviceCallees
+## ScoreModern.RecoveredFragments.CapacityDeviceCallees
 
 ```text
-ScoreModern.RecoveredFragments.CapacityDeviceCallees
 static ScoreModern.RecoveredFragments.CapacityDeviceResult KeyStatus(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult KeyStatusThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult Poll(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult PollThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## CapacityDeviceOutcome
+## ScoreModern.RecoveredFragments.CapacityDeviceOutcome
 
 ```text
-ScoreModern.RecoveredFragments.CapacityDeviceOutcome
-ReachedReturn = 0
-ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.CapacityDeviceOutcome ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.CapacityDeviceOutcome ReachedReturn = 0
+System.Int32 value__
 ```
 
-## CapacityDeviceResult
+## ScoreModern.RecoveredFragments.CapacityDeviceResult
 
 ```text
-ScoreModern.RecoveredFragments.CapacityDeviceResult
 ScoreModern.RecoveredFragments.CapacityDeviceOutcome Outcome
-Boolean RetfExecuted
+System.Boolean RetfExecuted
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## CapacityFollowup
+## ScoreModern.RecoveredFragments.CapacityFollowup
 
 ```text
-ScoreModern.RecoveredFragments.CapacityFollowup
 static ScoreModern.RecoveredFragments.CapacityFollowupResult Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityFollowupEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 calleeSegment)
 static ScoreModern.RecoveredFragments.CapacityFollowupResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityFollowupEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 calleeSegment)
 ```
 
-## CapacityFollowupCallKind
+## ScoreModern.RecoveredFragments.CapacityFollowupCallKind
 
 ```text
-ScoreModern.RecoveredFragments.CapacityFollowupCallKind
-KeyStatus = 0
-PromptOutput = 1
-KeyRead = 2
-Poll = 3
+static ScoreModern.RecoveredFragments.CapacityFollowupCallKind KeyRead = 2
+static ScoreModern.RecoveredFragments.CapacityFollowupCallKind KeyStatus = 0
+static ScoreModern.RecoveredFragments.CapacityFollowupCallKind Poll = 3
+static ScoreModern.RecoveredFragments.CapacityFollowupCallKind PromptOutput = 1
+System.Int32 value__
 ```
 
-## CapacityFollowupNativeEffects
+## ScoreModern.RecoveredFragments.CapacityFollowupNativeEffects
 
 ```text
-ScoreModern.RecoveredFragments.CapacityFollowupNativeEffects
-.ctor(ScoreModern.RecoveredFragments.ICapacityInterruptEffects interruptEffects, ScoreModern.RecoveredFragments.ICapacityCharacterEffects characterEffects, System.UInt16 characterTargetSegment)
+CapacityFollowupNativeEffects(ScoreModern.RecoveredFragments.ICapacityInterruptEffects interruptEffects, ScoreModern.RecoveredFragments.ICapacityCharacterEffects characterEffects, System.UInt16 characterTargetSegment)
 ScoreModern.RecoveredFragments.SignedDivide16State Call(ScoreModern.RecoveredFragments.CapacityFollowupCallKind kind, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## CapacityFollowupOutcome
+## ScoreModern.RecoveredFragments.CapacityFollowupOutcome
 
 ```text
-ScoreModern.RecoveredFragments.CapacityFollowupOutcome
-ReachedReturn = 0
-ExternalControlTransfer = 1
-UnverifiedBranch = 2
+static ScoreModern.RecoveredFragments.CapacityFollowupOutcome ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.CapacityFollowupOutcome ReachedReturn = 0
+static ScoreModern.RecoveredFragments.CapacityFollowupOutcome UnverifiedBranch = 2
+System.Int32 value__
 ```
 
-## CapacityFollowupResult
+## ScoreModern.RecoveredFragments.CapacityFollowupResult
 
 ```text
-ScoreModern.RecoveredFragments.CapacityFollowupResult
 ScoreModern.RecoveredFragments.CapacityFollowupOutcome Outcome
-Boolean RetfExecuted
+System.Boolean RetfExecuted
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## CapacityKeyReader
+## ScoreModern.RecoveredFragments.CapacityKeyReader
 
 ```text
-ScoreModern.RecoveredFragments.CapacityKeyReader
 static ScoreModern.RecoveredFragments.CapacityDeviceResult Execute(ScoreModern.RecoveredFragments.ICapacityKeyMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.ICapacityKeyMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## CapacityMessageHandler
+## ScoreModern.RecoveredFragments.CapacityMessageHandler
 
 ```text
-ScoreModern.RecoveredFragments.CapacityMessageHandler
 static ScoreModern.RecoveredFragments.CapacityMessageResult Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityCallEffects effects, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 stringSegment, System.UInt16 followupSegment)
 static ScoreModern.RecoveredFragments.CapacityMessageResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICapacityCallEffects effects, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 stringSegment, System.UInt16 followupSegment)
 ```
 
-## CapacityMessageNativeEffects
+## ScoreModern.RecoveredFragments.CapacityMessageNativeEffects
 
 ```text
-ScoreModern.RecoveredFragments.CapacityMessageNativeEffects
-.ctor(ScoreModern.RecoveredFragments.ICapacityInterruptEffects interruptEffects, ScoreModern.RecoveredFragments.ICapacityCharacterEffects characterEffects, System.UInt16 sharedCalleeSegment, System.UInt16 characterTargetSegment)
+CapacityMessageNativeEffects(ScoreModern.RecoveredFragments.ICapacityInterruptEffects interruptEffects, ScoreModern.RecoveredFragments.ICapacityCharacterEffects characterEffects, System.UInt16 sharedCalleeSegment, System.UInt16 characterTargetSegment)
 ScoreModern.RecoveredFragments.SignedDivide16State Call(ScoreModern.RecoveredFragments.CapacityCallKind kind, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 static ScoreModern.RecoveredFragments.CapacityMessageNativeEffects CreateWithNativeCharacters(ScoreModern.RecoveredFragments.ICapacityInterruptEffects interruptEffects, System.UInt16 sharedCalleeSegment, System.UInt16 characterTargetSegment)
 ```
 
-## CapacityMessageOutcome
+## ScoreModern.RecoveredFragments.CapacityMessageOutcome
 
 ```text
-ScoreModern.RecoveredFragments.CapacityMessageOutcome
-ReachedReturn = 0
-ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.CapacityMessageOutcome ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.CapacityMessageOutcome ReachedReturn = 0
+System.Int32 value__
 ```
 
-## CapacityMessageResult
+## ScoreModern.RecoveredFragments.CapacityMessageResult
 
 ```text
-ScoreModern.RecoveredFragments.CapacityMessageResult
 ScoreModern.RecoveredFragments.CapacityMessageOutcome Outcome
-Boolean RetfExecuted
+System.Boolean RetfExecuted
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## CapacityStringOutput
+## ScoreModern.RecoveredFragments.CapacityStringOutput
 
 ```text
-ScoreModern.RecoveredFragments.CapacityStringOutput
 static ScoreModern.RecoveredFragments.CapacityDeviceResult Execute(ScoreModern.RecoveredFragments.ICapacityStringMemory m, ScoreModern.RecoveredFragments.ICapacityCharacterEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 characterSegment)
 static ScoreModern.RecoveredFragments.CapacityDeviceResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.ICapacityStringMemory m, ScoreModern.RecoveredFragments.ICapacityCharacterEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 characterSegment)
 ```
 
-## CharacterAlternateOutput
+## ScoreModern.RecoveredFragments.CharacterAlternateOutput
 
 ```text
-ScoreModern.RecoveredFragments.CharacterAlternateOutput
 static ScoreModern.RecoveredFragments.CharacterBiosWords Run(ScoreModern.RecoveredFragments.ICharacterBiosContext context, ScoreModern.RecoveredFragments.CharacterBiosWords w)
 ```
 
-## CharacterBiosWords
+## ScoreModern.RecoveredFragments.CharacterBiosWords
 
 ```text
-ScoreModern.RecoveredFragments.CharacterBiosWords
-UInt16 AX
-UInt16 BX
-UInt16 CX
-UInt16 DX
-UInt16 SP
-UInt16 SS
+System.UInt16 AX
+System.UInt16 BX
+System.UInt16 CX
+System.UInt16 DX
+System.UInt16 SP
+System.UInt16 SS
 ```
 
-## CharacterDecisionResult
+## ScoreModern.RecoveredFragments.CharacterDecisionResult
 
 ```text
-ScoreModern.RecoveredFragments.CharacterDecisionResult
-.ctor(System.Byte al, System.UInt16 bx, System.Boolean branch)
-Byte AL
-Boolean Branch
-UInt16 BX
+System.Byte AL
+System.Boolean Branch
+System.UInt16 BX
+CharacterDecisionResult(System.Byte al, System.UInt16 bx, System.Boolean branch)
 ```
 
-## CharacterEntryWords
+## ScoreModern.RecoveredFragments.CharacterEntryWords
 
 ```text
-ScoreModern.RecoveredFragments.CharacterEntryWords
-UInt16 BP
-UInt16 DI
-UInt16 ES
-UInt16 SP
+System.UInt16 BP
+System.UInt16 DI
+System.UInt16 ES
+System.UInt16 SP
 ```
 
-## CharacterOutputDecisions
+## ScoreModern.RecoveredFragments.CharacterOutputDecisions
 
 ```text
-ScoreModern.RecoveredFragments.CharacterOutputDecisions
 static ScoreModern.RecoveredFragments.CharacterDecisionResult ProbeAlternateGate(ScoreModern.RecoveredFragments.ICharacterDecisionMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 di, System.UInt16 bx)
 static ScoreModern.RecoveredFragments.CharacterDecisionResult ProbeBackspace(ScoreModern.RecoveredFragments.ICharacterDecisionMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 di, System.Byte dl, System.UInt16 bx)
 ```
 
-## CharacterOutputFrame
+## ScoreModern.RecoveredFragments.CharacterOutputFrame
 
 ```text
-ScoreModern.RecoveredFragments.CharacterOutputFrame
 static ScoreModern.RecoveredFragments.CharacterEntryWords Enter(ScoreModern.RecoveredFragments.ICharacterFrameMemory m, System.UInt16 ss, System.UInt16 sp, System.UInt16 bp, System.UInt16 di)
 static ScoreModern.RecoveredFragments.CharacterReturnWords Leave(ScoreModern.RecoveredFragments.ICharacterFrameMemory m, System.UInt16 ss, System.UInt16 sp)
 ```
 
-## CharacterOutputRoutine
+## ScoreModern.RecoveredFragments.CharacterOutputRoutine
 
 ```text
-ScoreModern.RecoveredFragments.CharacterOutputRoutine
 static ScoreModern.RecoveredFragments.CharacterRoutineResult Run(ScoreModern.RecoveredFragments.ICharacterRoutineContext m, ScoreModern.RecoveredFragments.CharacterRoutineWords w)
 ```
 
-## CharacterReturnWords
+## ScoreModern.RecoveredFragments.CharacterReturnWords
 
 ```text
-ScoreModern.RecoveredFragments.CharacterReturnWords
-UInt16 BP
-UInt16 CS
-UInt16 DI
-UInt16 IP
-UInt16 SP
+System.UInt16 BP
+System.UInt16 CS
+System.UInt16 DI
+System.UInt16 IP
+System.UInt16 SP
 ```
 
-## CharacterRoutineResult
+## ScoreModern.RecoveredFragments.CharacterRoutineResult
 
 ```text
-ScoreModern.RecoveredFragments.CharacterRoutineResult
-UInt16 CS
-UInt16 IP
+System.UInt16 CS
+System.UInt16 IP
 ScoreModern.RecoveredFragments.CharacterRoutineWords Words
 ```
 
-## CharacterRoutineWords
+## ScoreModern.RecoveredFragments.CharacterRoutineWords
 
 ```text
-ScoreModern.RecoveredFragments.CharacterRoutineWords
-UInt16 AX
-UInt16 BP
-UInt16 BX
-UInt16 CX
-UInt16 DI
-UInt16 DS
-UInt16 DX
-UInt16 ES
-UInt16 SI
-UInt16 SP
-UInt16 SS
+System.UInt16 AX
+System.UInt16 BP
+System.UInt16 BX
+System.UInt16 CX
+System.UInt16 DI
+System.UInt16 DS
+System.UInt16 DX
+System.UInt16 ES
+System.UInt16 SI
+System.UInt16 SP
+System.UInt16 SS
 ```
 
-## ClippingCpu
+## ScoreModern.RecoveredFragments.ClippingCpu
 
 ```text
-ScoreModern.RecoveredFragments.ClippingCpu
 static ScoreModern.RecoveredFragments.SignedDivide16Result Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## ConsumerContextSaver
+## ScoreModern.RecoveredFragments.ConsumerContextSaver
 
 ```text
-ScoreModern.RecoveredFragments.ConsumerContextSaver
 static System.UInt16 Execute(ScoreModern.RecoveredFragments.IConsumerContextMemory m, System.UInt16 stackSegment, System.UInt16 entrySp, System.UInt16 entryBp, System.UInt16 entrySi, System.UInt16 entryDi, System.UInt16 entryDs)
 ```
 
-## CoordinateConversion
+## ScoreModern.RecoveredFragments.CoordinateConversion
 
 ```text
-ScoreModern.RecoveredFragments.CoordinateConversion
 static ScoreModern.RecoveredFragments.SignedDivide16State Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICoordinateFpuEffects fpu, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.SignedDivide16State ExecuteThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.ICoordinateFpuEffects fpu, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## CoordinateWordClamp
+## ScoreModern.RecoveredFragments.CoordinateWordClamp
 
 ```text
-ScoreModern.RecoveredFragments.CoordinateWordClamp
 static System.UInt32 Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt32 flags)
 ```
 
-## DatTextLookup
+## ScoreModern.RecoveredFragments.DatTextLookup
 
 ```text
-ScoreModern.RecoveredFragments.DatTextLookup
 static ScoreModern.RecoveredFragments.DatTextLookupWords Read(ScoreModern.RecoveredFragments.IDatTextLookupMemory m, System.UInt16 ds)
 ```
 
-## DatTextLookupWords
+## ScoreModern.RecoveredFragments.DatTextLookupWords
 
 ```text
-ScoreModern.RecoveredFragments.DatTextLookupWords
-UInt16 AX
-UInt16 BX
-UInt16 DX
+System.UInt16 AX
+System.UInt16 BX
+System.UInt16 DX
 ```
 
-## DirectionalStringBlocks
+## ScoreModern.RecoveredFragments.DirectionalStringBlocks
 
 ```text
-ScoreModern.RecoveredFragments.DirectionalStringBlocks
 static ScoreModern.RecoveredFragments.StringCopyResult Copy(ScoreModern.RecoveredFragments.IStringBlockMemory m, System.UInt16 ds, System.UInt16 si, System.UInt16 es, System.UInt16 di, System.UInt16 count, System.Boolean directionFlag)
 static ScoreModern.RecoveredFragments.StringFillResult Fill(ScoreModern.RecoveredFragments.IStringBlockMemory m, System.UInt16 es, System.UInt16 di, System.UInt16 ax, System.UInt16 count, System.Boolean directionFlag)
 ```
 
-## EndingBracket
+## ScoreModern.RecoveredFragments.EndingBracket
 
 ```text
-ScoreModern.RecoveredFragments.EndingBracket
 static ScoreModern.RecoveredFragments.EndingBracketResult Build(System.Single[] p, ScoreModern.RecoveredFragments.TupletBracketContext c, System.Boolean printed, System.Boolean tomsTenth)
 static ScoreModern.RecoveredFragments.TupletBracketPoint DotPoint(System.Single x, System.Single y, System.Single scale, ScoreModern.RecoveredFragments.EndingBracketResult r)
 ```
 
-## EndingBracketResult
+## ScoreModern.RecoveredFragments.EndingBracketResult
 
 ```text
-ScoreModern.RecoveredFragments.EndingBracketResult
-.ctor()
-Single DotX
-Single DotY
-Boolean HasDot
+System.Single DotX
+System.Single DotY
+System.Boolean HasDot
 System.Nullable`1[ScoreModern.RecoveredFragments.TupletPlacement] Number
 System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.TupletBracketPoint] Points
+EndingBracketResult()
 ```
 
-## EqualStepRaster
+## ScoreModern.RecoveredFragments.EqualStepRaster
 
 ```text
-ScoreModern.RecoveredFragments.EqualStepRaster
 static ScoreModern.RecoveredFragments.VerticalRasterWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 cx, System.UInt16 dx, System.UInt16 si)
 static ScoreModern.RecoveredFragments.VerticalRasterWords ExecuteWithFlags(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 cx, System.UInt16 dx, System.UInt16 si, System.UInt32 eflags)
 ```
 
-## ExternalVgaFont
+## ScoreModern.RecoveredFragments.ExternalVgaFont
 
 ```text
-ScoreModern.RecoveredFragments.ExternalVgaFont
-.ctor(System.Byte[] data)
+ExternalVgaFont(System.Byte[] data)
 System.Byte Row(System.Byte character, System.Int32 line)
 ```
 
-## FiniteBinary32Integer64
+## ScoreModern.RecoveredFragments.FiniteBinary32Integer64
 
 ```text
-ScoreModern.RecoveredFragments.FiniteBinary32Integer64
 static System.Boolean TryConvert(System.UInt32 bits, System.Int64& value)
 ```
 
-## FormatterWordWriter
+## ScoreModern.RecoveredFragments.FormatterWordWriter
 
 ```text
-ScoreModern.RecoveredFragments.FormatterWordWriter
 static System.Void Execute(ScoreModern.RecoveredFragments.IFormatterWordContext context, System.UInt16 low, System.UInt16 high)
 ```
 
-## HorizontalRaster
+## ScoreModern.RecoveredFragments.HorizontalRaster
 
 ```text
-ScoreModern.RecoveredFragments.HorizontalRaster
 static ScoreModern.RecoveredFragments.HorizontalRasterWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 cx, System.UInt16 dx)
 static ScoreModern.RecoveredFragments.HorizontalRasterWords ExecuteWithFlags(ScoreModern.RecoveredFragments.IByteOrResultMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 cx, System.UInt16 dx, System.UInt32 eflags)
 ```
 
-## HorizontalRasterWords
+## ScoreModern.RecoveredFragments.HorizontalRasterWords
 
 ```text
-ScoreModern.RecoveredFragments.HorizontalRasterWords
-UInt16 AX
-UInt16 BX
-UInt16 CX
-UInt32 DefinedEFlagsMask
-UInt16 DI
-UInt16 DX
-UInt32 EFlags
-UInt16 SI
+System.UInt16 AX
+System.UInt16 BX
+System.UInt16 CX
+System.UInt32 DefinedEFlagsMask
+System.UInt16 DI
+System.UInt16 DX
+System.UInt32 EFlags
+System.UInt16 SI
 ```
 
-## IBiosKeyContext
+## ScoreModern.RecoveredFragments.IBiosKeyContext
 
 ```text
-ScoreModern.RecoveredFragments.IBiosKeyContext
 System.UInt16 ReadBiosKey()
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 ```
 
-## IBufferedDrawMemory
+## ScoreModern.RecoveredFragments.IBufferedDrawMemory
 
 ```text
-ScoreModern.RecoveredFragments.IBufferedDrawMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IBufferedPointFpuEffects
+## ScoreModern.RecoveredFragments.IBufferedPointFpuEffects
 
 ```text
-ScoreModern.RecoveredFragments.IBufferedPointFpuEffects
 System.Void LoadBinary32(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, System.UInt16 segment, System.UInt16 offset)
 ```
 
-## IByteOrResultMemory
+## ScoreModern.RecoveredFragments.IByteOrResultMemory
 
 ```text
-ScoreModern.RecoveredFragments.IByteOrResultMemory
 System.Byte OrByteAndGetResult(System.UInt16 segment, System.UInt16 offset, System.Byte mask)
 ```
 
-## ICapacityCallEffects
+## ScoreModern.RecoveredFragments.ICapacityCallEffects
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityCallEffects
 ScoreModern.RecoveredFragments.SignedDivide16State Call(ScoreModern.RecoveredFragments.CapacityCallKind kind, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## ICapacityCharacterEffects
+## ScoreModern.RecoveredFragments.ICapacityCharacterEffects
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityCharacterEffects
 ScoreModern.RecoveredFragments.SignedDivide16State CallCharacter(ScoreModern.RecoveredFragments.ICapacityStringMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## ICapacityFollowupEffects
+## ScoreModern.RecoveredFragments.ICapacityFollowupEffects
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityFollowupEffects
 ScoreModern.RecoveredFragments.SignedDivide16State Call(ScoreModern.RecoveredFragments.CapacityFollowupCallKind kind, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## ICapacityInterruptEffects
+## ScoreModern.RecoveredFragments.ICapacityInterruptEffects
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityInterruptEffects
 ScoreModern.RecoveredFragments.SignedDivide16State Interrupt(System.Byte number, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## ICapacityKeyMemory
+## ScoreModern.RecoveredFragments.ICapacityKeyMemory
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityKeyMemory
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 ```
 
-## ICapacityStringMemory
+## ScoreModern.RecoveredFragments.ICapacityStringMemory
 
 ```text
-ScoreModern.RecoveredFragments.ICapacityStringMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## ICharacterBiosContext
+## ScoreModern.RecoveredFragments.ICharacterBiosContext
 
 ```text
-ScoreModern.RecoveredFragments.ICharacterBiosContext
 System.Void Interrupt10(ScoreModern.RecoveredFragments.CharacterBiosWords& words)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## ICharacterDecisionMemory
+## ScoreModern.RecoveredFragments.ICharacterDecisionMemory
 
 ```text
-ScoreModern.RecoveredFragments.ICharacterDecisionMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## ICharacterFrameMemory
+## ScoreModern.RecoveredFragments.ICharacterFrameMemory
 
 ```text
-ScoreModern.RecoveredFragments.ICharacterFrameMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## ICharacterRoutineContext
+## ScoreModern.RecoveredFragments.ICharacterRoutineContext
 
 ```text
-ScoreModern.RecoveredFragments.ICharacterRoutineContext
 System.Void Interrupt10(ScoreModern.RecoveredFragments.CharacterRoutineWords& words, System.UInt16 returnOffset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## IConsumerContextMemory
+## ScoreModern.RecoveredFragments.IConsumerContextMemory
 
 ```text
-ScoreModern.RecoveredFragments.IConsumerContextMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## ICoordinateFpuEffects
+## ScoreModern.RecoveredFragments.ICoordinateFpuEffects
 
 ```text
-ScoreModern.RecoveredFragments.ICoordinateFpuEffects
 System.Void LoadControlWord(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, System.UInt16 segment, System.UInt16 offset)
 System.Void StoreControlWord(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, System.UInt16 segment, System.UInt16 offset)
 System.Void StoreInteger64AndPop(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, System.UInt16 segment, System.UInt16 offset)
 System.Void Wait()
 ```
 
-## IDatTextLookupMemory
+## ScoreModern.RecoveredFragments.IDatTextLookupMemory
 
 ```text
-ScoreModern.RecoveredFragments.IDatTextLookupMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## IFormatterWordContext
+## ScoreModern.RecoveredFragments.IFormatterWordContext
 
 ```text
-ScoreModern.RecoveredFragments.IFormatterWordContext
 System.UInt16 ReadWord(System.UInt16 offset)
 System.Void WriteByte(System.UInt16 offset, System.Byte value)
 System.Void WriteWord(System.UInt16 offset, System.UInt16 value)
 ```
 
-## IHorizontalRasterMemory
+## ScoreModern.RecoveredFragments.IHorizontalRasterMemory
 
 ```text
-ScoreModern.RecoveredFragments.IHorizontalRasterMemory
 System.Void OrByte(System.UInt16 segment, System.UInt16 offset, System.Byte mask)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IMode12GlyphSource
+## ScoreModern.RecoveredFragments.IMode12GlyphSource
 
 ```text
-ScoreModern.RecoveredFragments.IMode12GlyphSource
 System.Byte Row(System.Byte character, System.Int32 line)
 ```
 
-## IMode12Surface
+## ScoreModern.RecoveredFragments.IMode12Surface
 
 ```text
-ScoreModern.RecoveredFragments.IMode12Surface
 System.Void Scroll(System.Int32 top, System.Int32 left, System.Int32 bottom, System.Int32 right, System.Int32 lines, System.Byte background)
 System.Void WriteGlyph(System.Int32 row, System.Int32 column, System.Byte character, System.Byte color)
 ```
 
-## IncludedEpsTransform
+## ScoreModern.RecoveredFragments.IncludedEpsTransform
 
 ```text
-ScoreModern.RecoveredFragments.IncludedEpsTransform
-.ctor()
-Single BoxX
-Single BoxY
-Boolean Rotate
-Single Rotation
-Single ScaleX
-Single ScaleY
-Single X
-Single Y
+System.Single BoxX
+System.Single BoxY
+System.Boolean Rotate
+System.Single Rotation
+System.Single ScaleX
+System.Single ScaleY
+System.Single X
+System.Single Y
+IncludedEpsTransform()
 static ScoreModern.RecoveredFragments.IncludedEpsTransform Prepare(ScoreModern.RecoveredFragments.PageItemContext page, System.Single staffBase, System.Single vertical, System.Single horizontalSize, System.Single verticalSize, System.Single boxLeft, System.Single boxBottom, System.Single rotation, System.Single printSize, System.Int32 leftOffset, System.Int32 bottomOffset)
 ```
 
-## IncludedPostScriptVariables
+## ScoreModern.RecoveredFragments.IncludedPostScriptVariables
 
 ```text
-ScoreModern.RecoveredFragments.IncludedPostScriptVariables
-.ctor()
-Single BottomOffset
-Single GlobalSize
-Single LeftOffset
-Single LineWidth
-Single PointsLevel
-Single PP3
-Single PP4
-Single PP5
-Single PP6
-Single StaffLevel
-Single StaffSize
+System.Single BottomOffset
+System.Single GlobalSize
+System.Single LeftOffset
+System.Single LineWidth
+System.Single PointsLevel
+System.Single PP3
+System.Single PP4
+System.Single PP5
+System.Single PP6
+System.Single StaffLevel
+System.Single StaffSize
+IncludedPostScriptVariables()
 static ScoreModern.RecoveredFragments.IncludedPostScriptVariables Prepare(ScoreModern.RecoveredFragments.PageItemContext item, System.Single staffLevel, System.Single p5, System.Single p6, System.Single printSize, System.Single lineWidth, System.Int32 leftOffset, System.Int32 bottomOffset)
 ```
 
-## InputAttachedMarks
+## ScoreModern.RecoveredFragments.InputAttachedMarks
 
 ```text
-ScoreModern.RecoveredFragments.InputAttachedMarks
 static System.Single DefaultValue(System.Int32 mark, System.Single pitch, System.Single stem)
 ```
 
-## InputAutomaticBeamMeterException
+## ScoreModern.RecoveredFragments.InputAutomaticBeamMeterException
 
 ```text
-ScoreModern.RecoveredFragments.InputAutomaticBeamMeterException
-.ctor(System.Int32 top, System.Int32 bottom)
+InputAutomaticBeamMeterException(System.Int32 top, System.Int32 bottom)
 ```
 
-## InputAutomaticBeams
+## ScoreModern.RecoveredFragments.InputAutomaticBeams
 
 ```text
-ScoreModern.RecoveredFragments.InputAutomaticBeams
 static System.Single[] Durations(System.Collections.Generic.IList`1[System.Single[]] rows)
 static System.Single[] Groups(System.Collections.Generic.IList`1[System.Single[]] rows, System.Single[] durations, System.Single groupControl, System.Int32 skip)
 ```
 
-## InputBeamConstructionResult
+## ScoreModern.RecoveredFragments.InputBeamConstructionResult
 
 ```text
-ScoreModern.RecoveredFragments.InputBeamConstructionResult
-.ctor()
-Int32[] ForcedStems
+System.Int32[] ForcedStems
 System.Collections.Generic.List`1[System.Single[]] Records
+InputBeamConstructionResult()
 ```
 
-## InputBeamFit
+## ScoreModern.RecoveredFragments.InputBeamFit
 
 ```text
-ScoreModern.RecoveredFragments.InputBeamFit
 static ScoreModern.RecoveredFragments.InputBeamFitResult Fit(System.Single[] pitch, System.Single[] x, System.Int32 direction, System.Int32 flags, System.Single slopeLimit)
 ```
 
-## InputBeamFitResult
+## ScoreModern.RecoveredFragments.InputBeamFitResult
 
 ```text
-ScoreModern.RecoveredFragments.InputBeamFitResult
-.ctor()
-Int32 Direction
-Single End
-Single Start
-Single UnquantizedEnd
-Single UnquantizedStart
+System.Int32 Direction
+System.Single End
+System.Single Start
+System.Single UnquantizedEnd
+System.Single UnquantizedStart
+InputBeamFitResult()
 ```
 
-## InputBeamLevels
+## ScoreModern.RecoveredFragments.InputBeamLevels
 
 ```text
-ScoreModern.RecoveredFragments.InputBeamLevels
 static System.Collections.Generic.List`1[System.Single[]] Pack(System.Single[] prototype, System.Int32[] original, System.Single[] x)
 ```
 
-## InputBeamStemCompletion
+## ScoreModern.RecoveredFragments.InputBeamStemCompletion
 
 ```text
-ScoreModern.RecoveredFragments.InputBeamStemCompletion
-static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] items, System.Int32 firstItem, ScoreModern.RecoveredFragments.InputEndpointStaffContext context)
+static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] items, System.Int32 firstItem, ScoreModern.RecoveredFragments.InputEndpointStaffContext context = null)
 ```
 
-## InputChordDots
+## ScoreModern.RecoveredFragments.InputChordDots
 
 ```text
-ScoreModern.RecoveredFragments.InputChordDots
 static System.Void Apply(System.Collections.Generic.IList`1[System.Single[]] rows)
 static System.Void ApplyRange(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int32 first, System.Int32 countLimit)
 ```
 
-## InputChordLayout
+## ScoreModern.RecoveredFragments.InputChordLayout
 
 ```text
-ScoreModern.RecoveredFragments.InputChordLayout
 static System.Int32 Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int32 start, System.Int32 end)
 ```
 
-## InputChordPitchRecords
+## ScoreModern.RecoveredFragments.InputChordPitchRecords
 
 ```text
-ScoreModern.RecoveredFragments.InputChordPitchRecords
 static ScoreModern.RecoveredFragments.InputPitchResult CompileSpacedNaturals(System.Single[] source, System.Single staff, System.Single left, System.Single right)
 ```
 
-## InputChordRhythmRecords
+## ScoreModern.RecoveredFragments.InputChordRhythmRecords
 
 ```text
-ScoreModern.RecoveredFragments.InputChordRhythmRecords
 static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Single[] encoded, System.Single left, System.Single right, System.Single scale, System.Int32[] stems)
-static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Single[] encoded, System.Single left, System.Single right, System.Single scale, System.Int32[] stems, System.Boolean proportional, System.Single exponent, System.Nullable`1[System.Single] referenceStart, System.Nullable`1[System.Int16] retainedGraceWord, System.Nullable`1[System.Single] rememberedLeft)
+static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Single[] encoded, System.Single left, System.Single right, System.Single scale, System.Int32[] stems, System.Boolean proportional, System.Single exponent, System.Nullable`1[System.Single] referenceStart = null, System.Nullable`1[System.Int16] retainedGraceWord = null, System.Nullable`1[System.Single] rememberedLeft = null)
 ```
 
-## InputDynamics
+## ScoreModern.RecoveredFragments.InputDynamics
 
 ```text
-ScoreModern.RecoveredFragments.InputDynamics
 static System.Single[] Create(System.Int32 symbol, System.Single[] note, System.Single staff, System.Single preference)
 ```
 
-## InputEditInverse
+## ScoreModern.RecoveredFragments.InputEditInverse
 
 ```text
-ScoreModern.RecoveredFragments.InputEditInverse
 static System.String Number(System.Single n)
-static ScoreModern.RecoveredFragments.InputEditInverseResult Project(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Single left, System.Single right, System.Boolean sorted)
+static ScoreModern.RecoveredFragments.InputEditInverseResult Project(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Single left, System.Single right, System.Boolean sorted = False)
 static ScoreModern.RecoveredFragments.InputEditInverseResult Project(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Single left, System.Single right, System.Boolean sorted, System.Boolean documentedRepeatedMarks)
 static ScoreModern.RecoveredFragments.InputEditInverseResult Project(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Single left, System.Single right, System.Boolean sorted, System.Boolean documentedRepeatedMarks, System.Boolean reproduceInvalid)
 static ScoreModern.RecoveredFragments.InputEditInverseResult Project(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 staff, System.Single left, System.Single right, System.Boolean sorted, System.Boolean documentedRepeatedMarks, System.Boolean reproduceInvalid, System.Nullable`1[System.Single] verifiedTrailingWord)
 ```
 
-## InputEditInverseResult
+## ScoreModern.RecoveredFragments.InputEditInverseResult
 
 ```text
-ScoreModern.RecoveredFragments.InputEditInverseResult
-.ctor()
 System.String Header
-Int32 InitialClef
-Single Left
+System.Int32 InitialClef
+System.Single Left
 System.String[] Lines
 System.String Positions
 System.Collections.Generic.List`1[System.Single[]] Prefix
-Single Right
+System.Single Right
 System.Collections.Generic.List`1[System.Single[]] Selected
-Int32 Staff
+System.Int32 Staff
+InputEditInverseResult()
 ```
 
-## InputEndpointProjection
+## ScoreModern.RecoveredFragments.InputEndpointProjection
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointProjection
-static ScoreModern.RecoveredFragments.InputEndpointResult Decode(System.Single first, System.Single last, System.Int32 stage, System.Collections.Generic.IList`1[System.Single[]] records, System.Int32[] noteToItem, System.Int32[] stems, System.Single beginning, System.Single end, ScoreModern.RecoveredFragments.InputEndpointStaffContext context)
+static ScoreModern.RecoveredFragments.InputEndpointResult Decode(System.Single first, System.Single last, System.Int32 stage, System.Collections.Generic.IList`1[System.Single[]] records, System.Int32[] noteToItem, System.Int32[] stems, System.Single beginning, System.Single end, ScoreModern.RecoveredFragments.InputEndpointStaffContext context = null)
 ```
 
-## InputEndpointRepromptException
+## ScoreModern.RecoveredFragments.InputEndpointRepromptException
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointRepromptException
-.ctor()
+InputEndpointRepromptException()
 ```
 
-## InputEndpointResult
+## ScoreModern.RecoveredFragments.InputEndpointResult
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointResult
-.ctor()
-Int16 EndFlag
-Int16 EndItem
-Int16 EndNote
-Single EndPitch
-Single EndX
-Int16 Number
-Int16 StartFlag
-Int16 StartItem
-Int16 StartNote
-Single StartPitch
-Single StartX
-Int16 Stem
+System.Int16 EndFlag
+System.Int16 EndItem
+System.Int16 EndNote
+System.Single EndPitch
+System.Single EndX
+System.Int16 Number
+System.Int16 StartFlag
+System.Int16 StartItem
+System.Int16 StartNote
+System.Single StartPitch
+System.Single StartX
+System.Int16 Stem
+InputEndpointResult()
 ```
 
-## InputEndpointStaffContext
+## ScoreModern.RecoveredFragments.InputEndpointStaffContext
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointStaffContext
-.ctor(System.Single[] bases, System.Single[] scales, System.Int32 staff)
+InputEndpointStaffContext(System.Single[] bases, System.Single[] scales, System.Int32 staff)
+InputEndpointStaffContext(System.Single[] bases, System.Single[] scales, System.Int32 staff, System.Boolean scor4)
 System.Void Adjust(System.Single[] row, System.Single& pitch)
 System.Void AdjustBeamStem(System.Single[] row, System.Int32 direction, System.Single& extension)
 ScoreModern.RecoveredFragments.InputEndpointStaffContext ForStaff(System.Int32 value)
 ```
 
-## InputEndpointText
+## ScoreModern.RecoveredFragments.InputEndpointText
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointText
 static ScoreModern.RecoveredFragments.InputEndpointTokens Parse(System.String text, System.Boolean beams, System.Int32 meterTop, System.Int32 meterBottom)
 static ScoreModern.RecoveredFragments.InputEndpointTokens Parse(System.String text, System.Boolean beams, System.Int32 meterTop, System.Int32 meterBottom, ScoreModern.RecoveredFragments.InputMacroContext context)
 ```
 
-## InputEndpointTokens
+## ScoreModern.RecoveredFragments.InputEndpointTokens
 
 ```text
-ScoreModern.RecoveredFragments.InputEndpointTokens
-.ctor()
-Boolean Automatic
-Single GroupControl
-Single[] Pairs
-Int32 Skip
+System.Boolean Automatic
+System.Single GroupControl
+System.Single[] Pairs
+System.Int32 Skip
+InputEndpointTokens()
 ```
 
-## InputListExpansion
+## ScoreModern.RecoveredFragments.InputListExpansion
 
 ```text
-ScoreModern.RecoveredFragments.InputListExpansion
 static System.Void Repeat(System.Collections.Generic.List`1[System.Single] tokens, System.Int32 entries, System.Int32 total, System.Boolean keepAccidentals)
 static System.Void RepeatBeforePrevious(System.Collections.Generic.List`1[System.Single] tokens, System.Boolean keepAccidentals)
 ```
 
-## InputMacroContext
+## ScoreModern.RecoveredFragments.InputMacroContext
 
 ```text
-ScoreModern.RecoveredFragments.InputMacroContext
-.ctor()
+System.Collections.Generic.IEnumerable`1[System.Collections.Generic.KeyValuePair`2[System.Char,System.Single[]]] Entries { get; }
+System.Int32 StoredDefinitionCount { get; set; }
+InputMacroContext()
 System.Void AllowReplacement(System.Char name)
 System.Void Clear()
 System.Void ClearReplacementAllowances()
 ScoreModern.RecoveredFragments.InputMacroContext Clone()
 System.Void ReplaceFrom(ScoreModern.RecoveredFragments.InputMacroContext source)
-System.Collections.Generic.IEnumerable`1[System.Collections.Generic.KeyValuePair`2[System.Char,System.Single[]]] Entries
-Int32 StoredDefinitionCount
 ```
 
-## InputMainNoteReconstruction
+## ScoreModern.RecoveredFragments.InputMainNoteReconstruction
 
 ```text
-ScoreModern.RecoveredFragments.InputMainNoteReconstruction
-static System.Collections.Generic.List`1[System.Single[]] Build(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 stem, System.Nullable`1[System.Int16] retainedGraceWord, System.Boolean originalInvalidStates)
+static System.Collections.Generic.List`1[System.Single[]] Build(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32 stem, System.Nullable`1[System.Int16] retainedGraceWord = null, System.Boolean originalInvalidStates = False)
 ```
 
-## InputMarksCompiler
+## ScoreModern.RecoveredFragments.InputMarksCompiler
 
 ```text
-ScoreModern.RecoveredFragments.InputMarksCompiler
 static ScoreModern.RecoveredFragments.InputMarksResult Apply(System.Collections.Generic.IList`1[System.Single[]] original, System.Int32[] map, System.Single[] tokens, System.Int32[] opposite, System.Single staff, System.Single beginning, System.Single end, System.Single followingStaffScale, System.Single dynamics)
 static ScoreModern.RecoveredFragments.InputMarksResult Apply(System.Collections.Generic.IList`1[System.Single[]] original, System.Int32[] map, System.Single[] tokens, System.Int32[] opposite, System.Single staff, System.Single beginning, System.Single end, System.Single followingStaffScale, System.Single dynamics, System.Boolean reproduceRetainedDescriptor)
 ```
 
-## InputMarksResult
+## ScoreModern.RecoveredFragments.InputMarksResult
 
 ```text
-ScoreModern.RecoveredFragments.InputMarksResult
-.ctor()
-Int32 FirstOrnament
+System.Int32 FirstOrnament
 System.Collections.Generic.List`1[System.Single[]] Records
+InputMarksResult()
 ```
 
-## InputMarkText
+## ScoreModern.RecoveredFragments.InputMarkText
 
 ```text
-ScoreModern.RecoveredFragments.InputMarkText
 static ScoreModern.RecoveredFragments.InputMarkTokens Parse(System.String text, ScoreModern.RecoveredFragments.InputMacroContext context)
 static ScoreModern.RecoveredFragments.InputMarkTokens Parse(System.String text, ScoreModern.RecoveredFragments.InputMacroContext context, System.Boolean rejectMultiDigitF)
 static ScoreModern.RecoveredFragments.InputMarkTokens Parse(System.String text)
 static ScoreModern.RecoveredFragments.InputMarkTokens Parse(System.String text, System.Boolean rejectMultiDigitF)
 ```
 
-## InputMarkTokens
+## ScoreModern.RecoveredFragments.InputMarkTokens
 
 ```text
-ScoreModern.RecoveredFragments.InputMarkTokens
-.ctor()
-Int32[] Opposite
-Single[] Values
+System.Int32[] Opposite
+System.Single[] Values
+InputMarkTokens()
 ```
 
-## InputMotiveReplacementException
+## ScoreModern.RecoveredFragments.InputMotiveReplacementException
 
 ```text
-ScoreModern.RecoveredFragments.InputMotiveReplacementException
-.ctor(System.Char name)
-Char Name
+System.Char Name
+InputMotiveReplacementException(System.Char name)
 ```
 
-## InputPitchRecords
+## ScoreModern.RecoveredFragments.InputPitchRecords
 
 ```text
-ScoreModern.RecoveredFragments.InputPitchRecords
 static ScoreModern.RecoveredFragments.InputPitchResult Compile(System.Single[] tokens, System.Single staff, System.Int32 clef, System.Single left, System.Single right, System.Boolean insetLeft)
 static ScoreModern.RecoveredFragments.InputPitchResult CompileSingleNotes(System.Single[] tokens, System.Single staff, System.Int32 clef, System.Single left, System.Single right, System.Boolean insetLeft)
 ```
 
-## InputPitchResult
+## ScoreModern.RecoveredFragments.InputPitchResult
 
 ```text
-ScoreModern.RecoveredFragments.InputPitchResult
-.ctor()
-Int32 Events
-Int32 FinalClef
+System.Int32 Events
+System.Int32 FinalClef
 System.Collections.Generic.List`1[System.Int32] ForcedStems
-Single Left
+System.Single Left
 System.Collections.Generic.List`1[System.Int32] NoteIndices
 System.Collections.Generic.List`1[System.Single[]] Records
+InputPitchResult()
 ```
 
-## InputPitchState
+## ScoreModern.RecoveredFragments.InputPitchState
 
 ```text
-ScoreModern.RecoveredFragments.InputPitchState
-.ctor()
-Int32 BarSpan
-Int32 KeySignature
-Int32 MeterBottom
-Int32 MeterTop
-Int32 Octave
-Int32 Previous
-Int32 PreviousDegree
-Boolean Proximity
+System.Int32 BarSpan
+System.Int32 KeySignature
+System.Int32 MeterBottom
+System.Int32 MeterTop
+System.Int32 Octave
+System.Int32 Previous
+System.Int32 PreviousDegree
+System.Boolean Proximity
+InputPitchState()
 ```
 
-## InputPitchToken
+## ScoreModern.RecoveredFragments.InputPitchToken
 
 ```text
-ScoreModern.RecoveredFragments.InputPitchToken
 static System.Nullable`1[System.Single] Parse(System.String text, ScoreModern.RecoveredFragments.InputPitchState state)
 ```
 
-## InputProximityDelimiterException
+## ScoreModern.RecoveredFragments.InputProximityDelimiterException
 
 ```text
-ScoreModern.RecoveredFragments.InputProximityDelimiterException
-.ctor(System.Int32 caret)
-Int32 Caret
+System.Int32 Caret
+InputProximityDelimiterException(System.Int32 caret)
 ```
 
-## InputRealReader
+## ScoreModern.RecoveredFragments.InputRealReader
 
 ```text
-ScoreModern.RecoveredFragments.InputRealReader
 static System.Single Read(System.String text, System.Int32& at)
 ```
 
-## InputRecordCompaction
+## ScoreModern.RecoveredFragments.InputRecordCompaction
 
 ```text
-ScoreModern.RecoveredFragments.InputRecordCompaction
 static System.Byte[] Compact(System.Single[] parameters)
 ```
 
-## InputReferenceSpacing
+## ScoreModern.RecoveredFragments.InputReferenceSpacing
 
 ```text
-ScoreModern.RecoveredFragments.InputReferenceSpacing
-.ctor(System.Collections.Generic.IList`1[System.Single[]] staff)
-.ctor(System.Collections.Generic.IList`1[System.Single[]] staff, System.Action`2[System.Int32,System.Single] normalizedPosition)
-Boolean HasClefAtZero
+System.Boolean HasClefAtZero { get; }
+InputReferenceSpacing(System.Collections.Generic.IList`1[System.Single[]] staff)
+InputReferenceSpacing(System.Collections.Generic.IList`1[System.Single[]] staff, System.Action`2[System.Int32,System.Single] normalizedPosition)
 ```
 
-## InputRhythmDecoder
+## ScoreModern.RecoveredFragments.InputRhythmDecoder
 
 ```text
-ScoreModern.RecoveredFragments.InputRhythmDecoder
 static ScoreModern.RecoveredFragments.InputRhythmValue Decode(System.Single encoded)
 ```
 
-## InputRhythmRecords
+## ScoreModern.RecoveredFragments.InputRhythmRecords
 
 ```text
-ScoreModern.RecoveredFragments.InputRhythmRecords
-static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Single[] encoded, System.Single left, System.Single right, System.Single scale, System.Boolean proportional, System.Single exponent, System.Int32[] forcedStems, System.Nullable`1[System.Single] referenceStart, System.Nullable`1[System.Single] rememberedLeft)
+static System.Collections.Generic.List`1[System.Single[]] Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Single[] encoded, System.Single left, System.Single right, System.Single scale, System.Boolean proportional, System.Single exponent, System.Int32[] forcedStems, System.Nullable`1[System.Single] referenceStart = null, System.Nullable`1[System.Single] rememberedLeft = null)
 ```
 
-## InputRhythmToken
+## ScoreModern.RecoveredFragments.InputRhythmToken
 
 ```text
-ScoreModern.RecoveredFragments.InputRhythmToken
 static System.Single Parse(System.String text)
 static System.Single Parse(System.String text, System.Boolean originalMantissaWrap)
 ```
 
-## InputRhythmValue
+## ScoreModern.RecoveredFragments.InputRhythmValue
 
 ```text
-ScoreModern.RecoveredFragments.InputRhythmValue
-Single Denominator
-Single DotControl
-Single Duration
-Single FlagCount
+System.Single Denominator
+System.Single DotControl
+System.Single Duration
+System.Single FlagCount
 ```
 
-## InputSetupBounds
+## ScoreModern.RecoveredFragments.InputSetupBounds
 
 ```text
-ScoreModern.RecoveredFragments.InputSetupBounds
 static ScoreModern.RecoveredFragments.InputSetupBoundsResult Find(System.Collections.Generic.IList`1[System.Single[]] records, ScoreModern.RecoveredFragments.InputSetupState state)
 ```
 
-## InputSetupBoundsResult
+## ScoreModern.RecoveredFragments.InputSetupBoundsResult
 
 ```text
-ScoreModern.RecoveredFragments.InputSetupBoundsResult
-.ctor()
-Int32 Clef
+System.Int32 Clef
 System.String Key
-Int32 Left
-Int32 MeterBottom
-Int32 MeterTop
-Int32 Right
+System.Int32 Left
+System.Int32 MeterBottom
+System.Int32 MeterTop
+System.Int32 Right
+InputSetupBoundsResult()
 ```
 
-## InputSetupState
+## ScoreModern.RecoveredFragments.InputSetupState
 
 ```text
-ScoreModern.RecoveredFragments.InputSetupState
-.ctor()
 System.String Key
-Int32 LeftEnd
-Int32 LeftPosition
-Int32 MeterBottom
-Int32 MeterTop
-Int32 RightEnd
-Int32 RightPosition
-Int32 Selected
-Single Size
-Int32 Spacing
-Int32 Staff
-Int32 Vertical
+System.Int32 LeftEnd
+System.Int32 LeftPosition
+System.Int32 MeterBottom
+System.Int32 MeterTop
+System.Int32 RightEnd
+System.Int32 RightPosition
+System.Int32 Selected
+System.Single Size
+System.Int32 Spacing
+System.Int32 Staff
+System.Int32 Vertical
+InputSetupState()
 System.Void KeyText(System.String key)
 System.Void MoveField(System.Int32 delta)
 System.Boolean Numeric(System.Single value)
@@ -1136,53 +1021,58 @@ System.Void SpacingLetter(System.Char letter)
 System.Single[] StaffRecord()
 ```
 
-## InputSlurConstruction
+## ScoreModern.RecoveredFragments.InputSlurConstruction
 
 ```text
-ScoreModern.RecoveredFragments.InputSlurConstruction
-static System.Collections.Generic.List`1[System.Single[]] Build(System.Collections.Generic.IList`1[System.Single[]] original, ScoreModern.RecoveredFragments.InputEndpointResult e, System.Single staff, System.Int32 boundary, System.Int16 tiesMode, System.Single end, ScoreModern.RecoveredFragments.InputEndpointStaffContext context)
+static System.Collections.Generic.List`1[System.Single[]] Build(System.Collections.Generic.IList`1[System.Single[]] original, ScoreModern.RecoveredFragments.InputEndpointResult e, System.Single staff, System.Int32 boundary, System.Int16 tiesMode, System.Single end, ScoreModern.RecoveredFragments.InputEndpointStaffContext context = null)
 static System.Single InitialHeight(System.Single left, System.Single right, System.Single y1, System.Single y2, System.Single offset, System.Single height)
 ```
 
-## InputStaccatoCentering
+## ScoreModern.RecoveredFragments.InputStaccatoCentering
 
 ```text
-ScoreModern.RecoveredFragments.InputStaccatoCentering
 static System.Boolean Apply(System.Single[] p, System.Single[] staffScales)
 ```
 
-## InputStaffStage
+## ScoreModern.RecoveredFragments.InputStaffStage
 
 ```text
-ScoreModern.RecoveredFragments.InputStaffStage
-Pitches = 0
-Rhythms = 1
-Marks = 2
-Beams = 3
-Slurs = 4
-Complete = 5
+static ScoreModern.RecoveredFragments.InputStaffStage Beams = 3
+static ScoreModern.RecoveredFragments.InputStaffStage Complete = 5
+static ScoreModern.RecoveredFragments.InputStaffStage Marks = 2
+static ScoreModern.RecoveredFragments.InputStaffStage Pitches = 0
+static ScoreModern.RecoveredFragments.InputStaffStage Rhythms = 1
+static ScoreModern.RecoveredFragments.InputStaffStage Slurs = 4
+System.Int32 value__
 ```
 
-## InputStaffTransaction
+## ScoreModern.RecoveredFragments.InputStaffTransaction
 
 ```text
-ScoreModern.RecoveredFragments.InputStaffTransaction
-.ctor(System.Single staff, System.Int32 clef, System.Single beginning, System.Single end, System.Single scale, System.Single followingScale, System.Single beam, System.Single dynamics, System.Int16 ties, System.Boolean proportional, System.Single exponent)
-.ctor(System.Single staff, System.Int32 clef, System.Single beginning, System.Single end, System.Single scale, System.Single followingScale, System.Single beam, System.Single dynamics, System.Int16 ties)
-System.Void Beams(ScoreModern.RecoveredFragments.InputEndpointTokens tokens)
+System.Int32 InitialClef { get; }
+System.Single OriginalSelectionLeft { get; }
+System.Single OriginalSelectionRight { get; }
+System.Single OriginalStaff { get; }
+System.String ReferenceSpacingWarning { get; set; }
+System.Int32 RhythmCount { get; }
+ScoreModern.RecoveredFragments.InputStaffStage Stage { get; set; }
+System.Collections.Generic.List`1[System.Single[]] WorkingRecords { get; }
+InputStaffTransaction(System.Single staff, System.Int32 clef, System.Single beginning, System.Single end, System.Single scale, System.Single followingScale, System.Single beam, System.Single dynamics, System.Int16 ties)
+InputStaffTransaction(System.Single staff, System.Int32 clef, System.Single beginning, System.Single end, System.Single scale, System.Single followingScale, System.Single beam, System.Single dynamics, System.Int16 ties, System.Boolean proportional, System.Single exponent)
 System.Void Beams(System.Single[] endpointPairs)
+System.Void Beams(ScoreModern.RecoveredFragments.InputEndpointTokens tokens)
 System.Collections.Generic.List`1[System.Single[]] Commit(System.Collections.Generic.IList`1[System.Single[]] prefix)
-System.Void Marks(System.Single[] tokens, System.Int32[] opposite, System.Boolean reproduceRetainedDescriptor)
 System.Void Marks(System.Single[] tokens, System.Int32[] opposite)
+System.Void Marks(System.Single[] tokens, System.Int32[] opposite, System.Boolean reproduceRetainedDescriptor)
 System.Single[] MouseNotePositions()
 System.Void ObservePitchPreviewLoader()
-System.Void Pitches(System.Single[] tokens, System.Boolean insetLeft, System.Boolean allowLargeInput, System.Boolean useReferenceClef)
 System.Void Pitches(System.Single[] tokens, System.Boolean insetLeft)
 System.Void Pitches(System.Single[] tokens, System.Boolean insetLeft, System.Boolean allowLargeInput)
+System.Void Pitches(System.Single[] tokens, System.Boolean insetLeft, System.Boolean allowLargeInput, System.Boolean useReferenceClef)
 System.Collections.Generic.List`1[System.Single[]] Preview(System.Collections.Generic.IList`1[System.Single[]] prefix)
-ScoreModern.RecoveredFragments.InputStaffTransaction Restart(System.Nullable`1[System.Single] correctedBeginning, System.Nullable`1[System.Single] correctedEnd, System.Nullable`1[System.Boolean] correctedProportional)
+ScoreModern.RecoveredFragments.InputStaffTransaction Restart(System.Nullable`1[System.Single] correctedBeginning = null, System.Nullable`1[System.Single] correctedEnd = null, System.Nullable`1[System.Boolean] correctedProportional = null)
 ScoreModern.RecoveredFragments.InputStaffTransaction RestartOnStaff(System.Int32 number, System.Int32 initialClef, System.Single factor, System.Single nextFactor)
-ScoreModern.RecoveredFragments.InputStaffTransaction RestartOnStaffRange(System.Int32 number, System.Int32 initialClef, System.Single factor, System.Single nextFactor, System.Single correctedBeginning, System.Single correctedEnd, System.Nullable`1[System.Boolean] correctedProportional)
+ScoreModern.RecoveredFragments.InputStaffTransaction RestartOnStaffRange(System.Int32 number, System.Int32 initialClef, System.Single factor, System.Single nextFactor, System.Single correctedBeginning, System.Single correctedEnd, System.Nullable`1[System.Boolean] correctedProportional = null)
 System.Void Rhythms(System.Single[] tokens)
 System.Void Rhythms(System.Single[] tokens, System.Boolean reproduceNonfiniteChordDuration)
 System.Void SkipRhythms()
@@ -1190,20 +1080,11 @@ System.Void Slurs(System.Single[] endpointPairs)
 System.Void UpdateInputMeter(System.Int32& top, System.Int32& bottom)
 System.Void UseReferenceSpacing(ScoreModern.RecoveredFragments.InputReferenceSpacing reference)
 System.Void UseStaffCoordinates(ScoreModern.RecoveredFragments.InputEndpointStaffContext context)
-Int32 InitialClef
-Single OriginalSelectionLeft
-Single OriginalSelectionRight
-Single OriginalStaff
-System.String ReferenceSpacingWarning
-Int32 RhythmCount
-ScoreModern.RecoveredFragments.InputStaffStage Stage
-System.Collections.Generic.List`1[System.Single[]] WorkingRecords
 ```
 
-## InputTextLists
+## ScoreModern.RecoveredFragments.InputTextLists
 
 ```text
-ScoreModern.RecoveredFragments.InputTextLists
 static System.Single[] Pitches(System.String text, ScoreModern.RecoveredFragments.InputPitchState state)
 static System.Single[] Pitches(System.String text, ScoreModern.RecoveredFragments.InputPitchState state, ScoreModern.RecoveredFragments.InputMacroContext context)
 static System.Single[] Rhythms(System.String text)
@@ -1211,105 +1092,92 @@ static System.Single[] Rhythms(System.String text, ScoreModern.RecoveredFragment
 static System.Single[] Rhythms(System.String text, ScoreModern.RecoveredFragments.InputMacroContext context, System.Boolean originalMantissaWrap)
 ```
 
-## InputTextTerminatorWrite
+## ScoreModern.RecoveredFragments.InputTextTerminatorWrite
 
 ```text
-ScoreModern.RecoveredFragments.InputTextTerminatorWrite
-static Byte Space
+static System.Byte Space = 32
 static System.UInt16 Apply(System.Byte[] segment, System.UInt16 destination, System.UInt16 length)
 static System.UInt16 Offset(System.UInt16 destination, System.UInt16 length)
 ```
 
-## InputTranspositionAccidentalTail
+## ScoreModern.RecoveredFragments.InputTranspositionAccidentalTail
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionAccidentalTail
 static ScoreModern.RecoveredFragments.TranspositionAccidentalTailResult Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Collections.Generic.IList`1[ScoreModern.RecoveredFragments.TranspositionRecord] entries, System.Int16[] pitches, System.Collections.Generic.IList`1[System.Int32] relationships, System.Int16 activeCount, System.Single stopPosition, System.Int16 kindZeroGuard, ScoreModern.RecoveredFragments.TranspositionRelationshipWindow initialWindow, System.Single margin, System.Single width)
 ```
 
-## InputTranspositionAttachments
+## ScoreModern.RecoveredFragments.InputTranspositionAttachments
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionAttachments
 static System.Void Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single left, System.Single right, System.Single diatonic, System.Boolean enabled)
 static System.Boolean ShouldApply(System.Int16 relationshipCount, System.Boolean extendedBeam)
 ```
 
-## InputTranspositionClefs
+## ScoreModern.RecoveredFragments.InputTranspositionClefs
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionClefs
 static System.Void Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Collections.Generic.IList`1[ScoreModern.RecoveredFragments.TranspositionRecord] entries, System.Int16[] pitches, System.Single staff, System.Int16 target, ScoreModern.RecoveredFragments.TranspositionClefState state)
 ```
 
-## InputTranspositionCollection
+## ScoreModern.RecoveredFragments.InputTranspositionCollection
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionCollection
 static System.Collections.Generic.List`1[System.Single] Boundaries(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single firstNotePosition, System.Single expandedRight)
-static ScoreModern.RecoveredFragments.TranspositionCollection FirstPass(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single expandedLeft, System.Single expandedRight, System.Int16 mode, System.Int16[] recoveredAccidentalTable)
 static ScoreModern.RecoveredFragments.TranspositionCollection FirstPass(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single expandedLeft, System.Single expandedRight, System.Int16 mode)
+static ScoreModern.RecoveredFragments.TranspositionCollection FirstPass(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single expandedLeft, System.Single expandedRight, System.Int16 mode, System.Int16[] recoveredAccidentalTable)
 ```
 
-## InputTranspositionCollector
+## ScoreModern.RecoveredFragments.InputTranspositionCollector
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionCollector
 static ScoreModern.RecoveredFragments.TranspositionCollectorResult Build(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single left, System.Single right, System.Int16 mode, ScoreModern.RecoveredFragments.TranspositionCollectorState state)
 static ScoreModern.RecoveredFragments.TranspositionCollectorResult Build(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Single left, System.Single right, System.Int16 mode, ScoreModern.RecoveredFragments.TranspositionCollectorState state, System.Int16[] recoveredAccidentalTable)
 ```
 
-## InputTranspositionEmbeddedControl
+## ScoreModern.RecoveredFragments.InputTranspositionEmbeddedControl
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionEmbeddedControl
-static System.String FingeringWarning
+static System.String FingeringWarning = ******** Fingerings for guitar chords will NOT transpose when P5 = -1 or -2.
 static System.Void Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 staff, System.Int16 semitoneClass, System.Boolean& warningRequired)
 ```
 
-## InputTranspositionInterval
+## ScoreModern.RecoveredFragments.InputTranspositionInterval
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionInterval
 static ScoreModern.RecoveredFragments.TranspositionInterval Convert(System.Int16 semitones)
 static System.Int16 Menu(System.Int16 choice)
 ```
 
-## InputTranspositionKey
+## ScoreModern.RecoveredFragments.InputTranspositionKey
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionKey
 static System.Void Convert(System.Int16 semitones, System.Int16 oldKey, System.Int16& diatonic, System.Int16& newKey)
 static System.Int16 KeyPosition(System.Int16 key)
 ```
 
-## InputTranspositionKeyInsertion
+## ScoreModern.RecoveredFragments.InputTranspositionKeyInsertion
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionKeyInsertion
 static System.Single[] Append(System.Collections.Generic.IList`1[System.Single[]] rows, System.Single staff, System.Int16 key, System.Int16 clef)
 static System.Boolean ShouldInsert(System.Boolean answerYes, System.Int16 firstKeyState, System.Int16 semitoneClass)
 static System.Boolean ShouldPrompt(System.Boolean forceQuestion, System.Int16 firstKeyState, System.Int16 semitoneClass)
 ```
 
-## InputTranspositionKeyRecord
+## ScoreModern.RecoveredFragments.InputTranspositionKeyRecord
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionKeyRecord
 static ScoreModern.RecoveredFragments.TranspositionKeyRecordResult Apply(System.Single[] parameters, System.Int16 collectedKey, System.Int16 semitones, System.Int16 previousOverride, System.Int16 clef, System.Int16 collectorIndex, System.Single erasedCode)
 ```
 
-## InputTranspositionMainPass
+## ScoreModern.RecoveredFragments.InputTranspositionMainPass
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionMainPass
 static ScoreModern.RecoveredFragments.TranspositionMainPassResult Apply(System.Collections.Generic.IList`1[System.Single[]] rows, System.Collections.Generic.IList`1[ScoreModern.RecoveredFragments.TranspositionRecord] entries, System.Int16[] pitches, System.Collections.Generic.IList`1[System.Int32] relationships, ScoreModern.RecoveredFragments.TranspositionMainState state)
 ```
 
-## InputTranspositionOperation
+## ScoreModern.RecoveredFragments.InputTranspositionOperation
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionOperation
 static ScoreModern.RecoveredFragments.TranspositionOperationResult Apply(System.Collections.Generic.IList`1[System.Single[]] source, ScoreModern.RecoveredFragments.TranspositionRequest request, ScoreModern.RecoveredFragments.TranspositionWorkspace workspace)
 static ScoreModern.RecoveredFragments.TranspositionOperationSession Begin(System.Collections.Generic.IList`1[System.Single[]] source, ScoreModern.RecoveredFragments.TranspositionRequest request, ScoreModern.RecoveredFragments.TranspositionWorkspace workspace)
 static System.Void ChangeClef(ScoreModern.RecoveredFragments.TranspositionOperationSession session, System.Int16 choice)
@@ -1317,1104 +1185,990 @@ static ScoreModern.RecoveredFragments.TranspositionOperationResult Finish(ScoreM
 static ScoreModern.RecoveredFragments.TranspositionOperationResult FinishCore(ScoreModern.RecoveredFragments.TranspositionOperationSession session, System.Boolean addKey, System.Boolean mainAttachments)
 ```
 
-## InputTranspositionOrder
+## ScoreModern.RecoveredFragments.InputTranspositionOrder
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionOrder
 static System.Boolean MarksModified(System.Int32 recordCount, System.Boolean alreadySorted)
 static System.Int32[] OrderForMain(System.Collections.Generic.IList`1[System.Single[]] rows, System.Boolean alreadySorted)
 ```
 
-## InputTranspositionPartition
+## ScoreModern.RecoveredFragments.InputTranspositionPartition
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionPartition
 static ScoreModern.RecoveredFragments.TranspositionPartition Apply(System.Collections.Generic.IList`1[System.Single] bars, System.Collections.Generic.IList`1[System.Single] positions, System.Collections.Generic.IList`1[System.Int16] kinds)
 ```
 
-## InputTranspositionPitch
+## ScoreModern.RecoveredFragments.InputTranspositionPitch
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionPitch
 static ScoreModern.RecoveredFragments.TranspositionPitchResult Apply(System.Single originalPitch, System.Single originalStem, System.Int16 collectedPitch, System.Int16 accidental, System.Int16 clef, System.Int16 oldKey, System.Int16 newKey, System.Int16 diatonic, System.Int16 keyOverride)
 ```
 
-## InputTranspositionRelationshipWindow
+## ScoreModern.RecoveredFragments.InputTranspositionRelationshipWindow
 
 ```text
-ScoreModern.RecoveredFragments.InputTranspositionRelationshipWindow
 static System.Void Advance(System.Collections.Generic.IList`1[System.Single[]] rows, System.Collections.Generic.IList`1[System.Int32] itemNumbers, System.Int16& activeCount, System.Int16& index, ScoreModern.RecoveredFragments.TranspositionRelationshipWindow& window, System.Single margin, System.Single width)
 ```
 
-## InputUniformBeam
+## ScoreModern.RecoveredFragments.InputUniformBeam
 
 ```text
-ScoreModern.RecoveredFragments.InputUniformBeam
-static ScoreModern.RecoveredFragments.InputBeamConstructionResult Build(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32[] map, System.Int32[] stems, System.Single first, System.Single last, System.Single begin, System.Single end, System.Single slopeLimit, ScoreModern.RecoveredFragments.InputEndpointStaffContext context)
+static ScoreModern.RecoveredFragments.InputBeamConstructionResult Build(System.Collections.Generic.IList`1[System.Single[]] source, System.Int32[] map, System.Int32[] stems, System.Single first, System.Single last, System.Single begin, System.Single end, System.Single slopeLimit, ScoreModern.RecoveredFragments.InputEndpointStaffContext context = null)
 ```
 
-## INumericConverterContext
+## ScoreModern.RecoveredFragments.INumericConverterContext
 
 ```text
-ScoreModern.RecoveredFragments.INumericConverterContext
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IParameterWordMemory
+## ScoreModern.RecoveredFragments.IParameterWordMemory
 
 ```text
-ScoreModern.RecoveredFragments.IParameterWordMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IPointBufferMemory
+## ScoreModern.RecoveredFragments.IPointBufferMemory
 
 ```text
-ScoreModern.RecoveredFragments.IPointBufferMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IPrefixPreparationMemory
+## ScoreModern.RecoveredFragments.IPrefixPreparationMemory
 
 ```text
-ScoreModern.RecoveredFragments.IPrefixPreparationMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IScreenBiosTransferEffects
+## ScoreModern.RecoveredFragments.IScreenBiosTransferEffects
 
 ```text
-ScoreModern.RecoveredFragments.IScreenBiosTransferEffects
 ScoreModern.RecoveredFragments.SignedDivide16State TransferToBios(ScoreModern.RecoveredFragments.IScreenHookMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## IScreenForwardMemory
+## ScoreModern.RecoveredFragments.IScreenForwardMemory
 
 ```text
-ScoreModern.RecoveredFragments.IScreenForwardMemory
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## IScreenHookMemory
+## ScoreModern.RecoveredFragments.IScreenHookMemory
 
 ```text
-ScoreModern.RecoveredFragments.IScreenHookMemory
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 ```
 
-## ISelectorContext
+## ScoreModern.RecoveredFragments.ISelectorContext
 
 ```text
-ScoreModern.RecoveredFragments.ISelectorContext
+System.UInt16 DataSegment { get; }
+System.Boolean DirectionFlag { get; }
 System.UInt16 CallFar(System.UInt16 relativeSegment, System.UInt16 offset, System.UInt16[] stackWords)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
-UInt16 DataSegment
-Boolean DirectionFlag
 ```
 
-## ISpanBookkeepingMemory
+## ScoreModern.RecoveredFragments.ISpanBookkeepingMemory
 
 ```text
-ScoreModern.RecoveredFragments.ISpanBookkeepingMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IStringBlockMemory
+## ScoreModern.RecoveredFragments.IStringBlockMemory
 
 ```text
-ScoreModern.RecoveredFragments.IStringBlockMemory
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 System.UInt16 ReadWord(System.UInt16 segment, System.UInt16 offset)
 System.Void WriteByte(System.UInt16 segment, System.UInt16 offset, System.Byte value)
 System.Void WriteWord(System.UInt16 segment, System.UInt16 offset, System.UInt16 value)
 ```
 
-## IStringOutputContext
+## ScoreModern.RecoveredFragments.IStringOutputContext
 
 ```text
-ScoreModern.RecoveredFragments.IStringOutputContext
 ScoreModern.RecoveredFragments.CharacterRoutineResult CallCharacter(ScoreModern.RecoveredFragments.CharacterRoutineWords words, System.UInt16 targetSegment, System.UInt16 targetOffset)
 System.Byte ReadByte(System.UInt16 segment, System.UInt16 offset)
 ```
 
-## ItemDrawingDispatch
+## ScoreModern.RecoveredFragments.ItemDrawingDispatch
 
 ```text
-ScoreModern.RecoveredFragments.ItemDrawingDispatch
 static ScoreModern.RecoveredFragments.ItemDrawingRoute Select(ScoreModern.RecoveredFragments.IDatTextLookupMemory memory, System.UInt16 ds, System.UInt16 cs)
 ```
 
-## ItemDrawingRoute
+## ScoreModern.RecoveredFragments.ItemDrawingRoute
 
 ```text
-ScoreModern.RecoveredFragments.ItemDrawingRoute
-UInt16 TableByteIndex
-UInt16 Target
-Boolean UsesTable
+System.UInt16 TableByteIndex
+System.UInt16 Target
+System.Boolean UsesTable
 ```
 
-## JustificationAllocationResult
+## ScoreModern.RecoveredFragments.JustificationAllocationResult
 
 ```text
-ScoreModern.RecoveredFragments.JustificationAllocationResult
-.ctor()
-Single Allocated
-Int16 NextIndex
-Single Remaining
+System.Single Allocated
+System.Int16 NextIndex
+System.Single Remaining
+JustificationAllocationResult()
 ```
 
-## JustificationCoordinates
+## ScoreModern.RecoveredFragments.JustificationCoordinates
 
 ```text
-ScoreModern.RecoveredFragments.JustificationCoordinates
-.ctor(System.Single[] words, System.Int16[] references, System.Single lowerBound, System.Single ratioThreshold, System.Single ratioReplacement)
-Single LowerBound
+System.Single LowerBound
+JustificationCoordinates(System.Single[] words, System.Int16[] references, System.Single lowerBound, System.Single ratioThreshold, System.Single ratioReplacement)
 System.Void Scale(System.Single left, System.Single right, System.Single delta)
 System.Void Shift(System.Single threshold, System.Single delta)
 ```
 
-## JustificationGapResult
+## ScoreModern.RecoveredFragments.JustificationGapResult
 
 ```text
-ScoreModern.RecoveredFragments.JustificationGapResult
-.ctor()
-Boolean CompressedMinimums
-Single DeficitPerGap
-Single MinimumTotal
-Single NegativeSlack
-Single PositiveSlack
-Single Width
+System.Boolean CompressedMinimums
+System.Single DeficitPerGap
+System.Single MinimumTotal
+System.Single NegativeSlack
+System.Single PositiveSlack
+System.Single Width
+JustificationGapResult()
 ```
 
-## LayoutBasicTablature
+## ScoreModern.RecoveredFragments.LayoutBasicTablature
 
 ```text
-ScoreModern.RecoveredFragments.LayoutBasicTablature
 static System.Collections.Generic.List`1[System.Single[]] Build(System.Single[] staff, System.Collections.Generic.IList`1[System.Single[]] notes, System.Int32 destination, System.Boolean clef, System.Boolean rhythmLine, System.Int16[] packedTuning, System.Int32 strings, System.Boolean bass, System.Collections.Generic.IList`1[System.Int16] frequencies, System.Boolean hasCollection)
-static System.Collections.Generic.List`1[System.Single[]] Build(System.Single[] staff, System.Collections.Generic.IList`1[System.Single[]] notes, System.Int32 destination, System.Boolean clef, System.Boolean rhythmLine, System.Int16[] packedTuning, System.Int32 strings, System.Boolean bass, System.Collections.Generic.IList`1[System.Int16] frequencies, System.Boolean hasCollection, System.Int16[] recoveredAccidentals, System.Int32 firstDelta, System.Func`3[System.Single[],System.Int32,System.Single[]] retainedCopy, System.Action`2[System.Single[],System.Int32] writeRecord)
+static System.Collections.Generic.List`1[System.Single[]] Build(System.Single[] staff, System.Collections.Generic.IList`1[System.Single[]] notes, System.Int32 destination, System.Boolean clef, System.Boolean rhythmLine, System.Int16[] packedTuning, System.Int32 strings, System.Boolean bass, System.Collections.Generic.IList`1[System.Int16] frequencies, System.Boolean hasCollection, System.Int16[] recoveredAccidentals, System.Int32 firstDelta, System.Func`3[System.Single[],System.Int32,System.Single[]] retainedCopy = null, System.Action`2[System.Single[],System.Int32] writeRecord = null)
 ```
 
-## LayoutCoordinateAffine
+## ScoreModern.RecoveredFragments.LayoutCoordinateAffine
 
 ```text
-ScoreModern.RecoveredFragments.LayoutCoordinateAffine
 static System.Void Apply(System.Single[] words, System.Int16[] references, System.Single first, System.Single second, System.Single third, System.Int16 mode)
 ```
 
-## LayoutCoordinateCollection
+## ScoreModern.RecoveredFragments.LayoutCoordinateCollection
 
 ```text
-ScoreModern.RecoveredFragments.LayoutCoordinateCollection
-static ScoreModern.RecoveredFragments.LayoutCoordinateCollectionResult Collect(System.Single[] words, System.Int32[] itemStarts, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Single tolerance, System.Int16 first, System.Int16 last, System.Int16 staffTableThreshold, System.Single codeFilter, System.Single emptyStaffControl, System.Single compoundBarControl, System.Int32 capacity, System.Int16 mode)
+static ScoreModern.RecoveredFragments.LayoutCoordinateCollectionResult Collect(System.Single[] words, System.Int32[] itemStarts, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Single tolerance, System.Int16 first, System.Int16 last, System.Int16 staffTableThreshold, System.Single codeFilter, System.Single emptyStaffControl, System.Single compoundBarControl, System.Int32 capacity, System.Int16 mode = 0)
 ```
 
-## LayoutCoordinateCollectionResult
+## ScoreModern.RecoveredFragments.LayoutCoordinateCollectionResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutCoordinateCollectionResult
-.ctor()
-Int16 FirstItem
-Int16 LastItem
-Int16[] References
+System.Int16 FirstItem
+System.Int16 LastItem
+System.Int16[] References
+LayoutCoordinateCollectionResult()
 ```
 
-## LayoutDecombineGroups
+## ScoreModern.RecoveredFragments.LayoutDecombineGroups
 
 ```text
-ScoreModern.RecoveredFragments.LayoutDecombineGroups
 static System.Int16[] Boundaries(System.Int16 maximum, System.Single[] sizes, System.Int16 lastSize)
 ```
 
-## LayoutDisappearingStaffs
+## ScoreModern.RecoveredFragments.LayoutDisappearingStaffs
 
 ```text
-ScoreModern.RecoveredFragments.LayoutDisappearingStaffs
-.ctor()
+LayoutDisappearingStaffs()
 System.Void Apply(System.Single[] values)
 System.Boolean Hidden(System.Int32 staff)
 System.Int32[] HiddenStaffs()
 ```
 
-## LayoutItemSpacing
+## ScoreModern.RecoveredFragments.LayoutItemSpacing
 
 ```text
-ScoreModern.RecoveredFragments.LayoutItemSpacing
-.ctor(System.Byte[] workspace, System.Single[] scoreWords, System.Int32[] itemStarts, System.Single[] selectedPositions, System.Int16[] selectedReferences, System.Single[] auxiliary, System.Single[] minimumGaps, System.Single[] outputPositions)
-System.Int16 Apply(System.Int16 staff, System.Single staffScale, System.Single firstStaff, System.Int16& cursor, System.Single left, System.Single right, System.Single[] afterSymbol, System.Boolean originalQuarterToneWidths, System.Nullable`1[System.Single] positionJoinTolerance, System.Boolean standaloneJust)
+LayoutItemSpacing(System.Byte[] workspace, System.Single[] scoreWords, System.Int32[] itemStarts, System.Single[] selectedPositions, System.Int16[] selectedReferences, System.Single[] auxiliary, System.Single[] minimumGaps, System.Single[] outputPositions)
+System.Int16 Apply(System.Int16 staff, System.Single staffScale, System.Single firstStaff, System.Int16& cursor, System.Single left, System.Single right, System.Single[] afterSymbol, System.Boolean originalQuarterToneWidths = True, System.Nullable`1[System.Single] positionJoinTolerance = null, System.Boolean standaloneJust = False)
+System.Int16 Apply(System.Int16 staff, System.Single staffScale, System.Single firstStaff, System.Int16& cursor, System.Single left, System.Single right, System.Single[] afterSymbol, System.Boolean originalQuarterToneWidths, System.Nullable`1[System.Single] positionJoinTolerance, System.Boolean standaloneJust, System.Boolean scor4Numbers)
 ```
 
-## LayoutJustificationAllocation
+## ScoreModern.RecoveredFragments.LayoutJustificationAllocation
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationAllocation
 static ScoreModern.RecoveredFragments.JustificationAllocationResult Apply(System.Single[] positions, System.Single[] allocations, System.Int16 index, System.Single target, System.Single limit, System.Single remaining, System.Single minimum)
 ```
 
-## LayoutJustificationGaps
+## ScoreModern.RecoveredFragments.LayoutJustificationGaps
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationGaps
 static ScoreModern.RecoveredFragments.JustificationGapResult Prepare(System.Single[] slack, System.Single[] minimum, System.Single[] positions, System.Int16 pointCount, System.Single left, System.Single right)
 ```
 
-## LayoutJustificationMerge
+## ScoreModern.RecoveredFragments.LayoutJustificationMerge
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationMerge
 static System.Int16 Append(System.Single[] oldPositions, System.Single[] oldMinimum, System.Single[] newPositions, System.Single[] newMinimum, System.Single[] mergedPositions, System.Single[] mergedMinimum, System.Int16 oldCount, System.Int16 newCount, System.Single right, System.Single rightThreshold, System.Single epsilon)
 ```
 
-## LayoutJustificationRedistribution
+## ScoreModern.RecoveredFragments.LayoutJustificationRedistribution
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationRedistribution
 static System.Boolean Apply(System.Single[] slack, System.Single[] positions, System.Int16 pointCount, System.Single positiveSlack, System.Single negativeSlack, ScoreModern.RecoveredFragments.JustificationCoordinates coordinates)
 ```
 
-## LayoutJustificationSnap
+## ScoreModern.RecoveredFragments.LayoutJustificationSnap
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationSnap
 static System.Void Apply(System.Single[] words, System.Int32[] itemStarts, System.Single tolerance, System.Single rightEdge)
 ```
 
-## LayoutJustificationSystem
+## ScoreModern.RecoveredFragments.LayoutJustificationSystem
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationSystem
 static ScoreModern.RecoveredFragments.LayoutJustificationSystemResult Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Single[] scales, System.Single[] afterSymbol, System.Int16 staffTableThreshold, System.Int16 coordinateCapacity, ScoreModern.RecoveredFragments.LayoutJustificationWorkspace work)
 ```
 
-## LayoutJustificationSystemResult
+## ScoreModern.RecoveredFragments.LayoutJustificationSystemResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationSystemResult
-.ctor()
-Int16[] CoordinateReferences
-Int16 FirstPoint
+System.Int16[] CoordinateReferences
+System.Int16 FirstPoint
 ScoreModern.RecoveredFragments.JustificationGapResult Gaps
-Int16 PointCount
-Boolean RedistributionApplied
-Int16 SelectionCursor
+System.Int16 PointCount
+System.Boolean RedistributionApplied
+System.Int16 SelectionCursor
+LayoutJustificationSystemResult()
 ```
 
-## LayoutJustificationWorkspace
+## ScoreModern.RecoveredFragments.LayoutJustificationWorkspace
 
 ```text
-ScoreModern.RecoveredFragments.LayoutJustificationWorkspace
-.ctor()
-Single[] Auxiliary
-Single[] MergedMinimum
-Single[] MergedPositions
-Single[] Minimum
-Single[] OldMinimum
-Single[] OldPositions
-Boolean OriginalQuarterToneWidths
+System.Single[] Auxiliary
+System.Single[] MergedMinimum
+System.Single[] MergedPositions
+System.Single[] Minimum
+System.Single[] OldMinimum
+System.Single[] OldPositions
+System.Boolean OriginalQuarterToneWidths
+System.Boolean Page4RoundScaleNumerator
 System.Nullable`1[System.Single] PositionJoinTolerance
-Single[] Positions
-Single[] Selected
-Int16[] SelectedReferences
-Byte[] Spacing
-Boolean StandaloneJust
+System.Single[] Positions
+System.Boolean Scor4NumberJustification
+System.Single[] Selected
+System.Int16[] SelectedReferences
+System.Byte[] Spacing
+System.Boolean StandaloneJust
+LayoutJustificationWorkspace()
 System.Void ResetForIsolatedTest()
 ```
 
-## LayoutLineupBeatTotal
+## ScoreModern.RecoveredFragments.LayoutLineupBeatTotal
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupBeatTotal
-.ctor()
-Int16 Staff
-Single Total
+System.Int16 Staff
+System.Single Total
+LayoutLineupBeatTotal()
 ```
 
-## LayoutLineupCleanup
+## ScoreModern.RecoveredFragments.LayoutLineupCleanup
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupCleanup
 static System.Void Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] staffUnits)
 ```
 
-## LayoutLineupCoordinates
+## ScoreModern.RecoveredFragments.LayoutLineupCoordinates
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupCoordinates
 static System.Void Apply(System.Single[] merged, System.Single[] positions, System.Single[] weights, System.Int16 count, System.Single left, System.Single right, System.Single staffUnit, System.Single exponent)
 ```
 
-## LayoutLineupDurationGroups
+## ScoreModern.RecoveredFragments.LayoutLineupDurationGroups
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupDurationGroups
 static ScoreModern.RecoveredFragments.LayoutLineupDurationGroupsResult Apply(System.Single[] current, System.Single[] prior, System.Single[] output, System.Int16 firstCurrent, System.Int16 priorCount, System.Int16 initialOutputCount)
 ```
 
-## LayoutLineupDurationGroupsResult
+## ScoreModern.RecoveredFragments.LayoutLineupDurationGroupsResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupDurationGroupsResult
-.ctor()
-Int16 CurrentIndex
-Single CurrentSum
-Single CurrentValue
-Int16 OutputCount
-Int16 PriorIndex
-Single PriorSum
-Single PriorValue
+System.Int16 CurrentIndex
+System.Single CurrentSum
+System.Single CurrentValue
+System.Int16 OutputCount
+System.Int16 PriorIndex
+System.Single PriorSum
+System.Single PriorValue
+LayoutLineupDurationGroupsResult()
 ```
 
-## LayoutLineupPreparation
+## ScoreModern.RecoveredFragments.LayoutLineupPreparation
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupPreparation
 static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] rhythms, System.Single[] positions, System.Single[] merged, System.Single[] scratch, System.Single[] union, System.Single[] subdivisions)
-static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult ApplyWithBeatPolicy(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] rhythms, System.Single[] positions, System.Single[] merged, System.Single[] scratch, System.Single[] union, System.Single[] subdivisions, System.Boolean returnUnequalBeats, System.Action`1[System.Int32] acknowledgeNegativePosition, System.Boolean standaloneJust)
+static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult ApplyWithBeatPolicy(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] rhythms, System.Single[] positions, System.Single[] merged, System.Single[] scratch, System.Single[] union, System.Single[] subdivisions, System.Boolean returnUnequalBeats, System.Action`1[System.Int32] acknowledgeNegativePosition = null, System.Boolean standaloneJust = False)
 ```
 
-## LayoutLineupPreparationResult
+## ScoreModern.RecoveredFragments.LayoutLineupPreparationResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupPreparationResult
-.ctor()
 ScoreModern.RecoveredFragments.LayoutLineupBeatTotal[] BeatTotals
-Int16 Bottom
-Int16 Count
-Single Left
-Boolean NeedsCleanup
-Single Right
+System.Int16 Bottom
+System.Int16 Count
+System.Single Left
+System.Boolean NeedsCleanup
+System.Single Right
 ScoreModern.RecoveredFragments.LayoutLineupStaffStream[] StaffStreams
-Int16 Top
-Boolean UnequalBeats
+System.Int16 Top
+System.Boolean UnequalBeats
+LayoutLineupPreparationResult()
 ```
 
-## LayoutLineupRemap
+## ScoreModern.RecoveredFragments.LayoutLineupRemap
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupRemap
 static System.Void Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] merged, System.Single[] newPositions, System.Int16 count, System.Single[] savedRhythms, System.Single[] savedPositions, System.Int16[] staffStarts, System.Single[] staffUnits, System.Int16 staffThreshold, System.Int32 capacity)
 ```
 
-## LayoutLineupStaffStream
+## ScoreModern.RecoveredFragments.LayoutLineupStaffStream
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupStaffStream
-.ctor()
-Single[] Positions
-Single[] Rhythms
-Int16 Staff
+System.Single[] Positions
+System.Single[] Rhythms
+System.Int16 Staff
+LayoutLineupStaffStream()
 ```
 
-## LayoutLineupStaffTables
+## ScoreModern.RecoveredFragments.LayoutLineupStaffTables
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupStaffTables
 static ScoreModern.RecoveredFragments.LayoutLineupStaffTablesResult Apply(System.Single[] merged, System.Int16 mergedCount, System.Single[] storedRhythms, System.Single[] storedPositions, System.Int16 firstStored, System.Single[] outputRhythms, System.Single[] outputPositions)
 ```
 
-## LayoutLineupStaffTablesResult
+## ScoreModern.RecoveredFragments.LayoutLineupStaffTablesResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupStaffTablesResult
-.ctor()
-Int16 Count
-Int16 FirstMerged
+System.Int16 Count
+System.Int16 FirstMerged
+LayoutLineupStaffTablesResult()
 ```
 
-## LayoutLineupStreamUnion
+## ScoreModern.RecoveredFragments.LayoutLineupStreamUnion
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupStreamUnion
 static ScoreModern.RecoveredFragments.LayoutLineupStreamUnionResult Apply(System.Single[] current, System.Int16 firstCurrent, System.Int16 currentCount, System.Single[] prior, System.Int16 priorCount, System.Single[] output)
 ```
 
-## LayoutLineupStreamUnionResult
+## ScoreModern.RecoveredFragments.LayoutLineupStreamUnionResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupStreamUnionResult
-.ctor()
-Int16 Count
-Int16 CurrentIndex
-Single CurrentSum
-Single LastValue
-Int16 PriorIndex
-Single PriorSum
+System.Int16 Count
+System.Int16 CurrentIndex
+System.Single CurrentSum
+System.Single LastValue
+System.Int16 PriorIndex
+System.Single PriorSum
+LayoutLineupStreamUnionResult()
 ```
 
-## LayoutLineupSystem
+## ScoreModern.RecoveredFragments.LayoutLineupSystem
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupSystem
 static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] staffUnits, System.Single exponent, System.Int16 staffThreshold, System.Int32 capacity, ScoreModern.RecoveredFragments.LayoutLineupWorkspace work)
-static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult ApplyWithBeatPolicy(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] staffUnits, System.Single exponent, System.Int16 staffThreshold, System.Int32 capacity, ScoreModern.RecoveredFragments.LayoutLineupWorkspace work, System.Boolean returnUnequalBeats, System.Action`1[System.Int32] acknowledgeNegativePosition)
+static ScoreModern.RecoveredFragments.LayoutLineupPreparationResult ApplyWithBeatPolicy(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single[] staffUnits, System.Single exponent, System.Int16 staffThreshold, System.Int32 capacity, ScoreModern.RecoveredFragments.LayoutLineupWorkspace work, System.Boolean returnUnequalBeats, System.Action`1[System.Int32] acknowledgeNegativePosition = null)
 ```
 
-## LayoutLineupTableCompact
+## ScoreModern.RecoveredFragments.LayoutLineupTableCompact
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupTableCompact
 static System.Int16 Apply(System.Single[] source, System.Single[] destination, System.Int16 first, System.Int16 last, System.Single retainedTag)
 ```
 
-## LayoutLineupWorkspace
+## ScoreModern.RecoveredFragments.LayoutLineupWorkspace
 
 ```text
-ScoreModern.RecoveredFragments.LayoutLineupWorkspace
-.ctor()
-Int32 MaximumStaff
-Single[] Merged
-Single[] Positions
-Single[] Rhythms
-Single[] Scratch
-Boolean StandaloneJust
-Single[] Subdivisions
-Single[] Union
+System.Int32 MaximumStaff
+System.Single[] Merged
+System.Boolean Page4RoundEachPosition
+System.Single[] Positions
+System.Single[] Rhythms
+System.Boolean Scor4DurationScale
+System.Single[] Scratch
+System.Boolean StandaloneJust
+System.Single[] Subdivisions
+System.Single[] Union
+LayoutLineupWorkspace()
 ```
 
-## LayoutNoteSpacingSpan
+## ScoreModern.RecoveredFragments.LayoutNoteSpacingSpan
 
 ```text
-ScoreModern.RecoveredFragments.LayoutNoteSpacingSpan
-.ctor(System.Byte[] workspace, System.Single[] scoreWords, System.Int16[] recordReferences, System.Single[] selectedPositions, System.Boolean originalQuarterToneWidths, System.Single followingBarScale)
+LayoutNoteSpacingSpan(System.Byte[] workspace, System.Single[] scoreWords, System.Int16[] recordReferences, System.Single[] selectedPositions, System.Boolean originalQuarterToneWidths, System.Single followingBarScale)
 System.Boolean Apply()
 System.Void LoadRecord(System.Int32 wordIndex, System.Int32 countAddress)
 ```
 
-## LayoutParentPreparation
+## ScoreModern.RecoveredFragments.LayoutParentPreparation
 
 ```text
-ScoreModern.RecoveredFragments.LayoutParentPreparation
-.ctor(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Boolean alreadySorted, System.Boolean lineupMode)
-Int16 Bottom
-Boolean Complete
-Int32 DuplicateIndex
-Single Left
-Boolean Modified
+System.Int16 Bottom
+System.Boolean Complete
+System.Int32 DuplicateIndex
+System.Single Left
+System.Boolean Modified
 System.Collections.Generic.List`1[System.Int32] Origins
-Single Right
+System.Single Right
 System.Collections.Generic.List`1[System.Single[]] Rows
-Int16 Top
+System.Int16 Top
+LayoutParentPreparation(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Boolean alreadySorted, System.Boolean lineupMode)
 System.Void AnswerDuplicate(System.Boolean delete)
 ```
 
-## LayoutRestSpacing
+## ScoreModern.RecoveredFragments.LayoutRestSpacing
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRestSpacing
 static ScoreModern.RecoveredFragments.LayoutRestSpacingResult Apply(System.Single multiplier, System.Single p6, System.Single p5, System.Single p4, System.Single left, System.Int16 parameterCount, System.Single p9, System.Single p10, System.Single p15)
 ```
 
-## LayoutRestSpacingResult
+## ScoreModern.RecoveredFragments.LayoutRestSpacingResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRestSpacingResult
-.ctor()
-Single Left
-Single Multiplier
+System.Single Left
+System.Single Multiplier
 System.Nullable`1[System.Single] Parameter10Scratch
-Single Right
+System.Single Right
+LayoutRestSpacingResult()
 ```
 
-## LayoutRhythmicCollection
+## ScoreModern.RecoveredFragments.LayoutRhythmicCollection
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRhythmicCollection
-static ScoreModern.RecoveredFragments.LayoutRhythmicCollectionResult Collect(System.Single[] words, System.Int32[] starts, System.Single staff, System.Int16 inputMode, System.Int16 cursor, System.Single[] rhythms, System.Single[] positions, System.Single[] scratch, System.Action`1[System.Int32] acknowledgeNegativePosition, System.Boolean standaloneJust)
+static ScoreModern.RecoveredFragments.LayoutRhythmicCollectionResult Collect(System.Single[] words, System.Int32[] starts, System.Single staff, System.Int16 inputMode, System.Int16 cursor, System.Single[] rhythms, System.Single[] positions, System.Single[] scratch, System.Action`1[System.Int32] acknowledgeNegativePosition = null, System.Boolean standaloneJust = False)
 ```
 
-## LayoutRhythmicCollectionResult
+## ScoreModern.RecoveredFragments.LayoutRhythmicCollectionResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRhythmicCollectionResult
-.ctor()
-Int16 Count
-Boolean InvalidatedSort
-Int16 NextItem
-Single Total
+System.Int16 Count
+System.Boolean InvalidatedSort
+System.Int16 NextItem
+System.Single Total
+LayoutRhythmicCollectionResult()
 ```
 
-## LayoutRipple
+## ScoreModern.RecoveredFragments.LayoutRipple
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRipple
 static ScoreModern.RecoveredFragments.LayoutRippleResult Prepare(System.Single[] words, System.Int32[] starts, System.Int16 count, System.Int16 source, System.Int16 destination, System.Int16 bars)
 ```
 
-## LayoutRippleCoordinates
+## ScoreModern.RecoveredFragments.LayoutRippleCoordinates
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRippleCoordinates
 static System.Void Scale(System.Single[] words, System.Int16[] references, System.Single origin, System.Single factor)
 static System.Void Shift(System.Single[] words, System.Int16[] references, System.Single delta)
 static System.Void StaffShift(System.Single[] words, System.Int16[] references, System.Single delta)
 ```
 
-## LayoutRippleResult
+## ScoreModern.RecoveredFragments.LayoutRippleResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutRippleResult
-.ctor()
-Boolean Applied
-Int16 Count
-Int16 Destination
-Int16 Source
-Int32[] Starts
+System.Boolean Applied
+System.Int16 Count
+System.Int16 Destination
+System.Int16 Source
+System.Int32[] Starts
+LayoutRippleResult()
 ```
 
-## LayoutSeparateParts
+## ScoreModern.RecoveredFragments.LayoutSeparateParts
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSeparateParts
 static ScoreModern.RecoveredFragments.LayoutSeparateResult Apply(System.Collections.Generic.IList`1[System.Single[]] source, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Boolean deleteBottom)
 static System.Void Validate(System.Collections.Generic.IList`1[System.Single[]] rows, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right)
 ```
 
-## LayoutSeparateResult
+## ScoreModern.RecoveredFragments.LayoutSeparateResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSeparateResult
-.ctor()
 System.Collections.Generic.List`1[System.Int16] ChangedStaffs
-Int32 Deleted
+System.Int32 Deleted
 System.Collections.Generic.List`1[System.Int32] Origins
 System.Collections.Generic.List`1[System.Single[]] Rows
+LayoutSeparateResult()
 ```
 
-## LayoutSpacingSelection
+## ScoreModern.RecoveredFragments.LayoutSpacingSelection
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSpacingSelection
 static ScoreModern.RecoveredFragments.LayoutSpacingSelectionResult Collect(System.Single[] words, System.Int32[] starts, System.Int16 staff, System.Int16 firstStaff, System.Int16 cursor, System.Single left, System.Single right, System.Single tolerance, System.Single one, System.Single clefLimit, System.Single spanningLimit, System.Single barLimit, System.Single drawingLimit, System.Int32 capacity)
+static ScoreModern.RecoveredFragments.LayoutSpacingSelectionResult Collect(System.Single[] words, System.Int32[] starts, System.Int16 staff, System.Int16 firstStaff, System.Int16 cursor, System.Single left, System.Single right, System.Single tolerance, System.Single one, System.Single clefLimit, System.Single spanningLimit, System.Single barLimit, System.Single drawingLimit, System.Int32 capacity, System.Boolean scor4Numbers)
 static System.Void Sort(System.Single[] positions, System.Int16[] records, System.Int16 count)
 ```
 
-## LayoutSpacingSelectionResult
+## ScoreModern.RecoveredFragments.LayoutSpacingSelectionResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSpacingSelectionResult
-.ctor()
-Single[] Positions
-Int16[] RecordWords
-Int32 StoppedItem
+System.Single[] Positions
+System.Int16[] RecordWords
+System.Int32 StoppedItem
+LayoutSpacingSelectionResult()
 ```
 
-## LayoutSpacingWorkspace
+## ScoreModern.RecoveredFragments.LayoutSpacingWorkspace
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSpacingWorkspace
 static System.Byte[] Create()
 ```
 
-## LayoutSymbolSpacing
+## ScoreModern.RecoveredFragments.LayoutSymbolSpacing
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSymbolSpacing
 static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult Bar(System.Int16 previous, System.Int16 count, System.Single p5, System.Single p7, System.Single effectiveP8, System.Single p13, System.Single p14)
-static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult Key(System.Int16 previous, System.Single p7, System.Single p5, System.Boolean standaloneJust)
-static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult Meter(System.Int16 previous, System.Single minimum, System.Single[] parameters, System.Int16 count, System.Boolean standaloneJust)
+static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult Key(System.Int16 previous, System.Single p7, System.Single p5, System.Boolean standaloneJust = False)
+static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult Meter(System.Int16 previous, System.Single minimum, System.Single[] parameters, System.Int16 count, System.Boolean standaloneJust = False)
 ```
 
-## LayoutSymbolSpacingResult
+## ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult
-.ctor()
-Single Left
-Single Minimum
-Boolean ResetParameter10Scratch
-Single Right
-Single ScaleScratch
-Single Scratch
+System.Single Left
+System.Single Minimum
+System.Boolean ResetParameter10Scratch
+System.Single Right
+System.Single ScaleScratch
+System.Single Scratch
+LayoutSymbolSpacingResult()
 ```
 
-## LayoutTablatureAccidentalTable
+## ScoreModern.RecoveredFragments.LayoutTablatureAccidentalTable
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablatureAccidentalTable
-static Int32 FirstDelta
+static System.Int32 FirstDelta = -23
 static System.Int16[] Recover(System.UInt16 loadSegment)
 ```
 
-## LayoutTablatureChord
+## ScoreModern.RecoveredFragments.LayoutTablatureChord
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablatureChord
 static System.Void Apply(System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.LayoutTablatureChordNote] notes, System.Int32 staffStrings)
 ```
 
-## LayoutTablatureChordNote
+## ScoreModern.RecoveredFragments.LayoutTablatureChordNote
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablatureChordNote
-.ctor()
 ScoreModern.RecoveredFragments.LayoutTablaturePitchPlan Plan
-Single[] Row
-Int32 SortKey
+System.Single[] Row
+System.Int32 SortKey
+LayoutTablatureChordNote()
 ```
 
-## LayoutTablatureFrequency
+## ScoreModern.RecoveredFragments.LayoutTablatureFrequency
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablatureFrequency
 static System.Collections.Generic.Dictionary`2[System.Int32,System.Int16] Apply(ScoreModern.RecoveredFragments.TranspositionCollectorResult collection)
 ```
 
-## LayoutTablaturePitch
+## ScoreModern.RecoveredFragments.LayoutTablaturePitch
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablaturePitch
 static ScoreModern.RecoveredFragments.LayoutTablaturePitchPlan Prepare(System.Int32 head, System.Int32 pitch, System.Int32 accidental, System.Int16[] packed)
 static ScoreModern.RecoveredFragments.LayoutTablaturePitchPlan PrepareDrawing(System.Int32 head, System.Int32 pitch, System.Int32 accidental, System.Int16[] packed, System.Int16 capo)
 ```
 
-## LayoutTablaturePitchPlan
+## ScoreModern.RecoveredFragments.LayoutTablaturePitchPlan
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablaturePitchPlan
-.ctor()
-Int32 Absolute
-Int32 Strings
-Int32[] Tuning
+System.Int32 Absolute
+System.Int32 Strings
+System.Int32[] Tuning
+LayoutTablaturePitchPlan()
 System.Int32 SelectedString(System.Int32 requested)
 ```
 
-## LayoutTablatureRelationships
+## ScoreModern.RecoveredFragments.LayoutTablatureRelationships
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTablatureRelationships
 static System.Void Apply(System.Collections.Generic.IList`1[System.Single[]] rows, ScoreModern.RecoveredFragments.TranspositionCollectorResult collected, System.Collections.Generic.Dictionary`2[System.Int32,System.Int16] frequencies)
 ```
 
-## LayoutTextJustification
+## ScoreModern.RecoveredFragments.LayoutTextJustification
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTextJustification
 static ScoreModern.RecoveredFragments.LayoutTextJustificationResult Apply(System.Single[] words, System.Int32[] starts, System.Int16 bottom, System.Int16 top, System.Single left, System.Single right, System.Int16 textStaff, System.Single level, System.Single[] staffUnits, System.Int16 staffThreshold, System.Int32 capacity, ScoreModern.RecoveredFragments.LayoutTextJustificationWorkspace work)
 ```
 
-## LayoutTextJustificationResult
+## ScoreModern.RecoveredFragments.LayoutTextJustificationResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTextJustificationResult
-.ctor()
 ScoreModern.RecoveredFragments.JustificationGapResult Gaps
-Int16 PointCount
+System.Int16 PointCount
+LayoutTextJustificationResult()
 ```
 
-## LayoutTextJustificationWorkspace
+## ScoreModern.RecoveredFragments.LayoutTextJustificationWorkspace
 
 ```text
-ScoreModern.RecoveredFragments.LayoutTextJustificationWorkspace
-.ctor()
-Single[] Minimum
-Single[] Positions
-Single[] Slack
+System.Single[] Minimum
+System.Single[] Positions
+System.Single[] Slack
+LayoutTextJustificationWorkspace()
 ```
 
-## LayoutVerticalCollision
+## ScoreModern.RecoveredFragments.LayoutVerticalCollision
 
 ```text
-ScoreModern.RecoveredFragments.LayoutVerticalCollision
 static System.Int32 Minimum(System.Int16[] upper, System.Int16[] lower, System.Int16 radius)
 ```
 
-## LayoutVerticalContour
+## ScoreModern.RecoveredFragments.LayoutVerticalContour
 
 ```text
-ScoreModern.RecoveredFragments.LayoutVerticalContour
 static System.Void Apply(System.Int16[] x, System.Int16[] y, System.Int32 first, System.Int32 next, System.Boolean skipGuide, System.Boolean initialize, System.Int16[] minimum, System.Int16[] maximum, System.Int16 binWidth, System.Int16 bias)
 ```
 
-## LayoutVerticalPlacement
+## ScoreModern.RecoveredFragments.LayoutVerticalPlacement
 
 ```text
-ScoreModern.RecoveredFragments.LayoutVerticalPlacement
 static ScoreModern.RecoveredFragments.LayoutVerticalPlacementResult Apply(System.Int16[][] minimum, System.Int16[][] maximum, System.Boolean[] occupied, System.Single[] scales, System.Single[] bases, System.Int16 bottom, System.Int16 top, System.Int16 verticalSteps, System.Int16 radius, System.Single staffGap, System.Single[] retainedOffsets)
 ```
 
-## LayoutVerticalPlacementResult
+## ScoreModern.RecoveredFragments.LayoutVerticalPlacementResult
 
 ```text
-ScoreModern.RecoveredFragments.LayoutVerticalPlacementResult
-.ctor()
-Int16 Bottom
-Single[] Offsets
-Boolean Repeat
-Int16 Top
+System.Int16 Bottom
+System.Single[] Offsets
+System.Boolean Repeat
+System.Int16 Top
+LayoutVerticalPlacementResult()
 ```
 
-## LineClipping
+## ScoreModern.RecoveredFragments.LineClipping
 
 ```text
-ScoreModern.RecoveredFragments.LineClipping
 static ScoreModern.RecoveredFragments.LineClippingWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx, System.UInt16 si, System.UInt16 di)
 static ScoreModern.RecoveredFragments.LineClippingFlagResult ExecuteWithFlags(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx, System.UInt16 si, System.UInt16 di, System.UInt32 eflags)
 ```
 
-## LineClippingDivideFault
+## ScoreModern.RecoveredFragments.LineClippingDivideFault
 
 ```text
-ScoreModern.RecoveredFragments.LineClippingDivideFault
-.ctor()
-UInt32 EFlags
-Boolean HasEFlags
+System.UInt32 EFlags
+System.Boolean HasEFlags
+ScoreModern.RecoveredFragments.LineClippingWords Words
+LineClippingDivideFault()
+```
+
+## ScoreModern.RecoveredFragments.LineClippingFlagResult
+
+```text
+System.UInt32 EFlags
 ScoreModern.RecoveredFragments.LineClippingWords Words
 ```
 
-## LineClippingFlagResult
+## ScoreModern.RecoveredFragments.LineClippingWords
 
 ```text
-ScoreModern.RecoveredFragments.LineClippingFlagResult
-UInt32 EFlags
-ScoreModern.RecoveredFragments.LineClippingWords Words
+System.UInt16 AX
+System.UInt16 BX
+System.UInt16 CX
+System.UInt16 DI
+System.UInt16 DX
+System.UInt16 Exit
+System.UInt16 SI
 ```
 
-## LineClippingWords
+## ScoreModern.RecoveredFragments.LineDriverBody
 
 ```text
-ScoreModern.RecoveredFragments.LineClippingWords
-UInt16 AX
-UInt16 BX
-UInt16 CX
-UInt16 DI
-UInt16 DX
-UInt16 Exit
-UInt16 SI
-```
-
-## LineDriverBody
-
-```text
-ScoreModern.RecoveredFragments.LineDriverBody
 static ScoreModern.RecoveredFragments.LineDriverBodyResult Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.LineDriverBodyResult ExecuteThroughReturn(ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.LineDriverBodyResult ExecuteThroughReturnWithFlags(ScoreModern.RecoveredFragments.IByteOrResultMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State s)
 static ScoreModern.RecoveredFragments.LineDriverBodyResult ExecuteWithFlags(ScoreModern.RecoveredFragments.IByteOrResultMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## LineDriverBodyResult
+## ScoreModern.RecoveredFragments.LineDriverBodyResult
 
 ```text
-ScoreModern.RecoveredFragments.LineDriverBodyResult
-UInt16 ClippingExit
-UInt32 DefinedEFlagsMask
+System.UInt16 ClippingExit
+System.UInt32 DefinedEFlagsMask
 ScoreModern.RecoveredFragments.SignedDivide16Fault Fault
-UInt16 RasterEntry
-Boolean RetfExecuted
+System.UInt16 RasterEntry
+System.Boolean RetfExecuted
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## LinePreparation
+## ScoreModern.RecoveredFragments.LinePreparation
 
 ```text
-ScoreModern.RecoveredFragments.LinePreparation
 static ScoreModern.RecoveredFragments.LinePreparationWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 ax)
 ```
 
-## LinePreparationWords
+## ScoreModern.RecoveredFragments.LinePreparationWords
 
 ```text
-ScoreModern.RecoveredFragments.LinePreparationWords
-UInt16 AX
-UInt16 BX
-UInt16 CX
-UInt16 DI
-UInt16 DX
-UInt16 ES
+System.UInt16 AX
+System.UInt16 BX
+System.UInt16 CX
+System.UInt16 DI
+System.UInt16 DX
+System.UInt16 ES
 ```
 
-## Mode12BiosTransfer
+## ScoreModern.RecoveredFragments.Mode12BiosTransfer
 
 ```text
-ScoreModern.RecoveredFragments.Mode12BiosTransfer
-.ctor(ScoreModern.RecoveredFragments.Mode12VideoServices services, System.UInt16 measuredCallbackSegment, System.UInt16 measuredIretOffset)
+Mode12BiosTransfer(ScoreModern.RecoveredFragments.Mode12VideoServices services, System.UInt16 measuredCallbackSegment, System.UInt16 measuredIretOffset)
 ScoreModern.RecoveredFragments.SignedDivide16State TransferToBios(ScoreModern.RecoveredFragments.IScreenHookMemory m, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## Mode12CellSurface
+## ScoreModern.RecoveredFragments.Mode12CellSurface
 
 ```text
-ScoreModern.RecoveredFragments.Mode12CellSurface
-.ctor()
+System.Int64 Revision { get; set; }
+Mode12CellSurface()
 System.Byte Background(System.Int32 row, System.Int32 column)
 ScoreModern.RecoveredFragments.Mode12Glyph[] Cell(System.Int32 row, System.Int32 column)
 System.Void Clear()
 System.Void Scroll(System.Int32 top, System.Int32 left, System.Int32 bottom, System.Int32 right, System.Int32 lines, System.Byte background)
 System.Void WriteGlyph(System.Int32 row, System.Int32 column, System.Byte character, System.Byte color)
-Int64 Revision
 ```
 
-## Mode12Glyph
+## ScoreModern.RecoveredFragments.Mode12Glyph
 
 ```text
-ScoreModern.RecoveredFragments.Mode12Glyph
-.ctor(System.Byte c, System.Byte a)
-Byte Character
-Byte Color
+System.Byte Character
+System.Byte Color
+Mode12Glyph(System.Byte c, System.Byte a)
 ```
 
-## Mode12Plane2Surface
+## ScoreModern.RecoveredFragments.Mode12Plane2Surface
 
 ```text
-ScoreModern.RecoveredFragments.Mode12Plane2Surface
-.ctor(System.Byte[] initial, ScoreModern.RecoveredFragments.IMode12GlyphSource glyphs)
-Byte[] Bytes
+System.Byte[] Bytes
+Mode12Plane2Surface(System.Byte[] initial, ScoreModern.RecoveredFragments.IMode12GlyphSource glyphs)
 System.Void Scroll(System.Int32 top, System.Int32 left, System.Int32 bottom, System.Int32 right, System.Int32 lines, System.Byte background)
 System.Void WriteGlyph(System.Int32 row, System.Int32 column, System.Byte character, System.Byte color)
 ```
 
-## Mode12VideoServices
+## ScoreModern.RecoveredFragments.Mode12VideoServices
 
 ```text
-ScoreModern.RecoveredFragments.Mode12VideoServices
-.ctor(ScoreModern.RecoveredFragments.IMode12Surface output)
+Mode12VideoServices(ScoreModern.RecoveredFragments.IMode12Surface output)
 ScoreModern.RecoveredFragments.SignedDivide16State ExecuteService(ScoreModern.RecoveredFragments.IScreenHookMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## NumericConverter
+## ScoreModern.RecoveredFragments.NumericConverter
 
 ```text
-ScoreModern.RecoveredFragments.NumericConverter
 static ScoreModern.RecoveredFragments.NumericConverterResult Execute(ScoreModern.RecoveredFragments.INumericConverterContext m, System.UInt16 statusSegment, System.UInt16 statusOffset, System.UInt16 inputSegment, System.UInt16 inputOffset)
 ```
 
-## NumericConverterResult
+## ScoreModern.RecoveredFragments.NumericConverterResult
 
 ```text
-ScoreModern.RecoveredFragments.NumericConverterResult
-.ctor(System.UInt16 ax, System.UInt16 dx, System.UInt16 status)
-UInt16 AX
-UInt16 DX
-UInt16 Status
+System.UInt16 AX
+System.UInt16 DX
+System.UInt16 Status
+NumericConverterResult(System.UInt16 ax, System.UInt16 dx, System.UInt16 status)
 ```
 
-## OutputCountAdvance
+## ScoreModern.RecoveredFragments.OutputCountAdvance
 
 ```text
-ScoreModern.RecoveredFragments.OutputCountAdvance
 static ScoreModern.RecoveredFragments.OutputCountResult Execute(ScoreModern.RecoveredFragments.ISpanBookkeepingMemory m, System.UInt16 ss, System.UInt16 countOffset, System.UInt16 ds, System.UInt16 descriptorSi)
 ```
 
-## OutputCountResult
+## ScoreModern.RecoveredFragments.OutputCountResult
 
 ```text
-ScoreModern.RecoveredFragments.OutputCountResult
-.ctor(System.UInt16 ax, System.UInt16 dx)
-UInt16 AX
-UInt16 DX
+System.UInt16 AX
+System.UInt16 DX
+OutputCountResult(System.UInt16 ax, System.UInt16 dx)
 ```
 
-## PackedDrawingParts
+## ScoreModern.RecoveredFragments.PackedDrawingParts
 
 ```text
-ScoreModern.RecoveredFragments.PackedDrawingParts
-Int16 FinalAX
-Int16 High
-Int16 Low
-Int16 Middle
+System.Int16 FinalAX
+System.Int16 High
+System.Int16 Low
+System.Int16 Middle
 ```
 
-## PackedDrawingWord
+## ScoreModern.RecoveredFragments.PackedDrawingWord
 
 ```text
-ScoreModern.RecoveredFragments.PackedDrawingWord
 static ScoreModern.RecoveredFragments.PackedDrawingParts Decode(System.Int16 word)
 ```
 
-## PageCoordinates
+## ScoreModern.RecoveredFragments.PageCoordinates
 
 ```text
-ScoreModern.RecoveredFragments.PageCoordinates
-.ctor()
-Single[] Bases
-Single[] Scales
+System.Single[] Bases
+System.Single[] Scales
+PageCoordinates()
 ScoreModern.RecoveredFragments.PageItemContext Prepare(System.Single[] p, System.Int32 staff, System.Int32 code)
 ScoreModern.RecoveredFragments.PageStaffResult SetStaff(System.Single[] p, System.Boolean alternateUnits)
 ScoreModern.RecoveredFragments.PageStaffResult SetStaff(System.Single[] p, System.Int32 staff, System.Int16 referenceWord, System.Boolean alternateUnits)
 System.Single Vertical(System.Int32 staff, System.Single value)
 ```
 
-## PageItemContext
+## ScoreModern.RecoveredFragments.PageItemContext
 
 ```text
-ScoreModern.RecoveredFragments.PageItemContext
-Int16 HorizontalWord
-Single Scale
-Boolean ScreenHorizontalLimit
-Single VerticalInput
-Single X
-Single Y
+System.Int16 HorizontalWord
+System.Single Scale
+System.Boolean ScreenHorizontalLimit
+System.Single VerticalInput
+System.Single X
+System.Single Y
 ```
 
-## PageStaffLine
+## ScoreModern.RecoveredFragments.PageStaffLine
 
 ```text
-ScoreModern.RecoveredFragments.PageStaffLine
-Single Left
-Single Right
-Single Y
+System.Single Left
+System.Single Right
+System.Single Y
 ```
 
-## PageStaffResult
+## ScoreModern.RecoveredFragments.PageStaffResult
 
 ```text
-ScoreModern.RecoveredFragments.PageStaffResult
-.ctor()
-Single Base
-Single Bottom
-Int32 LineCount
+System.Single Base
+System.Single Bottom
+System.Int32 LineCount
 System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.PageStaffLine] Lines
-Single Scale
-Single Spacing
-Int16 WidthSelector
+System.Single Scale
+System.Single Spacing
+System.Int16 WidthSelector
+PageStaffResult()
 ```
 
-## ParameterWordReader
+## ScoreModern.RecoveredFragments.ParameterWordReader
 
 ```text
-ScoreModern.RecoveredFragments.ParameterWordReader
 static System.UInt16 Execute(ScoreModern.RecoveredFragments.IParameterWordMemory m, System.UInt16 cursorSegment, System.UInt16 cursorOffset, System.UInt16 destinationSegment, System.UInt16 destinationOffset)
 ```
 
-## PointBufferAppend
+## ScoreModern.RecoveredFragments.PointBufferAppend
 
 ```text
-ScoreModern.RecoveredFragments.PointBufferAppend
 static ScoreModern.RecoveredFragments.PointBufferWords Execute(ScoreModern.RecoveredFragments.IPointBufferMemory m, System.UInt16 ds, System.UInt16 ss, System.UInt16 bp)
 static ScoreModern.RecoveredFragments.PointBufferWords ExecuteWithFlags(ScoreModern.RecoveredFragments.IPointBufferMemory m, System.UInt16 ds, System.UInt16 ss, System.UInt16 bp, System.UInt32 flags)
 ```
 
-## PointBufferWords
+## ScoreModern.RecoveredFragments.PointBufferWords
 
 ```text
-ScoreModern.RecoveredFragments.PointBufferWords
-UInt16 AX
-UInt16 BX
-UInt32 DefinedEFlagsMask
-UInt32 EFlags
-UInt16 ES
-UInt16 SI
+System.UInt16 AX
+System.UInt16 BX
+System.UInt32 DefinedEFlagsMask
+System.UInt32 EFlags
+System.UInt16 ES
+System.UInt16 SI
 ```
 
-## PrefixPreparationResult
+## ScoreModern.RecoveredFragments.PrefixPreparationResult
 
 ```text
-ScoreModern.RecoveredFragments.PrefixPreparationResult
-.ctor(System.UInt16 ax, System.UInt16 bp, System.UInt16 sp, System.UInt16 si, System.UInt16 di)
-UInt16 AX
-UInt16 BP
-UInt16 DI
-UInt16 RelativeTargetSegment
-UInt16 SI
-UInt16 SP
-UInt16 TargetOffset
+System.UInt16 AX
+System.UInt16 BP
+System.UInt16 DI
+System.UInt16 RelativeTargetSegment
+System.UInt16 SI
+System.UInt16 SP
+System.UInt16 TargetOffset
+PrefixPreparationResult(System.UInt16 ax, System.UInt16 bp, System.UInt16 sp, System.UInt16 si, System.UInt16 di)
 ```
 
-## PrefixWritePreparation
+## ScoreModern.RecoveredFragments.PrefixWritePreparation
 
 ```text
-ScoreModern.RecoveredFragments.PrefixWritePreparation
 static ScoreModern.RecoveredFragments.PrefixPreparationResult Prepare(ScoreModern.RecoveredFragments.IPrefixPreparationMemory m, System.UInt16 ss, System.UInt16 ds, System.UInt16 cs, System.UInt16 sp, System.UInt16 bp, System.UInt16 si, System.UInt16 di)
 ```
 
-## PrimitiveTextGeometry
+## ScoreModern.RecoveredFragments.PrimitiveTextGeometry
 
 ```text
-ScoreModern.RecoveredFragments.PrimitiveTextGeometry
 static ScoreModern.RecoveredFragments.PrimitiveTextPoint Point(System.Int16 packed, ScoreModern.RecoveredFragments.PrimitiveTextScale scale)
 static ScoreModern.RecoveredFragments.PrimitiveTextScale Prepare(System.Single horizontal, System.Single vertical, System.Single staff, System.Single x, System.Single y, System.Single left, System.Single baseline)
 ```
 
-## PrimitiveTextPoint
+## ScoreModern.RecoveredFragments.PrimitiveTextPoint
 
 ```text
-ScoreModern.RecoveredFragments.PrimitiveTextPoint
-Boolean CommandOnly
-Int32 MarkerWordBack
-Int16 Operation
+System.Boolean CommandOnly
+System.Int32 MarkerWordBack
+System.Int16 Operation
 System.Nullable`1[System.Int16] RetainedMarkerY
-Single X
-Single Y
+System.Single X
+System.Single Y
 ```
 
-## PrimitiveTextScale
+## ScoreModern.RecoveredFragments.PrimitiveTextScale
 
 ```text
-ScoreModern.RecoveredFragments.PrimitiveTextScale
-Single OriginX
-Single OriginY
-Single X
-Single Y
+System.Single OriginX
+System.Single OriginY
+System.Single X
+System.Single Y
 ```
 
-## PrintedGlyphDefinition
+## ScoreModern.RecoveredFragments.PrintedGlyphDefinition
 
 ```text
-ScoreModern.RecoveredFragments.PrintedGlyphDefinition
 static System.String Fixed3(System.Single value)
 static ScoreModern.RecoveredFragments.PrintedGlyphVertex Vertex(System.Int16 x, System.Int16 y, System.Int16 operation)
 ```
 
-## PrintedGlyphVertex
+## ScoreModern.RecoveredFragments.PrintedGlyphVertex
 
 ```text
-ScoreModern.RecoveredFragments.PrintedGlyphVertex
-Int16 Operation
-Int32 X
-Int32 Y
+System.Int16 Operation
+System.Int32 X
+System.Int32 Y
 ```
 
-## PrintedHeadRequest
+## ScoreModern.RecoveredFragments.PrintedHeadRequest
 
 ```text
-ScoreModern.RecoveredFragments.PrintedHeadRequest
-Int32 Glyph
+System.Int32 Glyph
 System.String Scale
 System.String Width
-Int16 X
-Int16 Y
+System.Int16 X
+System.Int16 Y
 ```
 
-## PrintRotation
+## ScoreModern.RecoveredFragments.PrintRotation
 
 ```text
-ScoreModern.RecoveredFragments.PrintRotation
 static System.Single Apply(System.Single size, System.Boolean before, System.Boolean after)
 static System.Int32 Offset(System.Int32 candidate, System.Boolean before, System.Boolean after)
 ```
 
-## RasterDispatch
+## ScoreModern.RecoveredFragments.RasterDispatch
 
 ```text
-ScoreModern.RecoveredFragments.RasterDispatch
 static ScoreModern.RecoveredFragments.RasterDispatchWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx, System.UInt32 flags)
 ```
 
-## RasterDispatchWords
+## ScoreModern.RecoveredFragments.RasterDispatchWords
 
 ```text
-ScoreModern.RecoveredFragments.RasterDispatchWords
-UInt16 BX
-UInt16 CX
-UInt16 DX
-UInt32 EFlags
-UInt16 Exit
+System.UInt16 BX
+System.UInt16 CX
+System.UInt16 DX
+System.UInt32 EFlags
+System.UInt16 Exit
 ```
 
-## RasterStatusFlags
+## ScoreModern.RecoveredFragments.RasterStatusFlags
 
 ```text
-ScoreModern.RecoveredFragments.RasterStatusFlags
 static System.UInt32 Add16(System.UInt32 flags, System.UInt16 a, System.UInt16 b)
 static System.UInt32 Dec16(System.UInt32 flags, System.UInt16 a)
 static System.UInt32 Inc16(System.UInt32 flags, System.UInt16 a)
@@ -2423,19 +2177,17 @@ static System.UInt32 Sub16(System.UInt32 flags, System.UInt16 a, System.UInt16 b
 static System.UInt32 Sub8(System.UInt32 flags, System.Byte a, System.Byte b)
 ```
 
-## RealModeIret16
+## ScoreModern.RecoveredFragments.RealModeIret16
 
 ```text
-ScoreModern.RecoveredFragments.RealModeIret16
 static ScoreModern.RecoveredFragments.SignedDivide16State Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## RetainedParameterStorage
+## ScoreModern.RecoveredFragments.RetainedParameterStorage
 
 ```text
-ScoreModern.RecoveredFragments.RetainedParameterStorage
-.ctor()
-static Int32 Capacity
+static System.Int32 Capacity = 56800
+RetainedParameterStorage()
 ScoreModern.RecoveredFragments.RetainedParameterStorage Clone()
 System.Void CommitReplay(System.Byte[] active)
 System.Void CopyBytes(System.Int32 source, System.Int32 destination, System.Int32 count)
@@ -2451,424 +2203,399 @@ System.Byte[] UndefinedWord()
 System.Void WriteKnown(System.Int32 offset, System.Byte[] bytes)
 ```
 
-## ScorlasFilePlacement
+## ScoreModern.RecoveredFragments.ScoreVersionControls
 
 ```text
-ScoreModern.RecoveredFragments.ScorlasFilePlacement
-Int32 BottomShift
-Int32 Cumulative
-Int32 Delta
-Int32 DscBottom
-Int32 DscTop
-Int32 NextAdvance
-Int32 NormalizedHeight
-Int32 OverallHeight
-Int32 RawHeight
+static System.Single DrawingOffset(System.Boolean scor4, System.Single value)
+static System.Single HarpOffset(System.Boolean scor4, System.Single value)
+static System.Single Horizontal(System.Single value)
+static System.Int16 MeterThicknessSelector(System.Boolean scor4, System.Single value)
+static System.Boolean MeterThicknessSupported(System.Boolean scor4, System.Single value)
+static ScoreModern.RecoveredFragments.LayoutSymbolSpacingResult NumberSpacing(System.Single size, System.Single offset, System.Single staffScale)
+static System.Boolean SlurEndpointMode(System.Boolean scor4, System.Single p16)
+static System.Boolean SlurEndpointOverride(System.Boolean scor4, System.Single[] p)
+static System.Single[] SlurParameters(System.Boolean scor4, System.Single[] parameters)
+static System.Int16 SlurSubtype(System.Boolean scor4, System.Single p8, System.Single p16)
 ```
 
-## ScorlasFilePlacementState
+## ScoreModern.RecoveredFragments.ScorlasFilePlacement
 
 ```text
-ScoreModern.RecoveredFragments.ScorlasFilePlacementState
-.ctor()
+System.Int32 BottomShift
+System.Int32 Cumulative
+System.Int32 Delta
+System.Int32 DscBottom
+System.Int32 DscTop
+System.Int32 NextAdvance
+System.Int32 NormalizedHeight
+System.Int32 OverallHeight
+System.Int32 RawHeight
+```
+
+## ScoreModern.RecoveredFragments.ScorlasFilePlacementState
+
+```text
+ScorlasFilePlacementState()
 ScoreModern.RecoveredFragments.ScorlasFilePlacement Add(System.Int16 minimum, System.Int16 maximum, System.Int32 guide)
 ```
 
-## ScorlasGuideConversion
+## ScoreModern.RecoveredFragments.ScorlasGuideConversion
 
 ```text
-ScoreModern.RecoveredFragments.ScorlasGuideConversion
 static System.Int32 Convert(System.Single value, System.Boolean metric)
 ```
 
-## ScorlasStatisticsArithmetic
+## ScoreModern.RecoveredFragments.ScorlasStatisticsArithmetic
 
 ```text
-ScoreModern.RecoveredFragments.ScorlasStatisticsArithmetic
 static System.Single Height(System.Int32 cumulativeHeight, System.Single printSize, System.Boolean metric)
 ```
 
-## ScreenForwardResult
+## ScoreModern.RecoveredFragments.ScreenForwardResult
 
 ```text
-ScoreModern.RecoveredFragments.ScreenForwardResult
-.ctor(System.UInt16 dx, System.UInt16 cx, System.UInt16 bx, System.UInt16 ds, System.UInt16 sp, System.UInt16 ip, System.UInt16 cs)
-UInt16 BX
-UInt16 CS
-UInt16 CX
-UInt16 DS
-UInt16 DX
-UInt16 IP
-UInt16 SP
+System.UInt16 BX
+System.UInt16 CS
+System.UInt16 CX
+System.UInt16 DS
+System.UInt16 DX
+System.UInt16 IP
+System.UInt16 SP
+ScreenForwardResult(System.UInt16 dx, System.UInt16 cx, System.UInt16 bx, System.UInt16 ds, System.UInt16 sp, System.UInt16 ip, System.UInt16 cs)
 ```
 
-## ScreenHookDecisions
+## ScoreModern.RecoveredFragments.ScreenHookDecisions
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookDecisions
 static System.UInt16 DecrementSavedRow(ScoreModern.RecoveredFragments.IStringBlockMemory m, System.UInt16 ds)
 static System.Boolean ShouldProbeCursor(ScoreModern.RecoveredFragments.IStringBlockMemory m, System.UInt16 ds, System.UInt16 ax)
 static System.Boolean ShouldScroll(ScoreModern.RecoveredFragments.IStringBlockMemory m, System.UInt16 ds, System.Byte al, System.UInt16 dx)
 ```
 
-## ScreenHookForwarding
+## ScoreModern.RecoveredFragments.ScreenHookForwarding
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookForwarding
 static ScoreModern.RecoveredFragments.ScreenForwardResult RestoreAndResolve(ScoreModern.RecoveredFragments.IScreenForwardMemory m, System.UInt16 ss, System.UInt16 sp, System.UInt16 codeSegment)
 ```
 
-## ScreenHookInterrupt
+## ScoreModern.RecoveredFragments.ScreenHookInterrupt
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookInterrupt
 static ScoreModern.RecoveredFragments.SignedDivide16State Enter(ScoreModern.RecoveredFragments.IScreenHookMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## ScreenHookInterruptEffects
+## ScoreModern.RecoveredFragments.ScreenHookInterruptEffects
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookInterruptEffects
-.ctor(ScoreModern.RecoveredFragments.IScreenBiosTransferEffects biosEffects, ScoreModern.RecoveredFragments.ICapacityInterruptEffects otherInterruptEffects, System.UInt16 hookedSegment, System.UInt16 hookedOffset, System.UInt16 relocatedDataSegment)
+ScreenHookInterruptEffects(ScoreModern.RecoveredFragments.IScreenBiosTransferEffects biosEffects, ScoreModern.RecoveredFragments.ICapacityInterruptEffects otherInterruptEffects, System.UInt16 hookedSegment, System.UInt16 hookedOffset, System.UInt16 relocatedDataSegment)
 ScoreModern.RecoveredFragments.SignedDivide16State Interrupt(System.Byte number, ScoreModern.RecoveredFragments.IHorizontalRasterMemory memory, ScoreModern.RecoveredFragments.SignedDivide16State state)
 ```
 
-## ScreenHookOutcome
+## ScoreModern.RecoveredFragments.ScreenHookOutcome
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookOutcome
-Forwarded = 0
-ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.ScreenHookOutcome ExternalControlTransfer = 1
+static ScoreModern.RecoveredFragments.ScreenHookOutcome Forwarded = 0
+System.Int32 value__
 ```
 
-## ScreenHookResult
+## ScoreModern.RecoveredFragments.ScreenHookResult
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookResult
 ScoreModern.RecoveredFragments.ScreenHookOutcome Outcome
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## ScreenHookRoutine
+## ScoreModern.RecoveredFragments.ScreenHookRoutine
 
 ```text
-ScoreModern.RecoveredFragments.ScreenHookRoutine
 static ScoreModern.RecoveredFragments.ScreenHookResult Execute(ScoreModern.RecoveredFragments.IScreenHookMemory m, ScoreModern.RecoveredFragments.ICapacityInterruptEffects fx, ScoreModern.RecoveredFragments.SignedDivide16State s, System.UInt16 dataSegment)
 ```
 
-## SelectorCopy
+## ScoreModern.RecoveredFragments.SelectorCopy
 
 ```text
-ScoreModern.RecoveredFragments.SelectorCopy
 static System.Boolean Apply(System.Byte[] dataSegment, System.Int16 state, System.Boolean directionFlag)
 ```
 
-## SelectorRoutine
+## ScoreModern.RecoveredFragments.SelectorRoutine
 
 ```text
-ScoreModern.RecoveredFragments.SelectorRoutine
 static System.Void Execute(ScoreModern.RecoveredFragments.ISelectorContext context, System.UInt16 parameterSegment, System.UInt16 parameterOffset)
 ```
 
-## SignedDivide16
+## ScoreModern.RecoveredFragments.SignedDivide16
 
 ```text
-ScoreModern.RecoveredFragments.SignedDivide16
 static ScoreModern.RecoveredFragments.SignedDivide16Result Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, ScoreModern.RecoveredFragments.SignedDivide16State s)
 ```
 
-## SignedDivide16Fault
+## ScoreModern.RecoveredFragments.SignedDivide16Fault
 
 ```text
-ScoreModern.RecoveredFragments.SignedDivide16Fault
-None = 0
-ZeroDivisor = 1
-QuotientOverflow = 2
+static ScoreModern.RecoveredFragments.SignedDivide16Fault None = 0
+static ScoreModern.RecoveredFragments.SignedDivide16Fault QuotientOverflow = 2
+System.Int32 value__
+static ScoreModern.RecoveredFragments.SignedDivide16Fault ZeroDivisor = 1
 ```
 
-## SignedDivide16Result
+## ScoreModern.RecoveredFragments.SignedDivide16Result
 
 ```text
-ScoreModern.RecoveredFragments.SignedDivide16Result
-UInt32 DefinedEFlagsMask
+System.UInt32 DefinedEFlagsMask
 ScoreModern.RecoveredFragments.SignedDivide16Fault Fault
 ScoreModern.RecoveredFragments.SignedDivide16State State
 ```
 
-## SignedDivide16State
+## ScoreModern.RecoveredFragments.SignedDivide16State
 
 ```text
-ScoreModern.RecoveredFragments.SignedDivide16State
-UInt16 AX
-UInt16 BP
-UInt16 BX
-UInt16 CS
-UInt16 CX
-UInt16 DI
-UInt16 DS
-UInt16 DX
-UInt32 EFlags
-UInt16 ES
-UInt16 IP
-UInt16 SI
-UInt16 SP
-UInt16 SS
+System.UInt16 AX
+System.UInt16 BP
+System.UInt16 BX
+System.UInt16 CS
+System.UInt16 CX
+System.UInt16 DI
+System.UInt16 DS
+System.UInt16 DX
+System.UInt32 EFlags
+System.UInt16 ES
+System.UInt16 IP
+System.UInt16 SI
+System.UInt16 SP
+System.UInt16 SS
 ```
 
-## SingleFixedDecimal
+## ScoreModern.RecoveredFragments.SingleFixedDecimal
 
 ```text
-ScoreModern.RecoveredFragments.SingleFixedDecimal
 static System.String Format(System.Single value, System.Int32 decimalPlaces)
 ```
 
-## SlopedRaster
+## ScoreModern.RecoveredFragments.SlopedRaster
 
 ```text
-ScoreModern.RecoveredFragments.SlopedRaster
 static ScoreModern.RecoveredFragments.VerticalRasterWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx)
 static ScoreModern.RecoveredFragments.VerticalRasterWords ExecuteWithFlags(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx, System.UInt32 eflags)
 ```
 
-## SlurGeometry
+## ScoreModern.RecoveredFragments.SlurGeometry
 
 ```text
-ScoreModern.RecoveredFragments.SlurGeometry
 static ScoreModern.RecoveredFragments.SlurGeometryResult Build(System.Single[] parameters, ScoreModern.RecoveredFragments.SlurOriginContext context, System.Boolean printed, System.Single configuredControl, ScoreModern.RecoveredFragments.SlurVectorBuffer caller, System.Boolean rejectInvalidTrims)
 ```
 
-## SlurGeometryResult
+## ScoreModern.RecoveredFragments.SlurGeometryResult
 
 ```text
-ScoreModern.RecoveredFragments.SlurGeometryResult
-.ctor()
 ScoreModern.RecoveredFragments.SlurVectorBuffer Buffer
 System.Nullable`1[ScoreModern.RecoveredFragments.TupletPlacement] Number
-Int32 Root
+System.Int32 Root
+SlurGeometryResult()
 ```
 
-## SlurLineWidth
+## ScoreModern.RecoveredFragments.SlurLineWidth
 
 ```text
-ScoreModern.RecoveredFragments.SlurLineWidth
+System.Single DefaultUnit { get; }
 static System.Single Field(System.Int16 selector, System.Int16 basis, System.Single unit)
 static System.String Format(System.Single value)
 static System.Single Printed(System.Int16 selector)
 static System.Single RawField(System.Int16 selector, System.Int16 basis, System.Single unit)
-Single DefaultUnit
 ```
 
-## SlurOriginContext
+## ScoreModern.RecoveredFragments.SlurOriginContext
 
 ```text
-ScoreModern.RecoveredFragments.SlurOriginContext
-.ctor()
-Single LeftX
-Single LeftY
-Single RightY
-Single Scale
+System.Single LeftX
+System.Single LeftY
+System.Single RightY
+System.Single Scale
+System.Boolean Scor4
+SlurOriginContext()
 ```
 
-## SlurOrigins
+## ScoreModern.RecoveredFragments.SlurOrigins
 
 ```text
-ScoreModern.RecoveredFragments.SlurOrigins
 static ScoreModern.RecoveredFragments.SlurOriginState Distance(System.Single[] p, ScoreModern.RecoveredFragments.SlurOriginContext c)
 static ScoreModern.RecoveredFragments.SlurOriginState Prepare(System.Single[] p, ScoreModern.RecoveredFragments.SlurOriginContext c)
 ```
 
-## SlurOriginState
+## ScoreModern.RecoveredFragments.SlurOriginState
 
 ```text
-ScoreModern.RecoveredFragments.SlurOriginState
-.ctor()
-Single CurveCenter
-Single DeltaY
-Single EffectiveStartFraction
-Single Height
-Single HorizontalSpan
-Single LeftX
-Single LeftY
-Single Length
-Int16 NumberWord
-Int16 OffsetWord
-Single OriginalLeft
-Single OriginalRight
-Single RightX
-Single StartFraction
-Single StopFraction
-Single WorkingRight
+System.Single CurveCenter
+System.Single DeltaY
+System.Single EffectiveStartFraction
+System.Single Height
+System.Single HorizontalSpan
+System.Single LeftX
+System.Single LeftY
+System.Single Length
+System.Int16 NumberWord
+System.Int16 OffsetWord
+System.Single OriginalLeft
+System.Single OriginalRight
+System.Single RightX
+System.Single StartFraction
+System.Single StopFraction
+System.Single WorkingRight
+SlurOriginState()
 ```
 
-## SlurPlotRequest
+## ScoreModern.RecoveredFragments.SlurPlotRequest
 
 ```text
-ScoreModern.RecoveredFragments.SlurPlotRequest
-.ctor(System.Int16 k, System.Int16 x, System.Int16 y)
-Int16 Kind
-Int16 X
-Int16 Y
+System.Int16 Kind
+System.Int16 X
+System.Int16 Y
+SlurPlotRequest(System.Int16 k, System.Int16 x, System.Int16 y)
 ```
 
-## SlurPostprocess
+## ScoreModern.RecoveredFragments.SlurPostprocess
 
 ```text
-ScoreModern.RecoveredFragments.SlurPostprocess
 static ScoreModern.RecoveredFragments.SlurVectorBuffer From(ScoreModern.RecoveredFragments.SlurSampleResult sample, ScoreModern.RecoveredFragments.SlurThicknessResult thickness, System.Boolean printed)
 static System.Void Pattern(ScoreModern.RecoveredFragments.SlurVectorBuffer b, System.Single[] p, System.Single scale, System.Boolean printed)
 static System.Void Rotate(ScoreModern.RecoveredFragments.SlurVectorBuffer b, ScoreModern.RecoveredFragments.SlurOriginState o)
 static System.Void Trim(ScoreModern.RecoveredFragments.SlurVectorBuffer b, System.Single[] p, System.Single start, System.Single stop, System.Boolean printed)
 ```
 
-## SlurSampleResult
+## ScoreModern.RecoveredFragments.SlurSampleResult
 
 ```text
-ScoreModern.RecoveredFragments.SlurSampleResult
-.ctor()
-Int32 Count
-Single Exponent
-Single FinalIncrement
-Single FinalX
-Single HalfSteps
-Single Height
+System.Int32 Count
+System.Single Exponent
+System.Single FinalIncrement
+System.Single FinalX
+System.Single HalfSteps
+System.Single Height
 ScoreModern.RecoveredFragments.SlurOriginState Origin
-Single Step
-Int16[] X
-Int16[] Y
+System.Single Step
+System.Int16[] X
+System.Int16[] Y
+SlurSampleResult()
 ```
 
-## SlurSampling
+## ScoreModern.RecoveredFragments.SlurSampling
 
 ```text
-ScoreModern.RecoveredFragments.SlurSampling
 static ScoreModern.RecoveredFragments.SlurSampleResult Build(System.Single[] p, ScoreModern.RecoveredFragments.SlurOriginContext context, System.Boolean printed)
 static ScoreModern.RecoveredFragments.SlurSampleResult BuildState(System.Single[] p, ScoreModern.RecoveredFragments.SlurOriginContext context, ScoreModern.RecoveredFragments.SlurOriginState o, System.Boolean printed, System.Boolean trimmed)
 ```
 
-## SlurThickness
+## ScoreModern.RecoveredFragments.SlurThickness
 
 ```text
-ScoreModern.RecoveredFragments.SlurThickness
 static ScoreModern.RecoveredFragments.SlurThicknessResult Build(System.Single[] p, ScoreModern.RecoveredFragments.SlurOriginContext context, ScoreModern.RecoveredFragments.SlurSampleResult sample, System.Single configuredControl)
 static System.Void Reflect(System.Single[] p, ScoreModern.RecoveredFragments.SlurSampleResult sample, System.Int16[] y, System.Boolean printed)
 ```
 
-## SlurThicknessResult
+## ScoreModern.RecoveredFragments.SlurThicknessResult
 
 ```text
-ScoreModern.RecoveredFragments.SlurThicknessResult
-.ctor()
-Single EffectiveControl
-Int32 FinalIncrement
-Single FinalRamp
-Single RampStep
-Int32 Target
-Single Thickness
-Int16[] X
-Int16[] Y
+System.Single EffectiveControl
+System.Int32 FinalIncrement
+System.Single FinalRamp
+System.Single RampStep
+System.Int32 Target
+System.Single Thickness
+System.Int16[] X
+System.Int16[] Y
+SlurThicknessResult()
 ```
 
-## SlurVectorBuffer
+## ScoreModern.RecoveredFragments.SlurVectorBuffer
 
 ```text
-ScoreModern.RecoveredFragments.SlurVectorBuffer
-.ctor()
-.ctor(System.UInt16 xSegment, System.UInt16 ySegment)
-Single Angle
-Int32 Base
-Int32 Capacity
-Single Cos
-Int32 CurveEnd
-Int32 End
-Int32 SampleCount
-Single Sin
+System.Single Angle
+System.Int32 Base
+System.Int32 Capacity
+System.Single Cos
+System.Int32 CurveEnd
+System.Int32 End
+System.Int32 SampleCount
+System.Single Sin
 ScoreModern.RecoveredFragments.SlurWordSegment X
 ScoreModern.RecoveredFragments.SlurWordSegment Y
+SlurVectorBuffer()
+SlurVectorBuffer(System.UInt16 xSegment, System.UInt16 ySegment)
 System.Void Copy(System.Int32 destination, System.Int32 source)
 System.Int16[] ExtractX()
 System.Int16[] ExtractY()
 System.Void Move(System.Int32 destination, System.Int32 source, System.Int32 count)
 ```
 
-## SlurVectorCommands
+## ScoreModern.RecoveredFragments.SlurVectorCommands
 
 ```text
-ScoreModern.RecoveredFragments.SlurVectorCommands
 static System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.SlurPlotRequest] Decode(ScoreModern.RecoveredFragments.SlurVectorBuffer b, System.Int32 root, System.Boolean appendRestore, System.Boolean printed)
 ```
 
-## SlurWordSegment
+## ScoreModern.RecoveredFragments.SlurWordSegment
 
 ```text
-ScoreModern.RecoveredFragments.SlurWordSegment
-.ctor(System.Byte[] bytes, System.Int32 address)
-Int16 Item [Int32]
-Int32 Length
+System.Int16 Item { get; set; }
+System.Int32 Length { get; }
+SlurWordSegment(System.Byte[] bytes, System.Int32 address)
 ```
 
-## SpanBookkeeping
+## ScoreModern.RecoveredFragments.SpanBookkeeping
 
 ```text
-ScoreModern.RecoveredFragments.SpanBookkeeping
 static System.UInt16 Execute(ScoreModern.RecoveredFragments.ISpanBookkeepingMemory m, System.UInt16 ss, System.UInt16 sourceArgumentOffset, System.UInt16 ds, System.UInt16 remainingSi, System.UInt16 transferredDi)
 ```
 
-## StaffHeightLayout
+## ScoreModern.RecoveredFragments.StaffHeightLayout
 
 ```text
-ScoreModern.RecoveredFragments.StaffHeightLayout
 static System.Single[] Targets(System.Single[] positions, System.Single[] sizes, System.Int32 maximum, System.Int32[] groups, System.Single oldHeight, System.Single newHeight, System.Boolean metric, System.Single[] physicalPositions)
 ```
 
-## StringCopyResult
+## ScoreModern.RecoveredFragments.StringCopyResult
 
 ```text
-ScoreModern.RecoveredFragments.StringCopyResult
-.ctor(System.UInt16 si, System.UInt16 di)
-UInt16 CX
-UInt16 DI
-UInt16 SI
+System.UInt16 CX
+System.UInt16 DI
+System.UInt16 SI
+StringCopyResult(System.UInt16 si, System.UInt16 di)
 ```
 
-## StringFillResult
+## ScoreModern.RecoveredFragments.StringFillResult
 
 ```text
-ScoreModern.RecoveredFragments.StringFillResult
-.ctor(System.UInt16 di)
-UInt16 CX
-UInt16 DI
+System.UInt16 CX
+System.UInt16 DI
+StringFillResult(System.UInt16 di)
 ```
 
-## StringOutputResult
+## ScoreModern.RecoveredFragments.StringOutputResult
 
 ```text
-ScoreModern.RecoveredFragments.StringOutputResult
-Boolean ReachedStringReturn
+System.Boolean ReachedStringReturn
 ScoreModern.RecoveredFragments.CharacterRoutineResult Result
 ```
 
-## StringOutputRoutine
+## ScoreModern.RecoveredFragments.StringOutputRoutine
 
 ```text
-ScoreModern.RecoveredFragments.StringOutputRoutine
 static ScoreModern.RecoveredFragments.StringOutputResult Run(ScoreModern.RecoveredFragments.IStringOutputContext m, ScoreModern.RecoveredFragments.CharacterRoutineWords w, System.UInt16 currentSegment, System.UInt16 characterSegment)
 ```
 
-## TextConverterFontState
+## ScoreModern.RecoveredFragments.TextConverterFontState
 
 ```text
-ScoreModern.RecoveredFragments.TextConverterFontState
-Boolean Forced
-Int16 Word
+System.Boolean Forced
+System.Int16 Word
+System.Int32 MetricFace { get; }
 System.Void Accept(System.Int16 token)
 static ScoreModern.RecoveredFragments.TextConverterFontState Begin(System.Int16 overrideWord, System.Int16 previousWord)
-Int32 MetricFace
 ```
 
-## TextMetricArithmetic
+## ScoreModern.RecoveredFragments.TextMetricArithmetic
 
 ```text
-ScoreModern.RecoveredFragments.TextMetricArithmetic
 static System.Single Accumulate(System.Single total, System.Single advance)
 static System.Single AddPosition(System.Int16 index, System.Single x, System.Single advance, System.Single units)
 static System.Single Advance(System.Single metric, ScoreModern.RecoveredFragments.TextMetricScale scale, System.Boolean space)
@@ -2878,313 +2605,285 @@ static ScoreModern.RecoveredFragments.TextMetricScale Prepare(System.Single size
 static System.Single StrokeHorizontal(System.Single metric, System.Single horizontal, System.Single primitiveMetric)
 ```
 
-## TextMetricScale
+## ScoreModern.RecoveredFragments.TextMetricScale
 
 ```text
-ScoreModern.RecoveredFragments.TextMetricScale
-Single Character
-Single ExtraSpace
+System.Single Character
+System.Single ExtraSpace
 ```
 
-## TextParameterPreparation
+## ScoreModern.RecoveredFragments.TextParameterPreparation
 
 ```text
-ScoreModern.RecoveredFragments.TextParameterPreparation
 static System.Single[] Adjust(System.Single[] advances, System.Single delta)
 static System.Single Interletter(System.Single total, System.Single factor, System.Single[] advances)
 static System.Single OutputExtra(System.Single value, System.Boolean printed, System.Single units)
 static ScoreModern.RecoveredFragments.TextPreparedParameters Prepare(System.Single[] p, System.Single x, System.Single modulus, System.Single glyphScale, System.Single units)
 ```
 
-## TextPreparedParameters
+## ScoreModern.RecoveredFragments.TextPreparedParameters
 
 ```text
-ScoreModern.RecoveredFragments.TextPreparedParameters
-Single GlyphHorizontal
-Single GlyphVertical
-Single Horizontal
-Single Origin
-Single RestoredHorizontal
-Single RestoredVertical
-Single Rotation
-Single Spacing
-Single Vertical
+System.Single GlyphHorizontal
+System.Single GlyphVertical
+System.Single Horizontal
+System.Single Origin
+System.Single RestoredHorizontal
+System.Single RestoredVertical
+System.Single Rotation
+System.Single Spacing
+System.Single Vertical
 ```
 
-## TranspositionAccidentalTailResult
+## ScoreModern.RecoveredFragments.TranspositionAccidentalTailResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionAccidentalTailResult
-.ctor()
-Int16 ActiveRelationships
-Int16[] Flags
-Int16 RelationshipIndex
+System.Int16 ActiveRelationships
+System.Int16[] Flags
+System.Int16 RelationshipIndex
 ScoreModern.RecoveredFragments.TranspositionRelationshipWindow Window
+TranspositionAccidentalTailResult()
 ```
 
-## TranspositionClefState
+## ScoreModern.RecoveredFragments.TranspositionClefState
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionClefState
-.ctor(System.Int16 staff, System.Int16 target)
-Int16 RetainedStaff
-Int16 RetainedTarget
+System.Int16 RetainedStaff
+System.Int16 RetainedTarget
+TranspositionClefState(System.Int16 staff, System.Int16 target)
 ```
 
-## TranspositionCollection
+## ScoreModern.RecoveredFragments.TranspositionCollection
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionCollection
-.ctor()
-Int16 FirstKeyState
+System.Int16 FirstKeyState
 System.Nullable`1[System.Single] FirstNotePosition
-Boolean HasExtendedBeam
+System.Boolean HasExtendedBeam
 System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.TranspositionRecord] Records
 System.Collections.Generic.List`1[System.Int32] RelationshipItems
+TranspositionCollection()
 ```
 
-## TranspositionCollectorResult
+## ScoreModern.RecoveredFragments.TranspositionCollectorResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionCollectorResult
-.ctor()
 System.Collections.Generic.List`1[System.Single] CollectedBoundaries
-Single ExpandedLeft
-Single ExpandedRight
+System.Single ExpandedLeft
+System.Single ExpandedRight
 ScoreModern.RecoveredFragments.TranspositionCollection FirstPass
 ScoreModern.RecoveredFragments.TranspositionPartition Partition
+TranspositionCollectorResult()
 ```
 
-## TranspositionCollectorState
+## ScoreModern.RecoveredFragments.TranspositionCollectorState
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionCollectorState
-.ctor(System.Single firstNotePosition)
-Single FirstNotePosition
+System.Single FirstNotePosition
+TranspositionCollectorState(System.Single firstNotePosition)
 ```
 
-## TranspositionInterval
+## ScoreModern.RecoveredFragments.TranspositionInterval
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionInterval
-.ctor()
-Int16 Diatonic
-Int16 Key
-Int16 SemitoneClass
-Int16 Semitones
+System.Int16 Diatonic
+System.Int16 Key
+System.Int16 SemitoneClass
+System.Int16 Semitones
+TranspositionInterval()
 ```
 
-## TranspositionKeyRecordResult
+## ScoreModern.RecoveredFragments.TranspositionKeyRecordResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionKeyRecordResult
-.ctor()
-Int16 Diatonic
-Int16 KeyOverride
-Int16 NewKeyBase
-Int16 OldKeyBase
-Single[] Parameters
-Int16 PitchBase
+System.Int16 Diatonic
+System.Int16 KeyOverride
+System.Int16 NewKeyBase
+System.Int16 OldKeyBase
+System.Single[] Parameters
+System.Int16 PitchBase
+TranspositionKeyRecordResult()
 ```
 
-## TranspositionMainPassResult
+## ScoreModern.RecoveredFragments.TranspositionMainPassResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionMainPassResult
-.ctor()
-Single StopPosition
+System.Single StopPosition
 ScoreModern.RecoveredFragments.TranspositionAccidentalTailResult Tail
+TranspositionMainPassResult()
 ```
 
-## TranspositionMainState
+## ScoreModern.RecoveredFragments.TranspositionMainState
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionMainState
-.ctor()
-Int16[] AccidentalMarkers
-Int16 Diatonic
-Single ErasedCode
+System.Int16[] AccidentalMarkers
+System.Int16 Diatonic
+System.Single ErasedCode
 ScoreModern.RecoveredFragments.TranspositionRelationshipWindow InitialWindow
-Int16 KeyOverride
-Int16 KindZeroGuard
-Single RelationshipMargin
-Single RelationshipWidth
-Int16 Semitones
-Single Sentinel
-Int16 TargetKey
+System.Int16 KeyOverride
+System.Int16 KindZeroGuard
+System.Single RelationshipMargin
+System.Single RelationshipWidth
+System.Int16 Semitones
+System.Single Sentinel
+System.Int16 TargetKey
+TranspositionMainState()
 ```
 
-## TranspositionOperationResult
+## ScoreModern.RecoveredFragments.TranspositionOperationResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionOperationResult
-.ctor()
 ScoreModern.RecoveredFragments.TranspositionCollectorResult Collection
 ScoreModern.RecoveredFragments.TranspositionMainPassResult Engine
-Boolean InsertedKey
+System.Boolean InsertedKey
 ScoreModern.RecoveredFragments.TranspositionInterval Interval
-Boolean KeyQuestion
+System.Boolean KeyQuestion
 System.Collections.Generic.List`1[System.Single[]] Rows
-Boolean SortMarksModified
-Boolean WarningRequired
+System.Boolean SortMarksModified
+System.Boolean WarningRequired
+TranspositionOperationResult()
 ```
 
-## TranspositionOperationSession
+## ScoreModern.RecoveredFragments.TranspositionOperationSession
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionOperationSession
-.ctor()
 ScoreModern.RecoveredFragments.TranspositionOperationResult Result
+TranspositionOperationSession()
 ```
 
-## TranspositionPartition
+## ScoreModern.RecoveredFragments.TranspositionPartition
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionPartition
-.ctor()
-Single[] Boundaries
-Int16[] Kinds
+System.Single[] Boundaries
+System.Int16[] Kinds
+TranspositionPartition()
 ```
 
-## TranspositionPitchResult
+## ScoreModern.RecoveredFragments.TranspositionPitchResult
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionPitchResult
-.ctor()
 System.Nullable`1[System.Int16] AccidentalMarker
-Single Pitch
-Single Stem
+System.Single Pitch
+System.Single Stem
+TranspositionPitchResult()
 ```
 
-## TranspositionRecord
+## ScoreModern.RecoveredFragments.TranspositionRecord
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionRecord
-.ctor()
-Int16 Accidental
-Int16 Clef
-Int32 Item
-Int16 Kind
+System.Int16 Accidental
+System.Int16 Clef
+System.Int32 Item
+System.Int16 Kind
 System.Nullable`1[System.Int16] Pitch
-Single Position
+System.Single Position
+TranspositionRecord()
 ```
 
-## TranspositionRelationshipWindow
+## ScoreModern.RecoveredFragments.TranspositionRelationshipWindow
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionRelationshipWindow
-Single EndHigh
-Single EndLow
-Single StartHigh
-Single StartLow
+System.Single EndHigh
+System.Single EndLow
+System.Single StartHigh
+System.Single StartLow
 ```
 
-## TranspositionRequest
+## ScoreModern.RecoveredFragments.TranspositionRequest
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionRequest
-.ctor()
-Boolean AddKey
+System.Boolean AddKey
 System.Nullable`1[System.Int16] Clef
-Int16[] ClefChanges
-Boolean ForceKeyQuestion
-Single Left
-Single Right
-Int16 Semitones
-Single Staff
+System.Int16[] ClefChanges
+System.Boolean ForceKeyQuestion
+System.Single Left
+System.Single Right
+System.Int16 Semitones
+System.Single Staff
+TranspositionRequest()
 ```
 
-## TranspositionWorkspace
+## ScoreModern.RecoveredFragments.TranspositionWorkspace
 
 ```text
-ScoreModern.RecoveredFragments.TranspositionWorkspace
-.ctor(ScoreModern.RecoveredFragments.TranspositionCollectorState collector, ScoreModern.RecoveredFragments.TranspositionClefState clefs, System.Int16[] pitchWords, System.Int16[] markers, System.Int16 guard, ScoreModern.RecoveredFragments.TranspositionRelationshipWindow window, System.Boolean sorted)
-Int16[] AccidentalMarkers
-Boolean AlreadySorted
+System.Int16[] AccidentalMarkers
+System.Boolean AlreadySorted
 ScoreModern.RecoveredFragments.TranspositionClefState Clefs
 ScoreModern.RecoveredFragments.TranspositionCollectorState Collector
-Int16 KindZeroGuard
-Int16[] PitchWords
+System.Int16 KindZeroGuard
+System.Int16[] PitchWords
 ScoreModern.RecoveredFragments.TranspositionRelationshipWindow Window
+TranspositionWorkspace(ScoreModern.RecoveredFragments.TranspositionCollectorState collector, ScoreModern.RecoveredFragments.TranspositionClefState clefs, System.Int16[] pitchWords, System.Int16[] markers, System.Int16 guard, ScoreModern.RecoveredFragments.TranspositionRelationshipWindow window, System.Boolean sorted)
 ```
 
-## TupletBracket
+## ScoreModern.RecoveredFragments.TupletBracket
 
 ```text
-ScoreModern.RecoveredFragments.TupletBracket
 static ScoreModern.RecoveredFragments.TupletBracketResult Build(System.Single[] p, ScoreModern.RecoveredFragments.TupletBracketContext c)
 ```
 
-## TupletBracketContext
+## ScoreModern.RecoveredFragments.TupletBracketContext
 
 ```text
-ScoreModern.RecoveredFragments.TupletBracketContext
-.ctor()
-Single LeftX
-Single LeftY
-Single RightY
-Single Scale
+System.Single LeftX
+System.Single LeftY
+System.Single RightY
+System.Single Scale
+TupletBracketContext()
 ```
 
-## TupletBracketPoint
+## ScoreModern.RecoveredFragments.TupletBracketPoint
 
 ```text
-ScoreModern.RecoveredFragments.TupletBracketPoint
-.ctor(System.Int16 tag, System.Single x, System.Single y)
-Int16 Tag
-Single X
-Single Y
+System.Int16 Tag
+System.Single X
+System.Single Y
+TupletBracketPoint(System.Int16 tag, System.Single x, System.Single y)
 ```
 
-## TupletBracketResult
+## ScoreModern.RecoveredFragments.TupletBracketResult
 
 ```text
-ScoreModern.RecoveredFragments.TupletBracketResult
-.ctor()
 System.Nullable`1[ScoreModern.RecoveredFragments.TupletPlacement] Number
 System.Collections.Generic.List`1[ScoreModern.RecoveredFragments.TupletBracketPoint] Points
+TupletBracketResult()
 ```
 
-## TupletGeometry
+## ScoreModern.RecoveredFragments.TupletGeometry
 
 ```text
-ScoreModern.RecoveredFragments.TupletGeometry
 static ScoreModern.RecoveredFragments.TupletPlacement Build(System.Int16 number, System.Int32 direction, System.Boolean cue, System.Single percent, System.Single verticalShift, System.Single scale, System.Single leftX, System.Single leftY, System.Single dx, System.Single dy)
 static System.Single Center(System.Int16 number, System.Single scale, System.Single along, System.Single left)
 static System.String NumberText(System.Int16 number)
 static System.Single PrintedEm(System.Single fontScale, System.Single staffScale)
 ```
 
-## TupletPlacement
+## ScoreModern.RecoveredFragments.TupletPlacement
 
 ```text
-ScoreModern.RecoveredFragments.TupletPlacement
-Single FontScale
-Int16 Number
-Single X
-Single Y
+System.Single FontScale
+System.Int16 Number
+System.Single X
+System.Single Y
 ```
 
-## VerticalRaster
+## ScoreModern.RecoveredFragments.VerticalRaster
 
 ```text
-ScoreModern.RecoveredFragments.VerticalRaster
 static ScoreModern.RecoveredFragments.VerticalRasterWords Execute(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx)
 static ScoreModern.RecoveredFragments.VerticalRasterWords ExecuteWithFlags(ScoreModern.RecoveredFragments.IHorizontalRasterMemory m, System.UInt16 ds, System.UInt16 es, System.UInt16 ax, System.UInt16 bx, System.UInt16 cx, System.UInt16 dx, System.UInt32 eflags)
 ```
 
-## VerticalRasterWords
+## ScoreModern.RecoveredFragments.VerticalRasterWords
 
 ```text
-ScoreModern.RecoveredFragments.VerticalRasterWords
-UInt16 AX
-UInt16 BP
-UInt16 BX
-UInt16 CX
-UInt32 DefinedEFlagsMask
-UInt16 DI
-UInt16 DX
-UInt32 EFlags
-UInt16 SI
+System.UInt16 AX
+System.UInt16 BP
+System.UInt16 BX
+System.UInt16 CX
+System.UInt32 DefinedEFlagsMask
+System.UInt16 DI
+System.UInt16 DX
+System.UInt32 EFlags
+System.UInt16 SI
 ```
 

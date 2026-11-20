@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Linq;
+using System;using System.Collections.Generic;using System.Linq;
 namespace ScoreModern {
  public sealed class BeamTemporaryEditPlan {public float[] Operations;public Item Pending;}
  // Recovered from the live 2C0C:1164..1E66 edit-command builder; see Code6 debugger evidence.

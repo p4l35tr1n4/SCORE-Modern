@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;
+using System;using System.Collections.Generic;
 using System.Linq;
 namespace ScoreModern {public sealed partial class Editor {
  // Shared numerical projection of original lyric dash creation and

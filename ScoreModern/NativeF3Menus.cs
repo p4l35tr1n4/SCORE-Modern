@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 
 namespace ScoreModern {
  public sealed partial class Editor {
@@ -6,7 +6,8 @@ namespace ScoreModern {
 
   void ChooseEditGroupOperation(int key) {
    if(key<1||key>EditGroupCommands.Length)return;
-   ApplyOriginalGroupField(command.Text);
+   ApplyOriginalGroupField(command.TextLength!=0||!originalGroupValueBox.Visible?command.Text:originalGroupValueBox.Text);
+   CloseOriginalGroupValue();
    string verb=EditGroupCommands[key-1];
    if(key==3&&originalGroupFields[3]==0)throw new System.IO.InvalidDataException("Code# must be specified for Alter.");
    if(key<=4){groupCommand=verb;groupRange=new float[5];for(int n=0;n<5;n++)groupRange[n]=originalGroupFields[n];if(groupRange[4]==0)groupRange[4]=groupRange[0];command.Clear();Message((key==1?"Move":key==2?"Copy":key==3?"Alter":"Delete")+"\r\n"+(key<=2?GroupDestinationPrompt:key==3?GroupAlterPrompt:GroupDeletePrompt));command.Focus();return;}

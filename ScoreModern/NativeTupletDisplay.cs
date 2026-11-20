@@ -7,6 +7,7 @@ namespace ScoreModern {
 
   static short Word(float value,bool horizontal){int n=unchecked((int)Math.Truncate(value));if(horizontal)n=Math.Max(-32600,Math.Min(32760,n));else n=Math.Min(32750,n);return unchecked((short)n);}
   public static bool Draw(Graphics g,Item item,float staffStep,float staffBase,ScoreText text,NativeNotationContext page=null){
+   if(text!=null&&ScoreVersionControls.SlurEndpointMode(NativeLibraryLocation.IsScor4(text.RootDirectory),item.P(16)))return false;
    if(unchecked((short)(int)Math.Truncate(item.P(8)))!=3)return false;
    float[] p=new float[21];for(int n=1;n<=20;n++)p[n]=item.P(n);float scale=page==null?5*staffStep:page.Scale,vertical=7*scale;
    var context=new TupletBracketContext{Scale=scale,LeftX=(float)((double)p[3]*150),LeftY=page==null?(float)((double)p[4]*vertical):page.Prepared.Y,RightY=page==null?(float)((double)p[5]*vertical):page.Vertical(p[5])};

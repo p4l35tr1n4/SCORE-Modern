@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Drawing;using System.IO;using System.Text;using System.Windows.Forms;
+using System;using System.Linq;using System.Drawing;using System.IO;using System.Text;using System.Windows.Forms;
 namespace ScoreModern {
  sealed class TextRowScrollPanel:Panel {
   internal int LinePitch=1;
@@ -16,6 +16,7 @@ namespace ScoreModern {
   const int DefaultTextRows=7;
   const string CompactTextSetting="compact-text";
   readonly TextRowScrollPanel textWindow=new TextRowScrollPanel();readonly Panel textBody=new Panel(),editHeader=new Panel();readonly Label itemTextLine=new NativeTextLabel(),inputStaffLine=new NativeTextLabel();readonly ToolTip resourcePathsTip=new ToolTip();Font resourceHeaderFont;
+  int resourceHeaderWidth;float resourceHeaderBaseSize;
   readonly TextBox inlineText=new NativeCommandBox{Dock=DockStyle.Top,AutoSize=false,BorderStyle=BorderStyle.None,MaxLength=160,Visible=false};
   readonly NativeTextLabel inputCorrectionLine=new NativeTextLabel{Visible=false,Cursor=Cursors.IBeam};
   bool correctionInPlace;
@@ -89,10 +90,10 @@ namespace ScoreModern {
    inlineText.Focus();
    if(caret.HasValue)inlineText.SelectionStart=inlineText.GetCharIndexFromPosition(caret.Value);
    else inlineText.SelectionStart=inlineText.TextLength;
-   Message("Edit SCORE text in place. Enter completes text editing.");
+   Message("Edit SCORE text in place. Enter saves changes. Esc cancels.");
   }
   int InlineTextPrefix(){int font;string text=inlineText.Text;if(ScoreText.FontCode(text,0,out font))return 3;if(text.StartsWith("__",StringComparison.Ordinal)&&ScoreText.FontCode(text,1,out font))return 4;return 0;}
-  bool OriginalInlineTextKey(KeyEventArgs e){if(!inlineTextActive)return false;if(e.KeyCode==Keys.Enter){e.SuppressKeyPress=true;FinishInlineText(true);}else if(e.KeyCode==Keys.Escape){e.SuppressKeyPress=true;}else if(e.KeyCode==Keys.Insert){e.SuppressKeyPress=true;inlineTextInsert=!inlineTextInsert;}else if(e.KeyCode==Keys.Home){e.SuppressKeyPress=true;inlineText.Select(InlineTextPrefix(),0);}else if(e.KeyCode==Keys.End){e.SuppressKeyPress=true;inlineText.Select(inlineText.TextLength,0);}else if(e.Modifiers==Keys.None&&(e.KeyCode==Keys.Left||e.KeyCode==Keys.Right)){e.SuppressKeyPress=true;inlineText.Select(Math.Max(0,Math.Min(inlineText.TextLength,inlineText.SelectionStart+(e.KeyCode==Keys.Left?-1:1))),0);}else if(e.KeyCode==Keys.Delete||e.KeyCode==Keys.Back){e.SuppressKeyPress=true;int at=inlineText.SelectionStart,count=inlineText.SelectionLength;if(count==0&&e.KeyCode==Keys.Back&&at>0){at--;count=1;}else if(count==0&&e.KeyCode==Keys.Delete&&at<inlineText.TextLength)count=1;if(count>0){inlineText.Text=inlineText.Text.Remove(at,count);inlineText.Select(at,0);}}return true;}
+  bool OriginalInlineTextKey(KeyEventArgs e){if(!inlineTextActive)return false;if(e.KeyCode==Keys.Enter){e.SuppressKeyPress=true;FinishInlineText(true);}else if(e.KeyCode==Keys.Escape){e.SuppressKeyPress=true;FinishInlineText(false);}else if(e.KeyCode==Keys.Insert){e.SuppressKeyPress=true;inlineTextInsert=!inlineTextInsert;}else if(e.KeyCode==Keys.Home){e.SuppressKeyPress=true;inlineText.Select(InlineTextPrefix(),0);}else if(e.KeyCode==Keys.End){e.SuppressKeyPress=true;inlineText.Select(inlineText.TextLength,0);}else if(e.Modifiers==Keys.None&&(e.KeyCode==Keys.Left||e.KeyCode==Keys.Right)){e.SuppressKeyPress=true;inlineText.Select(Math.Max(0,Math.Min(inlineText.TextLength,inlineText.SelectionStart+(e.KeyCode==Keys.Left?-1:1))),0);}else if(e.KeyCode==Keys.Delete||e.KeyCode==Keys.Back){e.SuppressKeyPress=true;int at=inlineText.SelectionStart,count=inlineText.SelectionLength;if(count==0&&e.KeyCode==Keys.Back&&at>0){at--;count=1;}else if(count==0&&e.KeyCode==Keys.Delete&&at<inlineText.TextLength)count=1;if(count>0){inlineText.Text=inlineText.Text.Remove(at,count);inlineText.Select(at,0);}}return true;}
   void OriginalInlineTextCharacter(KeyPressEventArgs e){if(Char.IsControl(e.KeyChar))return;e.Handled=true;int at=inlineText.SelectionStart,remove=inlineText.SelectionLength;if(!inlineTextInsert&&remove==0&&at<inlineText.TextLength)remove=1;string next=inlineText.Text.Remove(at,Math.Min(remove,inlineText.TextLength-at)).Insert(at,e.KeyChar.ToString());if(next.Length>inlineText.MaxLength)return;inlineText.Text=next;inlineText.Select(at+1,0);}
   void FinishInlineText(bool apply){
    if(!inlineTextActive)return;
@@ -143,8 +144,14 @@ namespace ScoreModern {
    string fallback=showFallbackLibraryPath&&!String.Equals(drawings.TrimEnd('\\','/'),normal.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase)
     ?" [fallback LIB: "+normal+"]":"";
    string text=(dirty?"* ":"")+file+"  Items="+(score==null?0:score.Items.Count)+"  Zoom="+canvas.Zoom.ToString("0.00",System.Globalization.CultureInfo.InvariantCulture)+"  LIB: "+drawings+fallback+(String.Equals(drawings.TrimEnd('\\','/'),metrics.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase)?"":"  Metrics: "+metrics)+"  Fonts: "+(String.IsNullOrEmpty(fonts)?"(not selected)":fonts);
-   fileLine.Text=text;fileLine.Visible=true;resourcePathsTip.SetToolTip(fileLine,text);
-   float size=classicFont==null?12:classicFont.Size;int width=Math.Max(1,top.ClientSize.Width);while(size>7){using(var font=NativeUiFont.Create(size)){if(TextRenderer.MeasureText(text,font,Size.Empty,TextFormatFlags.NoPadding|TextFormatFlags.SingleLine).Width<=width)break;}size-=.5f;}
+   bool textChanged=!String.Equals(fileLine.Text,text,StringComparison.Ordinal);
+   float baseSize=classicFont==null?12:classicFont.Size;
+   int width=Math.Max(1,top.ClientSize.Width);
+   if(!textChanged&&resourceHeaderWidth==width&&resourceHeaderBaseSize==baseSize&&NativeUiFont.Matches(resourceHeaderFont))return;
+   if(textChanged){fileLine.Text=text;resourcePathsTip.SetToolTip(fileLine,text);}
+   resourceHeaderWidth=width;
+   resourceHeaderBaseSize=baseSize;
+   float size=baseSize;while(size>7){using(var font=NativeUiFont.Create(size)){if(TextRenderer.MeasureText(text,font,Size.Empty,TextFormatFlags.NoPadding|TextFormatFlags.SingleLine).Width<=width)break;}size-=.5f;}
    if(!NativeUiFont.Matches(resourceHeaderFont)||Math.Abs(resourceHeaderFont.Size-size)>.01f){var old=resourceHeaderFont;resourceHeaderFont=NativeUiFont.Create(size);fileLine.Font=resourceHeaderFont;if(old!=null)old.Dispose();}
   }
   void LayoutTextContents(bool reveal){
@@ -156,9 +163,8 @@ namespace ScoreModern {
    textWindow.AutoScrollMinSize=new Size(0,height);textWindow.AutoScrollPosition=new Point(0,reveal||atEnd?Math.Max(0,height-textWindow.ClientSize.Height):textWindow.AlignedOffset(scrollY));
   }
   void LayoutTextWindow(int row){UpdateGroupWindowState();textRowHeight=row;textWindow.LinePitch=row;((NativeTextLabel)responseLine).LinePitch=row;inputCorrectionLine.Height=row;inputCorrectionLine.Font=classicFont;inputStaffLine.Height=row;inputStaffLine.Font=classicFont;inputStaffLine.Visible=musicInput!=null&&!musicInput.LetterInput;top.Height=prompt.Height+fileLine.Height+(textWindowRows-2)*row;top.Visible=!inputFullGraphics||mode==ScreenMode.EditGroupMenu&&!NativeKeyboardOptions.GroupFull||postGroupGraphicsTop>=0;
-   functionStrip.Visible=!inputFullGraphics&&!inputMenuHidden;
    canvas.DosFullGraphics=inputFullGraphics;
-   canvas.DosClipBottom=(short)(inputFullGraphics?479:inputMenuHidden?478:Scor4MenuActive?446:461);
+   UpdateFunctionStripVisibility();
    canvas.DosTextClipOverride=postGroupGraphicsTop>=0?postGroupGraphicsTop:inputFullGraphics?0:inputDosTextBoundary?97+16*(textWindowRows-DefaultTextRows):-1;
    canvas.CropTop=NativeNotationView.IsDosViewport&&(canvas.DosTextClipOverride>=0||canvas.DosGroupHeader)
     ?(int)Math.Round((canvas.DosClipTop-97)*canvas.RenderScale)

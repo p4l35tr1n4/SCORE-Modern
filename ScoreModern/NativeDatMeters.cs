@@ -7,7 +7,7 @@ namespace ScoreModern {
   public static List<PrimitiveTextPoint> Prepare(Item i,NativeNotationContext p,ScoreText text,NativeDatGlyphs dat){
    for(int n=3;n<=13;n++)if(Single.IsNaN(i.P(n))||Single.IsInfinity(i.P(n)))throw new NotSupportedException("DAT compound meter nonfinite controls need fault verification.");
    int a=(short)(int)i.P(5),b=(short)(int)i.P(6),c=(short)(int)i.P(8),d=(short)(int)i.P(9);if(a<0||a>=90||b<0||b>=90||c<1||c>=90||d< -1||d>=90||!NativeMeterDisplay.ValidSize(i.P(7)))throw new NotSupportedException("DAT compound meter numeric domain needs verification.");
-   if(!NativeMeterDisplay.VerifiedReservedControl(i.P(16)))throw new NotSupportedException("DAT compound meter P16 needs verification.");
+   if(!ScoreModern.RecoveredFragments.ScoreVersionControls.MeterThicknessSupported(NativeLibraryLocation.IsScor4(text.RootDirectory),i.P(16)))throw new NotSupportedException("DAT compound meter P16 needs verification.");
    if(!NativeMeterDisplay.VerifiedCompoundP17(i.P(17)))throw new NotSupportedException("DAT compound meter P17 needs verification.");
    for(int n=18;n<=20;n++)if(i.P(n)!=0)throw new NotSupportedException("DAT compound meter auxiliary controls need verification.");
    if(!NativeMeterDisplay.VerifiedJustificationControl(i.P(14)))throw new NotSupportedException("DAT compound meter layout control outside the measured domain.");

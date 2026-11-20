@@ -8,6 +8,7 @@ namespace ScoreModern {
   public static void AddMenu(ContextMenuStrip menu){var item=new ToolStripMenuItem("Endings: P8=10 follows Tom's Help");item.Click+=(s,e)=>Set(!TomsTenth,true);menu.Items.Add(item);menu.Opening+=(s,e)=>{item.Checked=TomsTenth;item.ToolTipText="Default: original P8=10 slur. Optional: ending path with default number 10; positive P9 overrides the number.";};}
   static short Word(float v,bool x){int n=unchecked((int)Math.Truncate(v));return unchecked((short)(x?Math.Max(-32600,Math.Min(32760,n)):Math.Min(32750,n)));}
   public static bool Draw(Graphics g,Item item,float step,float staffBase,ScoreText text,DrawingLibrary library,NativeNotationContext page=null){
+   if(text!=null&&ScoreVersionControls.SlurEndpointMode(NativeLibraryLocation.IsScor4(text.RootDirectory),item.P(16)))return false;
    short subtype=unchecked((short)(int)Math.Truncate(item.P(8)));if(subtype<1||subtype==3||subtype>9&&!(subtype==10&&TomsTenth))return false;
    float[] p=new float[21];for(int j=1;j<=20;j++)p[j]=item.P(j);float scale=page==null?5*step:page.Scale,origin=staffBase+3*step;
    bool printed=NativeBeamDisplay.Appearance==BeamAppearance.Printed;

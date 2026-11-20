@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Windows.Forms;
+using System;using System.Collections.Generic;using System.Windows.Forms;
 namespace ScoreModern {
  // Original2FC5:0094..0153. Keyboard queue ownership is independent of transport.
  internal sealed class NativePrintFlow {

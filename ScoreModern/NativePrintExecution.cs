@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Threading;using System.Windows.Forms;
+using System;using System.Collections.Generic;using System.Drawing;using System.Threading;using System.Windows.Forms;
 namespace ScoreModern {
  internal sealed class NativePrintExecution:IDisposable {
   [ThreadStatic]internal static NativePrintExecution Current;

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Drawing;using System.Drawing.Imaging;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Drawing;using System.Drawing.Imaging;using System.Windows.Forms;
 namespace ScoreModern {
  public sealed partial class Editor {
   internal void CheckInterfaceFonts(string output){Directory.CreateDirectory(output);string previous=NativeUiFont.Family;var original=score.Encode();int fonts=0,fields=0,rasters=0;try{NativeInterfaceText.SetConsolas(false);

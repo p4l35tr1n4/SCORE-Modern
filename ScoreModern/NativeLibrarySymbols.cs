@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed class LibrarySymbolPlan {public int Glyph;public float X,Y,H,V,Rotation;public bool Cached;}
  public static class NativeLibrarySymbols {

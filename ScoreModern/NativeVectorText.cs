@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed partial class ScoreText {
   readonly Dictionary<string,Glyph[]> textDrawings=new Dictionary<string,Glyph[]>();

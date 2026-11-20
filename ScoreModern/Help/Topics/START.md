@@ -11,6 +11,10 @@ Use this guide for Windows workflows and Tom’s Help for SCORE’s command lang
 
 ## Start here
 
+Press **Alt+P** for Preferences. Press **Alt+Shift+M** for the workspace context menu with the pointer over the page. **Alt+M** toggles the SCORE function-key rows.
+
+Use **Preferences → Shortcuts** to assign keys to workspace context-menu items. Choose an item, press a Ctrl or Alt letter/digit combination or a function key in the capture field, and click **Assign**. SCORE and editor shortcuts are protected by default. To reuse a protected shortcut, enable **Allow shortcuts to override SCORE defaults**. Conflicting assignments are inactive in Strict SCORE behaviour.
+
 1. On first setup, choose your startup folder, drawing LIB and, if available, your Type 1 fonts. SCORE Modern requires a verified serial-bearing DAT in LIB. The application stores local settings in `ScoreModern.ini` beside the executable.
 2. Open a score with **Open…** or type `G MOZART` at the main prompt when that file is in your working folder. `CD` changes the working folder used by relative names. See [G commands](G.md) and the [Disk menu](CODE47.md).
 3. Press **F3** to open the Edit menu. Choose an item with the mouse or enter `I` followed by its item number. **Esc** leaves Item Edit. See [Item Edit keys](CODE31.md) and the [Edit menu](CODE38.md).
@@ -20,7 +24,7 @@ Use this guide for Windows workflows and Tom’s Help for SCORE’s command lang
 
 - **F2 music input** proceeds through [pitch](CODE33.md), [rhythm](CODE34.md), [marks](CODE35.md), [beams](CODE36.md) and [slurs](CODE37.md). Use the displayed note numbers in the last three stages. F2 MIDI entry and live rhythm input are separate from F5 playback.
 - **F4 text input** and `T` create [Code 16 text](CODE16.md). To edit existing text, select it and use `TX` or click the displayed text below its parameters.
-- **Symbol Browser…** on the context menu outside the page shows drawing banks and their numbered slots. Right-click a slot to copy its number or edit it in DRAW. See [Code 9 library symbols](CODE09.md) and [Code 11 named drawings](CODE11.md).
+- **Symbol Browser…** on the context menu outside the page shows drawing banks with slots numbered 0–9. Right-click a slot to copy its number or edit it in DRAW. See [Code 9 library symbols](CODE09.md) and [Code 11 named drawings](CODE11.md).
 - **DRAW…** opens the vector editor. **Open Bank…** browses drawings by file and preview. Turn on **Plot points** to add points. Click and drag a point to move it. **Snap to grid** follows the square grid spacing. With the canvas focused, the arrow keys move a point by one DRAW unit and Shift+arrow moves it by ten. **Ctrl+Z** undoes an edit. **Ctrl+Y** and **Ctrl+Shift+Z** redo it.
 - **PAGE…**, **SCORLAS…** and **JUST…** on the same menu open the Windows versions of the layout, tiling and justification utilities.
 

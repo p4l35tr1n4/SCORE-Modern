@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Globalization;
+using System;using System.Drawing;using System.Globalization;
 namespace ScoreModern {public static class NativeFilteredMouse {
  public static string Arguments(Canvas canvas,PointF pointer,bool staffOnly){
   short dx=unchecked((short)((short)pointer.X-NativeDosViewport.OriginX));short productX=unchecked((short)(dx*NativeDosViewport.Divisor));short position=(short)Math.Round(productX/150.0,MidpointRounding.AwayFromZero);

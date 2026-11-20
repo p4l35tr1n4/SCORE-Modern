@@ -112,3 +112,23 @@ The SCORE 4 distribution also includes dedicated help for the following commands
 | Q | The original help leaves this topic for user-written pages. Its fixed 25-line page format applies to the DOS help reader. |
 
 Sources used for the profile comparison include the supplied SCORE 4.00 and 4.01 release notes, `MENU4.HLP`, `PREF-4.HLP`, and the corresponding SCORE 3.11 and Tom’s Help topics.
+
+
+## Version-specific engraving and spacing
+
+The shared DLL now supports these original SCOR4 controls. Select **SCOR4** in Preferences → Windows → SCORE profiles for their SCOR4 interpretation:
+
+| Item | Control | Meaning in SCOR4 |
+| --- | --- | --- |
+| Named drawing (Code 11) | P11 | Horizontal displacement in SCORE units; rotation uses the displaced origin. |
+| Harp-pedal diagram (Code 7, P7=1) | P15 | Moves the entire diagram horizontally. In SCORE 3.11 it instead slants the central line. |
+| Time signature (Code 18) | P16 | Adds/subtracts printer pixels from stroked symbol outlines. Negative values thin them; this does not change the stored glyph or font metrics. |
+| Slur (Code 5) | P16=1, P17/P18 | Explicit horizontal endpoint offsets. P8 is ignored, including tuplet/ending selections; P16 no longer means label 1. |
+| Number (Code 10) | P16=1 | Includes the number in automatic justification, respecting P15 displacement. |
+
+Screen/vector display, bounds and EPS use the matching version-specific geometry. The DOS screen retains its original print-only limitations. Opening recognized settings in SCORE 3.11 mode displays a compatibility notice without changing the profile or modifying the file. A notice cannot prove which SCORE version created a file, particularly for harp P15 and slur P16=1, whose meanings differ between editions.
+
+SCORE 3.11 behavior remains available. The new DLL is shared by Core and SMX; SMX-only five-point slurs and adjustable taper remain extensions in SMX.
+
+
+Command-line EPS export accepts `--score-profile=scor4` or `--score-profile=311`. Without an explicit flag, it follows the saved interface preference. The flags do not change saved preferences.

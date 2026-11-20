@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Globalization;using System.Drawing;using System.Drawing.Drawing2D;
+using System;using System.IO;using System.Text;using System.Globalization;using System.Drawing;using System.Drawing.Drawing2D;
 namespace ScoreModern {
  // EPS observes the same GDI draw calls as Canvas.Draw; no raster image is wrapped.
  public sealed partial class NativeEpsExport : IDisposable {
@@ -110,7 +110,7 @@ namespace ScoreModern {
     using(NativePrintContext.Begin(root))WritePage(canvas,g,file);
    }
   }
-  public static int Run(string[] args){try{if(args.Length<4)throw new ArgumentException("--export-eps SCORE_ROOT MUS_FILE OUTPUT_EPS");NativePrintJob job=NativePrintJob.Defaults(args[1]);foreach(string arg in args)if(arg.StartsWith("--print-settings="))job=NativePrintJob.Read(arg.Substring(17),job);var score=Score.Load(args[2]);using(var canvas=new Canvas())using(var bitmap=new Bitmap(1,1))using(var g=Graphics.FromImage(bitmap)){canvas.Library=new DrawingLibrary(args[1]);canvas.TextLayout=new ScoreText(args[1]);canvas.Score=score;canvas.LayoutScore();if(canvas.PageDocument.Issues.Count!=0)throw new NotSupportedException(String.Join("; ",canvas.PageDocument.Issues.ToArray()));if(job!=null)job.Resolve(canvas);using(var jobScope=job==null?null:job.Begin())using(NativePrintContext.Begin(args[1])){WritePage(canvas,g,args[3]);Console.WriteLine("PASS vector EPS.");}}return 0;}catch(Exception e){Console.Error.WriteLine(e);return 1;}}
+  public static int Run(string[] args){try{if(args.Length<4)throw new ArgumentException("--export-eps SCORE_ROOT MUS_FILE OUTPUT_EPS");NativePrintJob job=NativePrintJob.Defaults(args[1]);foreach(string arg in args)if(arg.StartsWith("--print-settings="))job=NativePrintJob.Read(arg.Substring(17),job);var score=Score.Load(args[2]);using(var canvas=new Canvas())using(var bitmap=new Bitmap(1,1))using(var g=Graphics.FromImage(bitmap)){canvas.Library=new DrawingLibrary(args[1]);canvas.TextLayout=new ScoreText(args[1]);canvas.Score=score;canvas.Scor4Interface=NativeLibraryLocation.IsScor4(args[1]);canvas.LayoutScore();if(canvas.PageDocument.Issues.Count!=0)throw new NotSupportedException(String.Join("; ",canvas.PageDocument.Issues.ToArray()));if(job!=null)job.Resolve(canvas);using(var jobScope=job==null?null:job.Begin())using(NativePrintContext.Begin(args[1])){WritePage(canvas,g,args[3]);Console.WriteLine("PASS vector EPS.");}}return 0;}catch(Exception e){Console.Error.WriteLine(e);return 1;}}
  }
  public static class NativeVectorDrawing {
   static void Record(Graphics g,GraphicsPath p,Brush b,Pen pen){NativeItemBounds.Path(g,p,pen);var e=NativeEpsExport.For(g);if(e!=null)e.Path(p,b,pen);}

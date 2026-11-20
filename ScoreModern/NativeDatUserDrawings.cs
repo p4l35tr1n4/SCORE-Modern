@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Text;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeDatUserDrawings {
   static float F(double x){return (float)x;}
@@ -14,7 +14,7 @@ namespace ScoreModern {
   internal static List<PrimitiveTextPoint> Prepare(Item i,NativeNotationContext p,DrawingLibrary library,bool applyThickness){
    for(int n=3;n<=13;n++)if(Single.IsNaN(i.P(n))||Single.IsInfinity(i.P(n)))throw new NotSupportedException("DAT user drawing nonfinite controls need fault verification.");
    if(i.Bytes.Length<80&&i.ExternalDrawingNameOverride==null||i.P(13)!=0&&!i.ExternalDrawingResetResolved)throw new NotSupportedException("DAT user drawing requires a stored filename without reset.");
-   int selector;var glyph=Load(i,library,out selector);float h=i.P(6)==0?1:i.P(6),v=i.P(7)==0?h:i.P(7);h=F((double)h*p.Scale);v=F((double)v*p.Scale);var points=new List<PrimitiveTextPoint>();
+   int selector;var glyph=Load(i,library,out selector);float offset=ScoreVersionControls.DrawingOffset(NativeLibraryLocation.IsScor4(library.Root),i.P(11));if(offset!=0){p=new NativeNotationContext{SourceScore=p.SourceScore,Staff=p.Staff,RawBase=p.RawBase,StaffBases=p.StaffBases,StaffScales=p.StaffScales,Prepared=p.Prepared,Projection=p.Projection};p.Prepared.X=F((double)p.Prepared.X+offset);}float h=i.P(6)==0?1:i.P(6),v=i.P(7)==0?h:i.P(7);h=F((double)h*p.Scale);v=F((double)v*p.Scale);var points=new List<PrimitiveTextPoint>();
    for(int n=0;n<glyph.Points.Length;n++)points.Add(new PrimitiveTextPoint{X=NativeNotationContext.Word(F((double)glyph.Points[n].X*h+p.Prepared.X),true),Y=NativeNotationContext.Word(F((double)glyph.Points[n].Y*v+p.Prepared.Y),false),Operation=glyph.Operations[n]});
    if((short)(int)i.P(9)!=0)NativeDatLines.Rotate(points,i.P(9),p.Prepared.X,p.Prepared.Y);short width=(short)(int)i.P(8);if(width==0&&(short)(int)i.P(10)>0)width=unchecked((short)((short)(int)i.P(10)*101));if(applyThickness)NativeDatLines.Thickness(points,width);RenderResourceAudit.Record("DAT user drawing",selector+":"+glyph.Name,glyph.Source,"external DRW; word-buffer projection");return points;
   }

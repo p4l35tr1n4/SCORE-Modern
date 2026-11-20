@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Text;using System.Text.RegularExpressions;using System.Collections.Generic;using System.Security.Cryptography;
+using System;using System.IO;using System.Linq;using System.Text;using System.Text.RegularExpressions;using System.Collections.Generic;using System.Security.Cryptography;
 namespace ScoreModern {
  internal sealed class FontAllocation {
   internal int Number;internal string Name="",Path="",Error="",FontPath="",Afm="";internal bool AfmMatchesInstalled;internal byte[] Bytes;

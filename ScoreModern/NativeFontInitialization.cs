@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Text.RegularExpressions;using System.Collections.Generic;using System.Windows.Forms;
+using System;using System.IO;using System.Text;using System.Text.RegularExpressions;using System.Collections.Generic;using System.Windows.Forms;
 namespace ScoreModern {
  public static class NativeFontInitialization {
   public sealed class Data {public string Path,Program;public readonly Dictionary<int,string> Encoding=new Dictionary<int,string>();}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
@@ -13,7 +13,7 @@ namespace ScoreModern {
     return DrawPedal(g,item,page,library,cache);
    }
    if(type==1){
-    var harp=NativeDatOrnaments.Harp(item,page,true);
+    var harp=NativeDatOrnaments.Harp(item,page,true,NativeLibraryLocation.IsScor4(library.Root));
     NativeNoteDetails.Path(g,page,harp[0].ConvertAll(q=>new BarlinePoint(q.X,q.Y,q.Operation)),NativePrintContext.Width(2));
     NativeNoteDetails.Path(g,page,harp[1].ConvertAll(q=>new BarlinePoint(q.X,q.Y,q.Operation)),NativePrintContext.Width(2));
     var points=harp[2].ConvertAll(q=>new BarlinePoint(q.X,q.Y,q.Operation));

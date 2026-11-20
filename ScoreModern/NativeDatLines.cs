@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeDatLines {
   static float F(double v){return (float)v;}
@@ -38,16 +38,29 @@ namespace ScoreModern {
     }
    }}
   }
+  internal static bool SupportedStraightAuxiliary(Item item){
+   // P19=-1 is retained in supplied SCOR4 line records. Original SCOR4 EPS
+   // tests confirm that it does not alter the printed straight-line path.
+   // P15 is unused on straight lines; original AUX0/AUX1 EPS agrees for signed values.
+   if(item.P(20)!=0||item.P(19)!=0&&item.P(19)!=-1)return false;
+   return item.P(16)==1||item.P(16)==0&&item.P(17)==0&&item.P(18)==0;
+  }
   static void Validate(Item i,NativeNotationContext p){
-   for(int n=8;n<=20;n++){if(n==10)continue;if(n==8||n==9||n==11||n==12||n==13||n==14)continue;if(i.P(n)!=0)throw new NotSupportedException("DAT line auxiliary controls need verification.");}
+   bool straight=i.Code==4&&i.P(7)==0&&i.P(5)<999;
+   if(straight&&!SupportedStraightAuxiliary(i))throw new NotSupportedException("DAT straight-line auxiliary controls need verification.");
+   for(int n=8;n<=20;n++){if(n==10||straight&&n>=15)continue;if(n==8||n==9||n==11||n==12||n==13||n==14)continue;if(i.P(n)!=0)throw new NotSupportedException("DAT line auxiliary controls need verification.");}
    for(int n=3;n<=20;n++)if(Single.IsNaN(i.P(n))||Single.IsInfinity(i.P(n))||Math.Abs(i.P(n))>32767)throw new NotSupportedException("DAT line inputs outside the measured finite domain.");if(p.Scale<=0)throw new NotSupportedException("DAT line staff scale needs verification.");
   }
   public static List<PrimitiveTextPoint> Hairpin(Item i,NativeNotationContext p){
    NativeHairpins.ValidateTrims(i);
-   foreach(int n in new[]{8,11,12,16,17,18,19,20})if(i.P(n)!=0)throw new NotSupportedException("DAT hairpin auxiliary controls need verification.");
+   if(!NativeHairpins.SupportedAuxiliary(i))throw new NotSupportedException("DAT hairpin auxiliary controls need verification.");
    for(int n=3;n<=20;n++)if(Single.IsNaN(i.P(n))||Single.IsInfinity(i.P(n))||Math.Abs(i.P(n))>32767)throw new NotSupportedException("DAT hairpin inputs outside the measured finite domain.");
    float spread=i.P(7);if(!Present(spread))spread=2.299999952316284f;if(spread==-1)spread=-2.299999952316284f;
-   float half=F(Math.Abs((double)spread)*p.Scale*3.5),right=F(i.P(6)*150.0),left=p.Prepared.X,y=p.Prepared.Y;bool negative=BitConverter.ToInt32(BitConverter.GetBytes(spread),0)<0;
+   // SCOR4 P16=1: P17/P18 are signed SCORE-unit displacements of
+   // the respective horizontal endpoints, independent of staff size.
+   float left=p.Prepared.X,right=F(i.P(6)*150.0),y=p.Prepared.Y;
+   if(i.P(16)==1){left=F((double)left+i.P(17)*150.0);right=F((double)right+i.P(18)*150.0);}
+   float half=F(Math.Abs((double)spread)*p.Scale*3.5);bool negative=BitConverter.ToInt32(BitConverter.GetBytes(spread),0)<0;
    float open=negative?left:right,tip=negative?right:left,dx=F((double)tip-open),start=i.P(14),stop=i.P(15),sx=Present(start)?F((double)dx*start):0,ex=Present(stop)?F((double)dx*stop):0,sh=Present(start)?F((double)start*half):0,eh=Present(stop)?F((double)stop*half):0;var a=new List<PrimitiveTextPoint>();
    if(!negative&&Present(start)){
     float from=F((double)tip-sx),to=Present(stop)?F((double)tip-ex):open,toHeight=Present(stop)?eh:half;
@@ -67,6 +80,7 @@ namespace ScoreModern {
   }
   public static List<PrimitiveTextPoint> Straight(Item i,NativeNotationContext p){
    Validate(i,p);var a=new List<PrimitiveTextPoint>();float x=p.Prepared.X,y=p.Prepared.Y,rightX=F((double)i.P(6)*150),rightY=p.Vertical(i.P(5)),unit=F((double)p.Scale*7);short op=1;
+   if(i.P(16)==1){x=F((double)x+i.P(17)*150.0);rightX=F((double)rightX+i.P(18)*150.0);}
    if(Present(i.P(11)))Hook(a,x,y,i.P(11),unit,ref op);Add(a,x,y,op);Add(a,rightX,rightY,0);op=0;if(Present(i.P(12)))Hook(a,rightX,rightY,i.P(12),unit,ref op);
    Thickness(a,unchecked((short)(W(i.P(10))*(Math.Abs((double)rightX-x)>=Math.Abs((double)rightY-y)?100:1))));Rotate(a,W(i.P(9))!=0?i.P(9):i.P(13),x,y);return a;
   }

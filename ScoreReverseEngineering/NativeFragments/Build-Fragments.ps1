@@ -1,8 +1,10 @@
-﻿param([string]$OutputPath)
+param([string]$OutputPath)
 $ErrorActionPreference = 'Stop'
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 if (-not (Test-Path -LiteralPath $compiler)) { throw 'The .NET Framework 4 compiler was not found.' }
 $names = @('SelectorCopy','SelectorRoutine','BiosKeyReader','FormatterWordWriter','NumericConverter','ConsumerContextSaver','ParameterWordReader','DirectionalStringBlocks','SpanBookkeeping','PrefixWritePreparation','OutputCountAdvance','ScreenHookDecisions','ScreenHookForwarding','CharacterOutputDecisions','CharacterAlternateOutput','CharacterOutputFrame','CharacterOutputRoutine','StringOutputRoutine','DatTextLookup','PointBufferAppend','BufferedDrawControl','HorizontalRaster','VerticalRaster','SlopedRaster','EqualStepRaster','LinePreparation','LineClipping','SignedDivide16','ClippingCpu','RasterDispatch','LineDriverBody','RasterStatusFlags','CoordinateConversion','CoordinateWordClamp','CapacityMessageHandler','CapacityFollowup','CapacityDeviceCallees','CapacityKeyReader','CapacityStringOutput','CapacityFollowupNativeEffects','CapacityMessageNativeEffects','CapacityCharacterOutput','ScreenHookRoutine','ScreenHookInterrupt','Mode12Video','BufferedPointCaller','PackedDrawingWord','ItemDrawingDispatch','BeamBufferEdit','BufferedCoordinateDecode','BufferedBeamLinePipeline','BeamGeometry','TupletGeometry','TupletBracket','SlurOrigins','SlurSampling','SlurThickness','SlurPostprocess','SlurGeometry','SlurLineWidth','SlurVectorCommands','EndingBracket','PageCoordinates','PrintedGlyphDefinition')
+$names += 'CoreDllVersion'
+$names += 'ScoreVersionControls'
 $names += 'RetainedParameterStorage'
 $names += 'TextMetricArithmetic'
 $names += 'TextParameterPreparation'

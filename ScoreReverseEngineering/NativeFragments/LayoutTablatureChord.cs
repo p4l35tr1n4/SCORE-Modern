@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;
+using System;using System.Collections.Generic;
 namespace ScoreModern.RecoveredFragments {
  public sealed class LayoutTablatureChordNote {public float[] Row;public LayoutTablaturePitchPlan Plan;public int SortKey;}
  public static class LayoutTablatureChord {

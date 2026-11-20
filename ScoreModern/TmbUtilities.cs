@@ -16,6 +16,8 @@ namespace ScoreModern {
         internal static readonly string[] Names = {"ACCS", "BEAM", "ES", "LABELS", "LJ", "SEP", "TRANSPOSE", "VJ"};
         const string SettingsKey = "tmb-utilities";
         internal const string IdentitySettingKey = "tmb-identity-dat";
+        internal const string KeepOutputSettingKey = "tmb-keep-output";
+        internal static bool KeepOutputOpen { get { return NativeSettings.Read(KeepOutputSettingKey)=="true"; } }
         internal const string ScoreFile = "SMX.MUS";
         internal string Name, Executable, Support;
         internal bool Enabled;
@@ -286,7 +288,7 @@ namespace ScoreModern {
                 commandFileStage == CommandFileStage.None && !commandFileInputQuestion;
         }
 
-        void RunTmbUtility(TmbUtility tool) {
+        async void RunTmbUtility(TmbUtility tool) {
             if (!CanRunTmbUtility() || !grid.EndEdit()) return;
 
             string folder = Path.Combine(Path.GetTempPath(), "ScoreModern-TMB-" + Guid.NewGuid().ToString("N"));
@@ -298,29 +300,88 @@ namespace ScoreModern {
                 string input = Path.Combine(folder, TmbUtility.ScoreFile);
                 var initial = PrepareTmbInput().Encode();
                 File.WriteAllBytes(input, initial);
-                string output;
-                int? exit = RunTmbWithProgress(tool, executable, folder, options, out output);
+                if (TmbUtility.KeepOutputOpen) {
+                    RunTmbWithOutput(tool, executable, folder, options, input, initial);
+                    return;
+                }
+                var lines = new ConcurrentQueue<string>();
+                int? exit = await RunTmbInBackground(tool, executable, folder, options, lines);
+                string output = String.Join(Environment.NewLine, lines);
                 if (!exit.HasValue) { Message(tool.Caption + " cancelled."); return; }
-                if (exit.Value != 0 || !File.Exists(input) ||
-                    output.IndexOf("could not process some or all", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                    output.IndexOf("!!!! ERROR", StringComparison.OrdinalIgnoreCase) >= 0) {
-                    ShowCopyableList(tool.Caption, "tmb-output", "The utility did not return a usable score. Exit code " +
-                        exit.Value + Environment.NewLine + output);
-                    return;
-                }
-                if (File.ReadAllBytes(input).SequenceEqual(initial)) {
-                    ShowCopyableList(tool.Caption, "tmb-output", "The utility returned no changes to the score." + Environment.NewLine + output);
-                    return;
-                }
-
-                ApplyTmbOutput(input);
-                Message(tool.Caption + " result loaded. Use Undo to restore the previous score.");
+                string notice = LoadTmbResult(tool, input, initial, exit.Value, output);
+                if (notice != null)
+                    ShowCopyableList(tool.Caption, "tmb-output", notice + Environment.NewLine + output);
+            } catch (Exception error) {
+                Safe(() => { throw error; });
             } finally {
                 // Only remove the private, uniquely named directory created above.
                 try {
                     if (Directory.Exists(folder) && (File.GetAttributes(folder) & FileAttributes.ReparsePoint) == 0)
                         Directory.Delete(folder, true);
                 } catch (IOException) { } catch (UnauthorizedAccessException) { }
+            }
+        }
+
+        string LoadTmbResult(TmbUtility tool, string input, byte[] initial, int exit, string output) {
+            if (exit != 0 || !File.Exists(input) ||
+                output.IndexOf("could not process some or all", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                output.IndexOf("!!!! ERROR", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "The utility did not return a usable score. Exit code " + exit;
+            if (File.ReadAllBytes(input).SequenceEqual(initial))
+                return "The utility returned no changes to the score.";
+            ApplyTmbOutput(input);
+            Message(tool.Caption + " result loaded. Use Undo to restore the previous score.");
+            return null;
+        }
+
+        void RunTmbWithOutput(TmbUtility tool, string executable, string folder, string options,
+            string input, byte[] initial) {
+            using (var cancellation = new CancellationTokenSource())
+            using (var dialog = new ScoreDialog("tmb-output") {Text = tool.Caption, Width = 700, Height = 360,
+                MinimumSize = new Size(360, 220), StartPosition = FormStartPosition.CenterParent})
+            using (var timer = new System.Windows.Forms.Timer {Interval = 100}) {
+                var log = new TextBox {Dock = DockStyle.Fill, ReadOnly = true, Multiline = true, ScrollBars = ScrollBars.Vertical};
+                var close = new Button {Text = "Cancel run", Dock = DockStyle.Bottom, AutoSize = true};
+                var lines = new ConcurrentQueue<string>();
+                bool finished = false;
+                Action drain = () => {
+                    string line;
+                    while (lines.TryDequeue(out line)) log.AppendText(line + Environment.NewLine);
+                };
+                dialog.Controls.Add(log);
+                dialog.Controls.Add(close);
+                dialog.SetTextOutputCancelButton(close);
+                close.Click += (sender, args) => dialog.Close();
+                dialog.FormClosing += (sender, args) => {
+                    if (finished) return;
+                    args.Cancel = true;
+                    cancellation.Cancel();
+                    close.Enabled = false;
+                };
+                timer.Tick += (sender, args) => drain();
+                dialog.Shown += async (sender, args) => {
+                    string notice = null;
+                    try {
+                        timer.Start();
+                        int exit = await Task.Run(() => TmbUtility.RunProcess(executable, folder, options, lines, cancellation.Token));
+                        drain();
+                        notice = LoadTmbResult(tool, input, initial, exit, log.Text);
+                    } catch (OperationCanceledException) {
+                        Message(tool.Caption + " cancelled.");
+                    } catch (Exception error) {
+                        notice = error.Message;
+                    } finally {
+                        timer.Stop();
+                        drain();
+                        finished = true;
+                    }
+                    if (cancellation.IsCancellationRequested) { dialog.Close(); return; }
+                    if (notice != null) log.AppendText(notice + Environment.NewLine);
+                    if (log.TextLength == 0) log.Text = "The utility produced no text output.";
+                    close.Text = "Close";
+                    close.Enabled = true;
+                };
+                dialog.ShowDialog(this);
             }
         }
 
@@ -339,38 +400,25 @@ namespace ScoreModern {
             ObserveDisplayLoad(false);
         }
 
-        int? RunTmbWithProgress(TmbUtility tool, string executable, string folder, string options, out string output) {
-            using (var cancellation = new CancellationTokenSource())
-            using (var dialog = new ScoreDialog("tmb-run") {Text = tool.Caption, Width = 700, Height = 360,
-                MinimumSize = new Size(360, 220), StartPosition = FormStartPosition.CenterParent})
-            using (var timer = new System.Windows.Forms.Timer {Interval = 100}) {
-                var log = new TextBox {Dock = DockStyle.Fill, ReadOnly = true, Multiline = true, ScrollBars = ScrollBars.Vertical};
-                var cancel = new Button {Text = "Cancel run", Dock = DockStyle.Bottom, AutoSize = true};
-                var lines = new ConcurrentQueue<string>();
-                var task = Task.Run(() => TmbUtility.RunProcess(executable, folder, options, lines, cancellation.Token));
-                Action drain = () => {
-                    string line;
-                    while (lines.TryDequeue(out line)) log.AppendText(line + Environment.NewLine);
-                };
-                dialog.Controls.Add(log);
-                dialog.Controls.Add(cancel);
-                dialog.FormClosing += (sender, args) => {
-                    if (task.IsCompleted) return;
+        async Task<int?> RunTmbInBackground(TmbUtility tool, string executable, string folder,
+            string options, ConcurrentQueue<string> lines) {
+            using (var cancellation = new CancellationTokenSource()) {
+                FormClosingEventHandler stop = (sender, args) => {
                     args.Cancel = true;
                     cancellation.Cancel();
-                    cancel.Enabled = false;
                 };
-                cancel.Click += (sender, args) => dialog.Close();
-                timer.Tick += (sender, args) => {
-                    drain();
-                    if (task.IsCompleted) dialog.Close();
-                };
-                timer.Start();
-                dialog.ShowDialog(this);
-                drain();
-                output = log.Text;
-                try { return task.GetAwaiter().GetResult(); }
-                catch (OperationCanceledException) { return null; }
+                Message(tool.Caption + " running...");
+                FormClosing += stop;
+                Enabled = false;
+                try {
+                    return await Task.Run(() => TmbUtility.RunProcess(executable, folder, options, lines, cancellation.Token));
+                } catch (OperationCanceledException) {
+                    return null;
+                } finally {
+                    FormClosing -= stop;
+                    Enabled = true;
+                    command.Focus();
+                }
             }
         }
     }

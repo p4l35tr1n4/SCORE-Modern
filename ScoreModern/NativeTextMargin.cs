@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Linq;using System.Windows.Forms;
+using System;using System.Collections.Generic;using System.Linq;using System.Windows.Forms;
 namespace ScoreModern {public sealed partial class Editor {
  sealed class OriginalMarginPlan {public Item Selected;public int Index,Count;public bool StagedDeletion,Justified,MissingFontWarning,FontWarningAcknowledged;public float JustifyLeft,JustifyRight;public List<Item> Lines;}
  OriginalMarginPlan originalMarginPlan,originalMarginFontPlan;

@@ -1,22 +1,17 @@
 # SCORE Modern
 
-SCORE Modern is a Windows application for working with legacy SCORE music engraving files. This repository contains the Core 0.3.60 RC2 source snapshot, based on build 2111.
+Windows application for legacy SCORE music engraving files. Core **0.3.67 RC2**, build **2402**; shared managed DLL **0.3.61.1**.
 
 ## Build on Windows
 
-Use Windows PowerShell and the .NET Framework 4.8 compiler installed with Windows. From the repository root, run:
+Use Windows PowerShell and .NET Framework 4.8:
 
 ```powershell
-$output = Join-Path (Get-Location) 'build'
-& .\ScoreModern\Build.ps1 -OutputDirectory $output -NativeBuild 2111
+& .\ScoreModern\Build.ps1 -OutputDirectory (Join-Path $PWD 'build') -CoreDllPath (Join-Path $PWD 'Binaries/ScoreModern.dll')
 ```
 
-The build creates `ScoreModern.exe`, `ScoreModern.dll`, and a `Help` directory. Keep them together. First setup asks for the location of an existing SCORE installation and its resources. SCORE executables, scores, libraries, fonts, and local preferences are external.
+Omit `-CoreDllPath` to compile the shared DLL from `ScoreReverseEngineering/NativeFragments`. The app build creates `ScoreModern.exe`, `ScoreModern.dll` and Help files. Keep them together. Supply your own compatible SCORE installation, drawing libraries, fonts and serial-bearing DAT.
 
-`ScoreModern/` contains the Windows application. `ScoreReverseEngineering/NativeFragments/` contains the recovered routines built into the managed DLL. The bundled help topics are under [ScoreModern/Help/Topics](ScoreModern/Help/Topics).
+`Binaries/` contains the publication executable and unchanged shared DLL. The application uses portable startup defaults, a generic legacy version label and no serial-derived denylist fingerprint. No scores, libraries, fonts, personal settings or original executables are included.
 
-For integration with other software, see the [DLL integration guide](ScoreModern/TechnicalManual/06-dll-integration.md) and [managed API reference](ScoreModern/TechnicalManual/DLL-API.md).
-
-The publication build uses portable startup defaults and a generic legacy version label. Startup still requires a compatible serial-bearing DAT supplied by the user.
-
-The [SCOR4 technical chapter](ScoreModern/TechnicalManual/07-scor4.md) covers the recovered SCORE 4.01 differences.
+SCOR4 differences are selected in Preferences. See the [technical manual](ScoreModern/TechnicalManual/README.md), [SCOR4 chapter](ScoreModern/TechnicalManual/07-scor4.md), [DLL guide](ScoreModern/TechnicalManual/06-dll-integration.md) and [API reference](ScoreModern/TechnicalManual/DLL-API.md).

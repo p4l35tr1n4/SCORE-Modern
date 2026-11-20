@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;using System.Text;using System.Text.RegularExpressions;using System.IO;using System.Runtime.CompilerServices;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;using System.Text;using System.Text.RegularExpressions;using System.IO;using System.Runtime.CompilerServices;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  internal static class NativeRawPostScript {
   internal const string Aliases="/m /moveto load def /l /lineto load def /tr /translate load def /aw /awidthshow load def\n/e /eofill load def /s /stroke load def /g /gsave load def /r /grestore load def\n/f /findfont load def /sf /setfont load def /mkf /makefont load def /lw /setlinewidth load def\n";

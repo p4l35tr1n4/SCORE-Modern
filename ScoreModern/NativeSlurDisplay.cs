@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Globalization;
 using System.Collections.Generic;
@@ -25,13 +25,13 @@ namespace ScoreModern {
   static int Word(float v){return unchecked((short)(int)Math.Truncate(v));}
   float? configuredControl;public int Records{get;private set;}public int Failures{get;private set;}
   public bool Add(Graphics g,Item item,float staffStep,float staffBase,ScoreText text,NativeNotationContext page=null){
-   int offset=Word(item.P(8));if(offset>0&&offset<10)return false;
+   bool scor4=text!=null&&NativeLibraryLocation.IsScor4(text.RootDirectory);int offset=ScoreVersionControls.SlurSubtype(scor4,item.P(8),item.P(16));if(offset>0&&offset<10)return false;
    float[] p=new float[21];for(int n=1;n<=20;n++)p[n]=item.P(n);float scale=page==null?5*staffStep:page.Scale;
    // Keep the verified word geometry in a local coordinate window. Applying
    // full-page Windows offsets before 16-bit storage would wrap lower staves.
    // Shared ordered buffer effects are retained within each staff projection.
    int key=page==null?item.Staff:0;StaffBuffer staff;if(!staffs.TryGetValue(key,out staff)){staff=new StaffBuffer();staffs.Add(key,staff);}var buffer=staff.Buffer;staff.Page=page;staff.Origin=page==null?staffBase+3*staffStep-20000/35f:page.Projection.OffsetY;
-   var context=new SlurOriginContext{Scale=scale,LeftX=(float)((double)p[3]*150),LeftY=page==null?(float)((double)p[4]*7*scale-20000):page.Prepared.Y,RightY=page==null?(float)((double)p[5]*7*scale-20000):page.Vertical(p[5])};
+   var context=new SlurOriginContext{Scor4=scor4,Scale=scale,LeftX=(float)((double)p[3]*150),LeftY=page==null?(float)((double)p[4]*7*scale-20000):page.Prepared.Y,RightY=page==null?(float)((double)p[5]*7*scale-20000):page.Vertical(p[5])};
    bool straight=Word(p[9])==99;bool widthPrefix=straight?Word(p[13])!=0:Word(p[11])==0;if(printed)buffer.End=straight?1:(widthPrefix?2:1);
    try{
     if(!configuredControl.HasValue)configuredControl=NativeSlurDisplay.ReadThickness(text==null?null:text.RootDirectory);

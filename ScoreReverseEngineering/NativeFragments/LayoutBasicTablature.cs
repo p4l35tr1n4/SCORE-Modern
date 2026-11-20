@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;
+using System;using System.Collections.Generic;
 namespace ScoreModern.RecoveredFragments {
  public static class LayoutBasicTablature {
   //2C0C:0377..051D staff/leading bar;0539..05C8 head, clef and bar-helper controls.

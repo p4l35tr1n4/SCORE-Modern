@@ -2,6 +2,7 @@ using System;using System.Drawing;using System.Globalization;using System.Window
 namespace ScoreModern {
  public static class NativeWorkspaceGuides {
   public static bool Rulers=NativeSettings.Read("rulers")=="on",Gap=NativeSettings.Read("notation-gap")=="on",StaffOne=NativeSettings.Read("ruler-staff")=="1",Crosshair=NativeSettings.Read("ruler-crosshair")!="off";
+  public static bool DenseRulerTicks=NativeSettings.Read("ruler-dense-ticks")=="on";
   public static string Units=NativeSettings.Read("ruler-units")??"inches";
   public static float GapPoints=ReadGap();
   public static bool PageGap=NativeSettings.Read("page-gap")=="on";
@@ -22,6 +23,10 @@ namespace ScoreModern {
    group.DropDownItems.Add("Ruler background colour...",null,(s,e)=>{using(var d=new ColorDialog{Color=RulerColor,FullOpen=true})if(d.ShowDialog(menu.FindForm())==DialogResult.OK)Change("ruler-background",d.Color.ToArgb().ToString("X8"),()=>RulerColor=d.Color);});
    menu.Opening+=(s,e)=>page.Checked=PageGap;
    var rulers=new ToolStripMenuItem("Show margin rulers");rulers.Click+=(s,e)=>Change("rulers",Rulers?"off":"on",()=>Rulers=!Rulers);group.DropDownItems.Add(rulers);
+   var denseTicks=new ToolStripMenuItem("Denser ruler ticks"){ToolTipText="Show finer subdivisions between labelled ticks. Both intervals follow the zoom level."};
+   denseTicks.Click+=(s,e)=>Change("ruler-dense-ticks",DenseRulerTicks?"off":"on",()=>DenseRulerTicks=!DenseRulerTicks);
+   group.DropDownItems.Add(denseTicks);
+   menu.Opening+=(s,e)=>denseTicks.Checked=DenseRulerTicks;
    foreach(string unit in new[]{"inches","centimetres","points","SCORE units"}){string chosen=unit;var item=new ToolStripMenuItem("Ruler units: "+unit);item.Click+=(s,e)=>Change("ruler-units",chosen,()=>Units=chosen);group.DropDownItems.Add(item);menu.Opening+=(s,e)=>item.Checked=Units==chosen;}
    var selected=new ToolStripMenuItem("SCORE vertical ruler: selected staff (otherwise staff 1)");selected.Click+=(s,e)=>Change("ruler-staff","selected",()=>StaffOne=false);group.DropDownItems.Add(selected);
    var first=new ToolStripMenuItem("SCORE vertical ruler: always staff 1");first.Click+=(s,e)=>Change("ruler-staff","1",()=>StaffOne=true);group.DropDownItems.Add(first);

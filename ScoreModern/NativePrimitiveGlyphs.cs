@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using System.Globalization;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public struct PrimitiveGlyphRequest {public int Glyph,WidthSelector;public float X,Y,Horizontal,Vertical;}
  public static class NativePrimitiveGlyphs {

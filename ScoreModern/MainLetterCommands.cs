@@ -105,7 +105,7 @@ namespace ScoreModern {
   void ShowScoreVersion(){
    uint serial=NativeScoreIdentity.Require(source,false).Serial;
    var culture=CultureInfo.InvariantCulture;
-   string version=scor4Interface?"4.0100-555":"3.1100-585";
+   string version=scor4Interface?"4.0100":"3.1100";
    string text=String.Format(culture,"Version =   {0}  --  Serial # = {1}",version,serial);
    if(score.Trailer.Length==24&&!String.IsNullOrEmpty(current)&&File.Exists(current)){
     uint creator=BitConverter.ToUInt32(score.Trailer,4);
@@ -317,7 +317,7 @@ namespace ScoreModern {
      throw new Exception("PM rows differ from the DOS fixture.");
     Execute("");
     Execute("VER");
-    if(!responseLine.Text.Contains("Version =   3.1100-585  --  Serial # = "+NativeScoreIdentity.Require(source,false).Serial))
+    if(!responseLine.Text.Contains("Version =   3.1100  --  Serial # = "+NativeScoreIdentity.Require(source,false).Serial))
      throw new Exception("VER identity differs.");
     SetDocument(Score.Load(a),a);
     Execute("NX");

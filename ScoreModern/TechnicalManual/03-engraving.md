@@ -75,3 +75,6 @@ For print, compute scale and geometry units from the job, apply origin, visibili
 An ordinary included EPS consumes its bounds for placement. The measured Code 15 program route exposes SCORE parameters as PostScript variables, so record order and external-program state can affect later output. Do not substitute viewer ink bounds for the original vector minimum scan. Native graphics, raster exports, EPS, and a plotted bounding rectangle answer different measurement questions.
 
 Sources: [point buffer](../../ScoreReverseEngineering/NativeFragments/PointBufferAppend.cs), [line preparation](../../ScoreReverseEngineering/NativeFragments/LinePreparation.cs), [clipping](../../ScoreReverseEngineering/NativeFragments/LineClipping.cs), [raster dispatch](../../ScoreReverseEngineering/NativeFragments/RasterDispatch.cs), [minimum scan](../../ScoreReverseEngineering/NativeFragments/VectorMinimumScan.cs), [DSC bounds](../NativePrintMinimum.cs), [EPS writer](../NativeEpsExport.cs).
+
+
+Shared-DLL support for SCOR4 Code11 P11, Code7 harp P15, Code18 P16 and Code5 explicit endpoint mode is described with exact units, operation ordering and test scope in [Chapter 07](07-scor4.md). These version-dependent controls are separate from SMX curvature/taper extensions.

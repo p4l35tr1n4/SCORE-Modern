@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Collections.Generic;
+using System;using System.Linq;using System.Collections.Generic;
 namespace ScoreModern {public sealed partial class Editor {
  // Cancel restores the indexed item count, but leaves allocated lyric records
  // and the RN end pointer. Safe mode discards them; original mode saves them.

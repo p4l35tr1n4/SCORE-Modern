@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Collections.Generic;
+using System;using System.Drawing;using System.Collections.Generic;
 namespace ScoreModern {
  public static class NativeTrillGlyph {
   // Shared by standalone Code7 and Code1's delegated trill. Relative

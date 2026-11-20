@@ -1,4 +1,4 @@
-﻿using System;using System.Text;using ScoreModern.RecoveredFragments;
+using System;using System.Text;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  // Preparation only. File resolution and canvas execution are deliberately
  // separate; a caller must supply the selected external program's contents.

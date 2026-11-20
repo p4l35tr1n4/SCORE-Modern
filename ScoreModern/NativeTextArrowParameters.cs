@@ -1,4 +1,4 @@
-﻿using System;using System.IO;
+using System;using System.IO;
 namespace ScoreModern {public sealed partial class Editor {
  Item textArrowItem;readonly float[] textArrowTail=new float[6];
  void ResetOriginalTextArrowState(Item item){textArrowItem=item;Array.Clear(textArrowTail,0,textArrowTail.Length);}

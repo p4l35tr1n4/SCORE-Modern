@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Text;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Text;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativeCode9Terms {
   sealed class Resource {public long Modified,Length;public Dictionary<int,string> Entries;}

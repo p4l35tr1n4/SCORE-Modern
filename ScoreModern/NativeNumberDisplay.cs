@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Globalization;
 namespace ScoreModern {
@@ -28,7 +28,7 @@ namespace ScoreModern {
    frame=new NativeNumberFrame();
    if(page==null||item.Code!=10)return false;
    for(int n=5;n<=15;n++)if(Single.IsNaN(item.P(n))||Single.IsInfinity(item.P(n)))return false;
-   for(int n=16;n<=20;n++)if(item.P(n)!=0)return false;
+   if(item.P(16)!=0&&item.P(16)!=1)return false;for(int n=17;n<=20;n++)if(item.P(n)!=0)return false;
    int number=(int)item.P(5),font=(int)item.P(7),enclosure=(int)item.P(8);
    if(item.P(5)<-1||item.P(5)>1026||font<0||font!=item.P(7)||font>12&&(font<1000||font>1089)||
     item.P(8)!=enclosure||enclosure<-32768||enclosure>32767||item.P(10)!=(int)item.P(10)||

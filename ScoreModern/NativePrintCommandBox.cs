@@ -1,4 +1,4 @@
-﻿using System;using System.Windows.Forms;
+using System;using System.Windows.Forms;
 namespace ScoreModern {
  internal sealed class NativePrintCommandBox:TextBox {
   internal Func<bool> AppendOnly;

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Globalization;using System.Collections.Generic;
+using System;using System.IO;using System.Globalization;using System.Collections.Generic;
 namespace ScoreModern {
  public sealed class NativePrintJob:IDisposable {
   [ThreadStatic]public static NativePrintJob Active;NativePrintJob previous;bool automaticResolved;public short? AutomaticMinimum;internal NativePrintExtents ResolvedExtents;public string OffsetWarning{get;private set;}

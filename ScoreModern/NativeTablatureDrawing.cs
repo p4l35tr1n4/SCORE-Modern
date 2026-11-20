@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  // Original 1BA1:0007..05BA; N131 entry/branch and text-converter snapshots.
  public static class NativeTablatureDrawing {

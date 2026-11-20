@@ -1,4 +1,4 @@
-﻿using System;using System.Globalization;using ScoreModern.RecoveredFragments;
+using System;using System.Globalization;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativePrintContext {
   sealed class Profile:IDisposable {public Profile Previous;public string Root;public short Basis=2,Beam=-2;public float Unit=SlurLineWidth.DefaultUnit,LineUnit=SlurLineWidth.DefaultUnit;public float? CarriedLineWidth;public NativePrintedChordGrid.State Grid;public bool Stroke;public int Procedures=2000;public void Dispose(){current=Previous;}}
@@ -17,6 +17,8 @@ namespace ScoreModern {
   internal static bool HasCarriedLineWidth{get{return current!=null&&!NativeNotationView.UsesDat&&current.CarriedLineWidth.HasValue;}}
   internal static void CarryLineWidth(float width){if(current!=null)current.CarriedLineWidth=width;}
   internal static void RestoreDefaultLineWidth(){if(current!=null)current.CarriedLineWidth=null;}
+  sealed class WidthScope:IDisposable {readonly Profile profile;readonly float? previous;public WidthScope(short selector){profile=current;if(profile!=null){previous=profile.CarriedLineWidth;profile.CarriedLineWidth=FixedWidth(selector);}}public void Dispose(){if(profile!=null)profile.CarriedLineWidth=previous;}}
+  internal static IDisposable OverrideLineWidth(short selector){return new WidthScope(selector);}
   public static float DefaultLineWidth{get{return Width(0);}}
   public static float BeamWidth{get{return Width(current==null?(short)-2:current.Beam);}}
   public static float PrintedDefault{get{return Single.Parse(SlurLineWidth.Format(SlurLineWidth.Field(0,current==null?(short)2:current.Basis,current==null?SlurLineWidth.DefaultUnit:current.LineUnit)),CultureInfo.InvariantCulture);}}

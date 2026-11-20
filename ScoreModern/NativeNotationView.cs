@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
+using System;using System.IO;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public enum NotationView {Vector,Dat,DatPixels,DatViewport}
  public static class NativeNotationView {

@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Drawing;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Drawing;using System.Windows.Forms;
 namespace ScoreModern {public sealed partial class Editor {
  internal void CheckZoomFramings(string output){Directory.CreateDirectory(output);var original=score.Encode();var modeBefore=NativeNotationView.Mode;bool dosBefore=NativeZoomFraming.Dos;try{
   foreach(bool dos in new[]{true,false})foreach(NotationView view in Enum.GetValues(typeof(NotationView)))foreach(float dpi in new[]{1f,1.75f,2f}){

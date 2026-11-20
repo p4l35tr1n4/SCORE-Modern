@@ -4,7 +4,7 @@ namespace ScoreModern {
   internal void RefreshActions(){OnOpening(new System.ComponentModel.CancelEventArgs());}
  }
  public class ScoreDialog : Form {
-  bool baselineApplied;
+  bool baselineApplied,closeTextOutputOnEscape;
   Font scaledSystemFont;
   protected override void OnHandleCreated(EventArgs e){base.OnHandleCreated(e);if(ShowInTaskbar)NativeDialogTaskbar.Set(Handle,sizeSetting);}
   protected override void Dispose(bool disposing){base.Dispose(disposing);if(disposing&&scaledSystemFont!=null){scaledSystemFont.Dispose();scaledSystemFont=null;}}
@@ -23,13 +23,48 @@ namespace ScoreModern {
   void ApplyBaseline(){if(baselineApplied)return;baselineApplied=true;SizeTableHeaders(this);SuspendLayout();AutoScaleMode=AutoScaleMode.Dpi;AutoScaleDimensions=new SizeF(96,96);ResumeLayout(true);PerformAutoScale();}
   static void PrepareHandles(Control c){var handle=c.Handle;foreach(Control child in c.Controls)PrepareHandles(child);}
   internal void PrepareForDisplay(){ApplyBaseline();RestoreSize();FitWorkingArea();PrepareHandles(this);PerformLayout();}
+  internal void AddTextOutputCloseButton(){
+   var close=new Button{Text="Close",AutoSize=true,Anchor=AnchorStyles.Right};
+   close.Click+=(s,e)=>Close();
+   var footer=new FlowLayoutPanel{Dock=DockStyle.Bottom,AutoSize=true,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(4)};
+   footer.Controls.Add(close);
+   Controls.Add(footer);
+   SetTextOutputCancelButton(close);
+  }
+  internal void SetTextOutputCancelButton(Button close){
+   ActiveControl=close;
+   CancelButton=close;
+   close.DialogResult=DialogResult.None;
+   closeTextOutputOnEscape=true;
+  }
+  protected override bool ProcessCmdKey(ref Message message,Keys keyData){
+   if(keyData==Keys.Escape&&closeTextOutputOnEscape){
+    Close();
+    return true;
+   }
+   return base.ProcessCmdKey(ref message,keyData);
+  }
+  static void InitializeTextOutputs(Control parent,bool initialSelection){
+   foreach(Control child in parent.Controls){
+    var text=child as TextBox;
+    if(text!=null&&text.Multiline&&text.ReadOnly){
+     if(initialSelection)text.Select(0,0);
+     else{
+      text.BackColor=NativeWindowsColors.TextOutputBackground;
+      text.ForeColor=NativeWindowsColors.TextOutputText;
+     }
+    }
+    InitializeTextOutputs(child,initialSelection);
+   }
+  }
   static void AddTextOutputMenus(Control parent){foreach(Control child in parent.Controls){var text=child as TextBox;if(text!=null&&text.Multiline&&text.ReadOnly&&text.ContextMenuStrip==null){var menu=new ContextMenuStrip();menu.Items.Add("Copy",null,(s,e)=>text.Copy());menu.Items.Add("Select all",null,(s,e)=>text.SelectAll());menu.Items.Add(new ToolStripSeparator());menu.Items.Add("Save as...",null,(s,e)=>{using(var file=new SaveFileDialog{Title="Save text output",Filter="Text files (*.txt)|*.txt|All files (*.*)|*.*",DefaultExt="txt",FileName="output.txt",RestoreDirectory=true})if(file.ShowDialog(text.FindForm())==DialogResult.OK)try{File.WriteAllText(file.FileName,text.Text,System.Text.Encoding.UTF8);}catch(Exception error){if(!(error is IOException||error is UnauthorizedAccessException))throw;MessageBox.Show(text.FindForm(),error.Message,"Save text output",MessageBoxButtons.OK,MessageBoxIcon.Error);}});text.ContextMenuStrip=menu;text.Disposed+=(s,e)=>menu.Dispose();}AddTextOutputMenus(child);}}
-  protected override void OnLoad(EventArgs e){ApplyBaseline();AddTextOutputMenus(this);base.OnLoad(e);}
+  protected override void OnLoad(EventArgs e){ApplyBaseline();InitializeTextOutputs(this,false);AddTextOutputMenus(this);base.OnLoad(e);}
   protected override void OnShown(EventArgs e){
    RestoreSize();
    FitWorkingArea();
    openedSize=LogicalSize(Size);
    base.OnShown(e);
+   InitializeTextOutputs(this,true);
   }
   Size LogicalSize(Size pixels){
    float scale=NativeDisplay.Scale(this);

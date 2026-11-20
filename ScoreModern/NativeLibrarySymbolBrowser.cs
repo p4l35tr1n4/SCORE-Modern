@@ -28,7 +28,7 @@ namespace ScoreModern {
    grid.AccessibleName="LIB drawing banks and symbols";
    grid.Columns.Add(new DataGridViewTextBoxColumn{HeaderText="Bank file",Width=145,Frozen=true,SortMode=DataGridViewColumnSortMode.NotSortable});
    for(int i=0;i<10;i++)grid.Columns.Add(new DataGridViewTextBoxColumn{
-    HeaderText="Slot "+(i+1).ToString(CultureInfo.InvariantCulture),Width=190,SortMode=DataGridViewColumnSortMode.NotSortable});
+    HeaderText="Slot "+i.ToString(CultureInfo.InvariantCulture),Width=190,SortMode=DataGridViewColumnSortMode.NotSortable});
    grid.RowTemplate.Height=190;
    var files=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
    foreach(var folder in new[]{Path.Combine(root,"LIB"),directory}.Distinct(StringComparer.OrdinalIgnoreCase))

@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Collections.Generic;using System.Globalization;using ScoreModern.RecoveredFragments;
+using System;using System.Drawing;using System.Collections.Generic;using System.Globalization;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public static class NativePrintedClefs {
   static float F(double value){return (float)value;}

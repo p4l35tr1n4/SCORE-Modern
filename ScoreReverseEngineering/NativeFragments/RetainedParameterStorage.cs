@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace ScoreModern.RecoveredFragments {
  // The original RN workspace has14200 real words. A fresh measured VM
  // starts with zero words; loading overlays the file, packing overwrites

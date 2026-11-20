@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Drawing.Imaging;using System.Runtime.CompilerServices;using System.Runtime.InteropServices;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Drawing.Imaging;using System.Runtime.CompilerServices;using System.Runtime.InteropServices;
 namespace ScoreModern {
  // Observe the paths/images actually drawn; selection anchors are independent.
  public static class NativeItemBounds {

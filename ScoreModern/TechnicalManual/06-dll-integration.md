@@ -1,12 +1,12 @@
 # Using ScoreModern.dll from another program
 
-This guide uses the DLL shipped with **SCORE Modern 0.3.60 RC1, build 1950**. The DLL is a Windows .NET Framework managed assembly. Its public namespace is `ScoreModern.RecoveredFragments`. Load it into your own process and call managed methods directly. There is no running SCORE Modern session to connect to, and the DLL does not provide an IPC endpoint, COM automation object, or native C API.
+This guide covers **ScoreModern.dll 0.3.61.1**, shared by current Core and SMX builds. The DLL is a Windows .NET Framework managed assembly. Its public namespace is `ScoreModern.RecoveredFragments`. Load it into your own process and call managed methods directly. There is no running SCORE Modern session to connect to, and the DLL does not provide an IPC endpoint, COM automation object, or native C API.
 
 The DLL contains recovered calculation and state routines. The Windows executable supplies the application layer, including opening and saving a complete score, selecting external LIB and font resources, preparing a page, running commands, and drawing or exporting a score. Call the DLL for individual calculations or for a workflow whose full inputs you can supply. Use the executable's command line for complete file rendering and export.
 
 ## Set up a C# client
 
-1. Extract `ScoreModern.dll` from the build you want to use into a folder for your project. Keep that exact binary with your application. Build 1950 reports assembly version `0.0.0.0`, so that metadata alone cannot identify the release or guarantee compatibility.
+1. Extract `ScoreModern.dll` from the build you want to use into a folder for your project. Keep that exact binary with your application. The DLL reports assembly version `0.0.0.0`, so that metadata alone cannot identify the release or guarantee compatibility.
 2. In a **Console App (.NET Framework)** project, use **Add Reference → Browse** and select the DLL. Set **Copy Local** to true so the loader can find it beside the client executable. Use a compatible .NET Framework installation on Windows. The release build was compiled with the .NET Framework v4 compiler and references `mscorlib`, `System`, `System.Core`, and `System.Numerics`.
 3. Add `using ScoreModern.RecoveredFragments;` in C#. Configure application resources separately if the workflow calls for them. The examples below only need the managed DLL and the .NET Framework.
 
@@ -100,7 +100,7 @@ The fields are `1`, `23`, and `45`. They are decoded numeric parts. Their meanin
 | Accumulate tiled page positions | `ScorlasGuideConversion.Convert`, `ScorlasFilePlacementState.Add` | Measured extents, guide and units. Retain one state object for each sequence of files. |
 | Model original memory and device operations | Interfaces such as `IPointBufferMemory`, `IHorizontalRasterMemory`, `ICoordinateFpuEffects`, and `IMode12Surface` | A memory and device adapter, initial register state, required buffer sizes and any external effects named in the routine contract. |
 
-Types and function signatures for the shipped binary are in the [assembly member index](DLL-API.md). The technical routine index links to implementation listings and original recovery evidence. The native integration listings show how the executable supplies arguments and handles results.
+Types and function signatures for the shipped binary are in the [assembly member index](DLL-API.md). The [technical routine index](B-routine-index.md) links to implementation listings and original recovery evidence. The [native integration listings](B-native-integration-listings.md) show how the executable supplies arguments and handles results.
 
 ## Input conventions and state ownership
 
@@ -142,3 +142,29 @@ These entry points are implemented by the executable in [its command-line dispat
 | A geometry call throws `NotSupportedException` | Check the helper's verified domain, indexing, units, array extents and original branch assumptions. |
 | The result looks scaled or flipped | Check whether the result is in parameter, raw drawing, raster, native canvas or PostScript space before applying a transform. |
 | A standalone export reports a missing resource | Check the installation root, selected LIB and matching font files or external drawings for the score. |
+
+
+## SCOR4 version controls
+
+See [Chapter 07](07-scor4.md#shared-dll-scor4-engraving-and-spacing-controls-20-november-2026) for exact meanings, units and rounding. Version selection is explicit and defaults to SCORE 3.11:
+
+```csharp
+var context = new SlurOriginContext { Scor4 = true, Scale = 22.5f,
+    LeftX = 4500, LeftY = -18802.5f, RightY = -18802.5f };
+var workspace = new LayoutJustificationWorkspace {
+    Scor4NumberJustification = true
+};
+float rawDrawingOffset = ScoreVersionControls.DrawingOffset(true, 2f); // 300
+short meterWidthSelector = ScoreVersionControls.MeterThicknessSelector(true, -2f);
+```
+
+Existing public selector/spacing signatures remain as classic overloads. The new explicit overloads opt into SCOR4. Supply the same version to geometry, bounds and layout; do not infer it from an ordinary MUS trailer. DLL file and informational version are 0.3.61.1; assembly version remains 0.0.0.0. The EXE supplies resource resolution, print state restoration and UI. Build both applications using `-CoreDllPath` with the same canonical binary.
+
+
+For command-line EPS, select the version explicitly with `--score-profile=scor4` or `--score-profile=311`. If omitted, the saved interface preference is used. For example:
+
+```powershell
+.\ScoreModernX.exe --export-eps C:\SCORE4 page.MUS page.EPS --score-profile=scor4 --notation=vector --type1-fonts=C:\SCORE4\PSFONTS
+```
+
+Core uses `ScoreModern.exe` with the same arguments. These flags select process-local rendering semantics and do not rewrite the saved profile or score.

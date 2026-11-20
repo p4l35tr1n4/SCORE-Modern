@@ -171,7 +171,7 @@ namespace ScoreModern {
     if(low!=high||left.HasValue||right.HasValue){
      if(!(low<high))throw new ArgumentException("The right limit must be greater than the left limit.");
      var justified=LayoutJustificationSystem.Apply(words,starts,bottom,top,low,high,scales,new float[4],StaffLimit,2800,
-      new LayoutJustificationWorkspace{StandaloneJust=true,PositionJoinTolerance=.1f,
+      new LayoutJustificationWorkspace{Scor4NumberJustification=scor4,StandaloneJust=true,PositionJoinTolerance=.1f,
        OriginalQuarterToneWidths=NativeEditCompatibility.OriginalQuarterToneWidths});
      if(justified.Gaps.CompressedMinimums&&report!=null)report("JUST reduced minimum spacing from "+
       justified.Gaps.MinimumTotal.ToString("0.000")+" to fit "+justified.Gaps.Width.ToString("0.000")+".");

@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 namespace ScoreModern {public static class NativeMenuMouseOptions {
  static bool helpExit=NativeSettings.Read("menu-three-button-exit")=="help";
  public static bool HelpExit{get{return !NativeScoreBehaviour.Enabled&&helpExit;}}

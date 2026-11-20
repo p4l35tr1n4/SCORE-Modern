@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Globalization;
+using System;using System.Drawing;using System.Drawing.Drawing2D;using System.Collections.Generic;using System.Globalization;
 namespace ScoreModern {
  public static class NativePrintedRepeatBars {
   static float F(double v){return (float)v;}static bool Present(float v){return BitConverter.ToInt32(BitConverter.GetBytes(v),0)!=0;}

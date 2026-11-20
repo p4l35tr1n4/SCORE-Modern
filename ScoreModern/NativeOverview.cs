@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
+using System;using System.Collections.Generic;using System.Drawing;using System.Drawing.Drawing2D;using System.Windows.Forms;using ScoreModern.RecoveredFragments;
 namespace ScoreModern {
  public sealed class NativeOverview {
   public short X,Y,Divisor;public float Factor;public readonly short Left,Top,Right,Bottom;

@@ -8,7 +8,7 @@ namespace ScoreModern {
   readonly LayoutJustificationWorkspace justification;
   internal NativePageLineLayout(bool scor4=false){
    lineup=new LayoutLineupWorkspace{Scor4DurationScale=scor4,Page4RoundEachPosition=scor4};
-   justification=new LayoutJustificationWorkspace{Page4RoundScaleNumerator=scor4};
+   justification=new LayoutJustificationWorkspace{Scor4NumberJustification=scor4,Page4RoundScaleNumerator=scor4};
   }
   internal List<Item> Apply(IList<Item> input,short bottom,short top,float[] staffUnits,float[] afterSymbol){
    return ApplyWithWarnings(input,bottom,top,staffUnits,afterSymbol,null);

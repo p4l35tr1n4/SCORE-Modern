@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Drawing.Imaging;using System.Windows.Forms;using System.Linq;
+using System;using System.Drawing;using System.Drawing.Imaging;using System.Windows.Forms;using System.Linq;
 namespace ScoreModern {
  public sealed class NativeScreenPalette {
   public Color Graphics,Background,Text,Edit;

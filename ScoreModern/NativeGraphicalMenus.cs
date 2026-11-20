@@ -1,4 +1,4 @@
-﻿using System;using System.IO;using System.Linq;using System.Globalization;using System.Windows.Forms;
+using System;using System.IO;using System.Linq;using System.Globalization;using System.Windows.Forms;
 namespace ScoreModern {public sealed partial class Editor {
  int pendingGraphicalMenu;bool deletingGraphicalMenu;readonly int[] graphicalMenuStaffs=new int[4];Score pendingGraphicalMenuScore;
  bool ExecuteOriginalGraphicalMenu(string text){if(mode!=ScreenMode.Main)return false;var fields=text.Split(new[]{' ','\t'},2,StringSplitOptions.RemoveEmptyEntries);if(fields.Length==0)return false;string verb=fields[0].ToUpperInvariant();if(verb!="MU"&&verb!="MD"&&verb!="MM")return false;

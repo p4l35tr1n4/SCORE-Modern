@@ -111,7 +111,7 @@ namespace ScoreModern {
         };
 
         bool Scor4SetupActive { get { return scor4Interface && musicInput != null &&
-            musicInput.Transaction == null && !musicInput.PositionsQuestion && setupEditField == 0; } }
+            musicInput.Transaction == null && !musicInput.PositionsQuestion; } }
         bool Scor4ItemActive { get { return scor4Interface && mode == ScreenMode.Edit &&
             canvas.Selected != null && Scor4EditLabelsForItem(canvas.Selected) != null &&
             !originalItemZero && !pendingEditAcknowledgement && pendingBeamTemporary == null &&
@@ -122,6 +122,7 @@ namespace ScoreModern {
         }
 
         void InitializeScor4Interface() {
+            Shown+=(s,e)=>FlushCoreScor4FileNotice();
             scor4Interface = ReadScor4InterfacePreference();
             canvas.Scor4Interface = scor4Interface;
             compactBottomMenu = NativeSettings.Read(CompactMenuSetting) == "true";
@@ -162,7 +163,7 @@ namespace ScoreModern {
         Control BuildScor4ProfileSelector(List<Action> refreshers) {
             var row = new FlowLayoutPanel {AutoSize = true, Dock = DockStyle.Top, Padding = new Padding(5), WrapContents = false};
             var selector = new ComboBox {DropDownStyle = ComboBoxStyle.DropDownList, AccessibleName = "Interface profile", Width = 160};
-            selector.Items.AddRange(new[]{"SCORE 3.11", "SCOR4 (preview)"});
+            selector.Items.AddRange(new[]{"SCORE 3.11", "SCOR4"});
             Action refresh = () => selector.SelectedIndex = scor4Interface ? 1 : 0;
             refresh();
             selector.SelectionChangeCommitted += (sender, args) => {
@@ -175,6 +176,7 @@ namespace ScoreModern {
             refreshers.Add(refresh);
             row.Controls.Add(new Label {Text = "Interface profile", AutoSize = true, Margin = new Padding(2, 6, 8, 0)});
             row.Controls.Add(selector);
+            var resetWarnings=new Button{Text="Reset suppressed information dialogs",AutoSize=true};resetWarnings.Click+=(s,e)=>Safe(NativeInformationNotice.Reset);row.Controls.Add(resetWarnings);
             var compact = new CheckBox {Text = "Compact bottom menu", AutoSize = true, Margin = new Padding(14, 5, 2, 0)};
             bool refreshing = false;
             Action refreshCompact = () => {
@@ -198,11 +200,13 @@ namespace ScoreModern {
         }
 
         Control BuildProfileLibrarySelector(List<Action> refreshers, bool forScor4) {
-            var row = new FlowLayoutPanel {AutoSize = true, Dock = DockStyle.Top, Padding = new Padding(5,0,5,3), WrapContents = false};
+            var row = new TableLayoutPanel {AutoSize = true, Dock = DockStyle.Top, Padding = new Padding(5,0,5,3),
+                ColumnCount = 4, RowCount = 1};
+            for (int column = 0; column < 4; column++) row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             string caption = forScor4 ? "SCORE 4 LIB folder" : "SCORE 3.11 LIB folder";
-            var field = new TextBox {Width = 250, AccessibleName = caption};
-            var browse = new Button {Text = "Browse…", AutoSize = true};
-            var all = new CheckBox {Text = "All resources", AutoSize = true};
+            var field = new TextBox {Width = 250, Anchor = AnchorStyles.Left, AccessibleName = caption};
+            var browse = CreatePreferenceBrowseButton(field,"Browse…",65);
+            var all = new CheckBox {Text = "All resources", AutoSize = true, Anchor = AnchorStyles.Left};
             bool refreshing = false;
             Func<NativeLibraryLocation.Selection> selected = () => NativeLibraryLocation.GetSelection(source,forScor4);
             Func<string> currentFolder = () => selected() == null ? "" : selected().Folder;
@@ -241,10 +245,10 @@ namespace ScoreModern {
                 using(var dialog=new FolderBrowserDialog {Description="Select the "+caption,SelectedPath=currentFolder()})
                     if(dialog.ShowDialog(row.FindForm())==DialogResult.OK){field.Text=dialog.SelectedPath;apply();}
             };
-            row.Controls.Add(new Label {Text=caption,AutoSize=true,Margin=new Padding(2,6,8,0)});
-            row.Controls.Add(field);
-            row.Controls.Add(browse);
-            row.Controls.Add(all);
+            row.Controls.Add(new Label {Text=caption,AutoSize=true,Anchor=AnchorStyles.Left,Margin=new Padding(2,3,8,3)},0,0);
+            row.Controls.Add(field,1,0);
+            row.Controls.Add(browse,2,0);
+            row.Controls.Add(all,3,0);
             refreshers.Add(() => {if(!field.Focused)refresh();});
             refresh();
             return row;
@@ -333,6 +337,14 @@ namespace ScoreModern {
             }
         }
 
+        void UpdateFunctionStripVisibility() {
+            bool active = Scor4MenuActive;
+            bool showMenu = !inputFullGraphics && !inputMenuHidden;
+            functionStrip.Visible = showMenu && !active;
+            scor4Strip.Visible = showMenu && active;
+            canvas.DosClipBottom = (short)(inputFullGraphics ? 479 : inputMenuHidden ? 478 : active ? 446 : 461);
+        }
+
         void UpdateScor4Menu() {
             if (scor4MenuItem != canvas.Selected) {
                 scor4MenuItem = canvas.Selected;
@@ -343,12 +355,8 @@ namespace ScoreModern {
                 scor4SymbolEditBank = 0;
                 scor4NoteBank = Scor4NoteBank.Item;
             }
-            bool active = Scor4MenuActive;
-            bool showMenu = !inputFullGraphics && !inputMenuHidden;
-            functionStrip.Visible = showMenu && !active;
-            scor4Strip.Visible = showMenu && active;
-            canvas.DosClipBottom = (short)(inputFullGraphics ? 479 : inputMenuHidden ? 478 : active ? 446 : 461);
-            if (!active || !showMenu) return;
+            UpdateFunctionStripVisibility();
+            if (!Scor4MenuActive || inputFullGraphics || inputMenuHidden) return;
             var labels = Scor4Labels();
             bool screen = scor4ScreenMenu && !Scor4ItemActive && !Scor4SetupActive;
             scor4Strip.SetColumnSpan(scor4Buttons[10], screen ? 2 : 1);

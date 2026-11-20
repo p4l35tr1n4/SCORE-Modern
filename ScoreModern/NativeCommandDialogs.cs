@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -15,6 +15,7 @@ namespace ScoreModern {
    using(var dialog=new ScoreDialog(key){Text=title,Width=950,Height=650,StartPosition=FormStartPosition.CenterParent}) {
     var text=new TextBox{Dock=DockStyle.Fill,Multiline=true,ReadOnly=true,ScrollBars=ScrollBars.Both,WordWrap=false,Font=font,Text=content};
     var menu=new ContextMenuStrip();menu.Items.Add("Copy",null,(s,e)=>text.Copy());menu.Items.Add("Select all",null,(s,e)=>text.SelectAll());menu.Items.Add(new ToolStripSeparator());menu.Items.Add("Save as...",null,(s,e)=>{using(var save=new SaveFileDialog{Title="Save text output",Filter=TextFileFilter+"|All files (*.*)|*.*",DefaultExt="txt",FileName="output.txt",RestoreDirectory=true})if(save.ShowDialog(dialog)==DialogResult.OK)Safe(()=>File.WriteAllText(save.FileName,text.Text,System.Text.Encoding.UTF8));});text.ContextMenuStrip=menu;dialog.Controls.Add(text);dialog.Disposed+=(s,e)=>menu.Dispose();
+    dialog.AddTextOutputCloseButton();
     dialog.ShowDialog(this);
    }
   }

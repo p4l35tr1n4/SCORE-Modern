@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Collections.Generic;using System.Drawing.Printing;using System.IO;using System.Drawing;using System.Drawing.Drawing2D;using System.Windows.Forms;
+using System;using System.Linq;using System.Collections.Generic;using System.Drawing.Printing;using System.IO;using System.Drawing;using System.Drawing.Drawing2D;using System.Windows.Forms;
 namespace ScoreModern {
  public sealed partial class Editor {
   NativePrintJob printJob;

@@ -1,4 +1,4 @@
-﻿using System;using System.Linq;using System.Collections.Generic;
+using System;using System.Linq;using System.Collections.Generic;
 using ScoreModern.RecoveredFragments;
 namespace ScoreModern {internal sealed class OriginalTextTabSpacingException:InvalidOperationException {internal OriginalTextTabSpacingException():base("*** When both JR and tabs are used, p5 must = 1.") {}}
 public sealed partial class ScoreText {

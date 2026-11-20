@@ -21,7 +21,7 @@ namespace ScoreModern {
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             var identity = new TextBox {Dock = DockStyle.Fill, AccessibleName = "TMB producer DAT"};
-            var identityBrowse = new Button {Text = "Browse...", AutoSize = true};
+            var identityBrowse = CreatePreferenceBrowseButton(identity,"Browse...",65);
             var identityRow = new TableLayoutPanel {Dock = DockStyle.Top, AutoSize = true, ColumnCount = 3};
             identityRow.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             identityRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -35,7 +35,14 @@ namespace ScoreModern {
                     if (picker.ShowDialog(dialog) == DialogResult.OK) identity.Text = picker.FileName;
             };
 
+            var keepOutput = new CheckBox {Text = "Keep utility output open until dismissed", AutoSize = true, Dock = DockStyle.Top};
+            keepOutput.CheckedChanged += (sender, args) => {
+                if(keepOutput.Checked==TmbUtility.KeepOutputOpen)return;
+                Safe(() => NativeSettings.WriteAllText(TmbUtility.KeepOutputSettingKey,keepOutput.Checked?"true":"false"));
+                keepOutput.Checked=TmbUtility.KeepOutputOpen;
+            };
             Action reload = () => {
+                keepOutput.Checked = TmbUtility.KeepOutputOpen;
                 identity.Text = NativeSettings.Read(TmbUtility.IdentitySettingKey) ?? "";
                 table.CancelEdit();
                 table.Rows.Clear();
@@ -97,6 +104,7 @@ namespace ScoreModern {
             buttons.Controls.Add(apply);
             tab.Controls.Add(table);
             tab.Controls.Add(identityRow);
+            tab.Controls.Add(keepOutput);
             tab.Controls.Add(new Label {Dock = DockStyle.Top, AutoSize = true,
                 Text = "Enable utilities for the context menu. Blank support folders use the executable's folder.\r\n" +
                     "A blank producer DAT uses the active SCORE library's verified DAT."});

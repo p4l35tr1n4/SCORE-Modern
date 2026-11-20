@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -53,15 +53,40 @@ namespace ScoreModern {
    contextLine.MouseClick+=(s,e)=>Safe(()=>ClickInputField((NativeTextLabel)s,6,e));
    setupValueBox.KeyDown+=(s,e)=>{
     Keys key=e.KeyCode;
-    if(key!=Keys.Enter&&key!=Keys.Escape&&key!=Keys.Up&&key!=Keys.Down)return;
+    if((key==Keys.PageUp||key==Keys.PageDown)&&(e.Modifiers&(Keys.Control|Keys.Alt))==0){
+     e.SuppressKeyPress=true;
+     PanInputSetup(key,50);
+     return;
+    }
+    if(key==Keys.End&&e.Modifiers==Keys.Control){
+     e.SuppressKeyPress=true;
+     if(!ApplySetupEditor())return;
+     UndoInputPreset();
+     FocusInputSetupField();
+     return;
+    }
+    if(key!=Keys.Enter&&key!=Keys.Escape&&key!=Keys.Up&&key!=Keys.Down&&key!=Keys.Space&&
+       (e.Modifiers!=Keys.None||key!=Keys.Left&&key!=Keys.Right))return;
     e.SuppressKeyPress=true;
-    if(key==Keys.Escape){CloseInputFieldEditor();command.Focus();return;}
+    if(key==Keys.Escape){
+     if(setupValueBox.Text!=setupOriginalValue){setupValueBox.Text=setupOriginalValue;setupValueBox.SelectAll();}
+     else EscapeMusicInput();
+     return;
+    }
     if((key==Keys.Up||key==Keys.Down)&&NativeScoreBehaviour.Enabled){if((e.Modifiers&(Keys.Control|Keys.Alt))==0)PanInputSetup(key,5);return;}
     if(!ApplySetupEditor())return;
-    if(key==Keys.Enter){command.Focus();return;}
-    MoveInputFieldRow(key==Keys.Down?1:-1);
-    var row=(NativeTextLabel)(inputSetup.Selected<=5?inputStaffLine:contextLine);
-    OpenInputFieldEditor(row,inputSetup.Selected-(inputSetup.Selected<=5?1:6));
+    if(key==Keys.Space){Safe(BeginInputStaff);return;}
+    if(key==Keys.Left||key==Keys.Right){inputSetup.MoveField(key==Keys.Right?1:-1);UpdateMusicInput();}
+    if(key==Keys.Up||key==Keys.Down)MoveInputFieldRow(key==Keys.Down?1:-1);
+    FocusInputSetupField();
+   };
+   setupValueBox.KeyPress+=(s,e)=>{
+    if(e.KeyChar!='/')return;
+    e.Handled=true;
+    if(!ApplySetupEditor())return;
+    inputSetup.MoveField(1);
+    UpdateMusicInput();
+    FocusInputSetupField();
    };
    setupValueBox.LostFocus+=(s,e)=>CloseInputFieldEditor();
    Disposed+=(s,e)=>{setupValueBox.Dispose();if(setupValueFont!=null)setupValueFont.Dispose();};
@@ -122,6 +147,13 @@ namespace ScoreModern {
    inputSetup.Selected=firstField+index;
    UpdateMusicInput();
    OpenInputFieldEditor(row,index);
+  }
+  void FocusInputSetupField(){
+   if(musicInput==null||musicInput.LetterInput||musicInput.PositionsQuestion||musicInput.Transaction!=null)
+    return;
+   int first=inputSetup.Selected<=5?1:6;
+   var row=(NativeTextLabel)(first==1?inputStaffLine:contextLine);
+   if(row.Visible&&setupSpans.ContainsKey(row))OpenInputFieldEditor(row,inputSetup.Selected-first);
   }
   void OpenInputFieldEditor(NativeTextLabel row,int index){
    var field=setupSpans[row][index];

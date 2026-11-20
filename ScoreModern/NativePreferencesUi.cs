@@ -156,7 +156,7 @@ namespace ScoreModern {
 
    try{
 
-    var tabs=new TabControl{Dock=DockStyle.Fill};
+    var tabs=CreatePreferenceTabs();
 
     var scoreTab=new TabPage(scor4Interface?"SCOR4":"SCORE 3.11");
 
@@ -169,6 +169,9 @@ namespace ScoreModern {
     var utilitiesTab=new TabPage("TMB utilities");
     Action resetUtilities=PopulateTmbPreferences(utilitiesTab,dialog);
     tabs.TabPages.Add(utilitiesTab);
+    var shortcutsTab=new TabPage("Shortcuts");
+    PopulateContextShortcutPreferences(shortcutsTab);
+    tabs.TabPages.Add(shortcutsTab);
 
     var table=new DataGridView{Dock=DockStyle.Fill,AllowUserToAddRows=false,AllowUserToDeleteRows=false,
 
@@ -304,11 +307,11 @@ namespace ScoreModern {
 
      table.CancelEdit();table.SuspendLayout();
 
-     try{foreach(DataGridViewRow row in table.Rows){string name=(string)row.Cells[0].Value;row.Cells[1].Value=data.Text(name);}}
+     try{foreach(DataGridViewRow row in table.Rows){string name=(string)row.Cells[0].Value;string value=data.Text(name);if(!Equals(row.Cells[1].Value,value))row.Cells[1].Value=value;}}
 
      finally{table.ResumeLayout(false);}
 
-     usePreferenceLibrary=false;;
+     usePreferenceLibrary=false;
 
      resetUtilities();
      profileDrafts.Clear();
@@ -427,7 +430,7 @@ namespace ScoreModern {
     foreach(Button button in buttons.Controls)button.Margin=new Padding(2);
     buttons.HandleCreated+=(s,e)=>fitScoreButtons();
     buttons.FontChanged+=(s,e)=>fitScoreButtons();
-    buttons.Layout+=(s,e)=>fitScoreButtons();
+    fitScoreButtons();
 
     scoreTab.Controls.Add(table);
 
@@ -441,14 +444,14 @@ namespace ScoreModern {
 
       if(refreshWindows==null)refreshWindows=PopulateWindowsPreferences(windowsTab,applyPreferences);
 
-      else refreshWindows();
+
 
     };
 
     warmPreferencesSession=warmWindows;
     warmWindows();
 
-    tabs.SelectedIndexChanged+=(sender,args)=>{if(tabs.SelectedTab==windowsTab)warmWindows();};
+
 
     refreshPreferencesSession=()=>{if(refreshWindows!=null)refreshWindows();};
 

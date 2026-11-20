@@ -1,4 +1,4 @@
-﻿param([string]$OutputDirectory, [ValidatePattern("^[a-z]?$")][string]$VersionSuffix = "", [ValidatePattern("^\d*$")][string]$NativeBuild = "")
+param([string]$OutputDirectory, [ValidatePattern("^[a-z]?$")][string]$VersionSuffix = "", [ValidatePattern("^\d*$")][string]$NativeBuild = "", [string]$CoreDllPath = "")
 $ErrorActionPreference = 'Stop'
 $buildOutput = if ($OutputDirectory) { [IO.Path]::GetFullPath($OutputDirectory) } else { $PSScriptRoot }
 if ($VersionSuffix -and $buildOutput.TrimEnd([IO.Path]::DirectorySeparatorChar) -eq ([IO.Path]::GetFullPath($PSScriptRoot)).TrimEnd([IO.Path]::DirectorySeparatorChar)) { throw "Temporary versions require a separate output directory." }
@@ -30,7 +30,13 @@ $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 if (-not (Test-Path -LiteralPath $compiler)) {
     $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319\csc.exe'
 }
-& (Join-Path $PSScriptRoot '..\ScoreReverseEngineering\NativeFragments\Build-Fragments.ps1') -OutputPath (Join-Path $buildOutput 'ScoreModern.dll')
+if ($CoreDllPath) {
+    $sharedDll = [IO.Path]::GetFullPath($CoreDllPath)
+    if (-not (Test-Path -LiteralPath $sharedDll -PathType Leaf)) { throw 'Shared core DLL not found.' }
+    if ($sharedDll -ne [IO.Path]::GetFullPath((Join-Path $buildOutput 'ScoreModern.dll'))) { Copy-Item -LiteralPath $sharedDll -Destination (Join-Path $buildOutput 'ScoreModern.dll') -Force }
+} else {
+    & (Join-Path $PSScriptRoot '..\ScoreReverseEngineering\NativeFragments\Build-Fragments.ps1') -OutputPath (Join-Path $buildOutput 'ScoreModern.dll')
+}
 $sourceFiles = Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*.cs' -File
 $strictUtf8 = New-Object System.Text.UTF8Encoding($false, $true)
 foreach ($sourceFile in $sourceFiles) { [void]$strictUtf8.GetString([IO.File]::ReadAllBytes($sourceFile.FullName)) }

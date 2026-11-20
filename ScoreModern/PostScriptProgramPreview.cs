@@ -1,4 +1,4 @@
-﻿using System;using System.Collections.Generic;using System.IO;using System.Text;using System.Globalization;using System.Diagnostics;using System.Drawing;using System.Drawing.Drawing2D;
+using System;using System.Collections.Generic;using System.IO;using System.Text;using System.Globalization;using System.Diagnostics;using System.Drawing;using System.Drawing.Drawing2D;
 namespace ScoreModern {
  // Canvas supplies resolved, prepared program batches. This service performs
  // rendering only; source lookup and parameter preparation remain separate.

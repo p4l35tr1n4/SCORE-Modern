@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace ScoreModern.RecoveredFragments {
  public sealed class LayoutTablaturePitchPlan {
   public int Absolute,Strings;public int[] Tuning;

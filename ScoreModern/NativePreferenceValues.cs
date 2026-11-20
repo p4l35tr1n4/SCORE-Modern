@@ -1,4 +1,4 @@
-﻿using System;using System.Drawing;using System.Globalization;using System.IO;using System.Windows.Forms;
+using System;using System.Drawing;using System.Globalization;using System.IO;using System.Windows.Forms;
 namespace ScoreModern { public sealed partial class Editor {
  string preferenceSerialKey,preferenceSerialPath;
  string PreferenceSerialPath(){string key=NativeLibraryLocation.CacheKey(source)+"|"+NativeSettings.Read("dat");if(preferenceSerialKey!=key){preferenceSerialPath=NativeScoreIdentity.Require(source,false).Path;preferenceSerialKey=key;}return preferenceSerialPath;}

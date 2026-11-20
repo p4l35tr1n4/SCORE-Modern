@@ -1,4 +1,4 @@
-﻿using ScoreModern.RecoveredFragments;
+using ScoreModern.RecoveredFragments;
 using System;
 using System.Collections.Generic;
 namespace ScoreModern {
