@@ -4,10 +4,6 @@ Windows application for legacy SCORE music engraving files. Core **0.3.67 RC3**,
 
 RC3 includes compatibility, engraving, viewport, editing and part-extraction corrections, including key and meter state, rest consolidation, cues, transposition and part resources. Legacy PAGE and SCORLAS remain available. SCOR4 differences are selected in Preferences.
 
-## Run
-
-Extract the binary release and keep ScoreModern.exe, ScoreModern.dll and Help together. Configure your compatible SCORE installation at first startup. Supply your own drawing libraries, fonts and serial-bearing DAT; original SCORE files and personal settings are not included. Preserve your existing configuration when updating. Requires 64-bit Windows and .NET Framework 4.8.
-
 ## Build
 
 ```powershell
