@@ -18,8 +18,8 @@ LIBRary (\LIB\) and HELP (\HLP\) directories are usually found on disk C:.
    or there may be some reasons to use different names for these directories.
    Example: To change drive name only to D, type: LIBR D:\SCOR4\LIB\
    To change directory name to LIB2 on drive E, type: LIBR E:\LIB2\   If you
-   are using only drive C, the drive letter is not needed.  LIBR \MYLIB\
-   will cause libraries to be read from the \MYLIB\ directory on the
+   are using only drive C, the drive letter is not needed.  LIBR \SAMPLELIB\
+   will cause libraries to be read from the \SAMPLELIB\ directory on the
    current logged drive. NO MORE THAN 13 CHARACTERS can be used for the
    complete directory path. The same procedures are used to change the HELP
    directory location. If a custom directory is created make sure that ALL

@@ -24,7 +24,7 @@ namespace ScoreModern {
   readonly CheckBox transposeAddKey=new CheckBox{Text="Add key if absent",AutoSize=true,Enabled=false};
   readonly CheckBox normalizeStems=new CheckBox{Text="Normalize stems",AutoSize=true,Enabled=false};
   readonly TextBox turnControls=new TextBox{Width=85,Text="1, 4",Visible=false};
-  readonly Label turnLabel=new Label{Text="Turn gap (quarter notes), requested pages",AutoSize=true,Visible=false,Margin=new Padding(3,6,3,3)};
+  readonly Label turnLabel=new Label{Text="Turn qtrs, pages [, lines/page, first page]",AutoSize=true,Visible=false,Margin=new Padding(3,6,3,3)};
   readonly ToolTip optionTips=new ToolTip();
   readonly ComboBox restStyle=new ComboBox{DropDownStyle=ComboBoxStyle.DropDownList,Width=100};
   readonly NumericUpDown startMeasure=new NumericUpDown{Minimum=-1,Maximum=32767,Width=72};
@@ -172,7 +172,7 @@ namespace ScoreModern {
    linesPerPage.Enabled=parts&&String.IsNullOrWhiteSpace(manualLines.Text)&&String.IsNullOrWhiteSpace(fixedProposal.Text);
    fixedProposal.Enabled=parts&&String.IsNullOrWhiteSpace(manualLines.Text)&&String.IsNullOrWhiteSpace(linesPerPage.Text);
   }
-  void InvalidatePlan(){files.RefreshMetrics();prepared=null;int route=operation.SelectedIndex;preview.Enabled=route==0||route==4?files.Items.Count>0:files.Items.Count==1&&(route!=3&&route!=5||Path.GetFileName((string)files.Items[0]).Equals("BARS.TMP",StringComparison.OrdinalIgnoreCase));save.Enabled=false;report.Text=route==5?"Open BARS.TMP with its source scores in the same folder.":route==4?"Add scores in reading order and set the number of staves per system.":route==3?"Open the original BARS.TMP with its score in the same folder. The verified route restores a single-staff, ten-inch job and proposes page turns.":route==2?"Choose one single-staff score. The verified PAGE turn layout uses one line per page and starts at page 1.":route==1?"Choose one score. Enter the mark to start after (0 for the beginning) and the mark to stop at. To select by bar number, enter N followed by the first and last bars.":preview.Enabled?"Preview the layout before saving.":"Add one or more input scores.";}
+  void InvalidatePlan(){files.RefreshMetrics();prepared=null;int route=operation.SelectedIndex;preview.Enabled=route==0||route==4?files.Items.Count>0:files.Items.Count==1&&(route!=3&&route!=5||Path.GetFileName((string)files.Items[0]).Equals("BARS.TMP",StringComparison.OrdinalIgnoreCase));save.Enabled=false;report.Text=route==5?"Open BARS.TMP with its source scores in the same folder.":route==4?"Add scores in reading order and set the number of staves per system.":route==3?"Open the original BARS.TMP with its score in the same folder. The verified route restores a single-staff, ten-inch job and proposes page turns.":route==2?"Choose one extracted part system. Enter turn quarters and pages; optionally add lines per page and first page number.":route==1?"Choose one score. Enter the mark to start after (0 for the beginning) and the mark to stop at. To select by bar number, enter N followed by the first and last bars.":preview.Enabled?"Preview the layout before saving.":"Add one or more input scores.";}
   void Add(){bool old=operation.SelectedIndex==3||operation.SelectedIndex==5;using(var dialog=new OpenFileDialog{Title=old?"Open PAGE Old Page Data":"Choose PAGE input scores",Filter=old?"Old Page Data (BARS.TMP)|BARS.TMP":"SCORE scores (*.mus;*.pag)|*.mus;*.pag|All files (*.*)|*.*",Multiselect=!old,RestoreDirectory=true})if(dialog.ShowDialog(this)==DialogResult.OK){if(old)files.Items.Clear();foreach(string path in dialog.FileNames)files.Items.Add(path);InvalidatePlan();}}
   void Remove(){foreach(int n in files.SelectedIndices.Cast<int>().OrderByDescending(x=>x).ToArray())files.Items.RemoveAt(n);InvalidatePlan();}
   void MoveFile(int direction){int index=files.SelectedIndex;ReorderFile(index,index+direction);}
@@ -189,9 +189,10 @@ namespace ScoreModern {
     }else if(operation.SelectedIndex>=2){
      var fields=turnControls.Text.Split(new[]{' ', ',', '\t'},StringSplitOptions.RemoveEmptyEntries);
      float quarters;int requested;
-     if(files.Items.Count!=1||fields.Length!=2||!Single.TryParse(fields[0],System.Globalization.NumberStyles.Float,System.Globalization.CultureInfo.InvariantCulture,out quarters)||!Int32.TryParse(fields[1],out requested))
-      throw new ArgumentException("Enter a turn gap in quarter notes and a requested page count.");
-     prepared=operation.SelectedIndex==3?NativePageTurnPlan.PrepareOld((string)files.Items[0],quarters,requested):NativePageTurnPlan.Prepare((string)files.Items[0],quarters,requested,(float)size.Value,(float)height.Value,(int)firstPage.Value,centerNumbers.Checked);
+     if(files.Items.Count!=1||(fields.Length<2||fields.Length>4)||!Single.TryParse(fields[0],System.Globalization.NumberStyles.Float,System.Globalization.CultureInfo.InvariantCulture,out quarters)||!Int32.TryParse(fields[1],out requested))
+      throw new ArgumentException("Enter turn gap and requested pages, optionally followed by lines per page and first page number.");
+     int turnLines=1,turnFirst=(int)firstPage.Value;if(fields.Length>=3&&!Int32.TryParse(fields[2],out turnLines)||fields.Length==4&&!Int32.TryParse(fields[3],out turnFirst))throw new ArgumentException("Turn lines per page and first page number must be integers.");
+     prepared=operation.SelectedIndex==3?NativePageTurnPlan.PrepareOld((string)files.Items[0],quarters,requested,turnLines,turnFirst):NativePageTurnPlan.Prepare((string)files.Items[0],quarters,requested,(float)size.Value,(float)height.Value,turnFirst,centerNumbers.Checked,turnLines);
      ShowPlan();
     }else if(operation.SelectedIndex==1){
      var marked=barRange.Text.Split(new[]{' ', ',', '\t'},StringSplitOptions.RemoveEmptyEntries);

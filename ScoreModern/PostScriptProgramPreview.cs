@@ -9,7 +9,7 @@ namespace ScoreModern {
   public static void Paint(Graphics g,string preparedPrograms,float pageWidth,float pageHeight){Paint(g,preparedPrograms,pageWidth,pageHeight,null,null);}
   public static void Paint(Graphics g,string preparedPrograms,float pageWidth,float pageHeight,List<Item> items,List<string> programs,string fontmap=null,Canvas scene=null){
    bool measure=NativeItemBounds.Active&&items!=null&&items.Count>1;if(measure&&(programs==null||programs.Count!=items.Count))throw new ArgumentException("Included program/bounds count mismatch.");
-   if(!GhostscriptTextRenderer.Enabled||!File.Exists(GhostscriptTextRenderer.Executable))throw new InvalidOperationException("Enable the external Ghostscript helper to preview an included PostScript program.");
+   if(!File.Exists(GhostscriptTextRenderer.Executable))throw new InvalidOperationException("Configure the Ghostscript executable to preview an included PostScript program. The optional Type 1 text-rendering checkbox is independent.");
    var clip=GhostscriptTextRenderer.Clip(g);if(clip.Width<=0||clip.Height<=0)return;if((long)clip.Width*clip.Height>100000000)throw new NotSupportedException("PostScript preview exceeds the 100-million-pixel limit.");
    // Use the actual projected page corners as the affine basis. A one-canvas-
    // unit sample magnifies float32 scale error across thousands of pixels.

@@ -116,9 +116,14 @@ Build one canonical DLL, then pass `-CoreDllPath <path>` to each application’s
 
 ### Verification scope
 
-Original-executable EPS and saved-score fixtures were collected in an isolated DOSBox-X copy; no installed score/library was modified and no physical printer job was sent. Tests compare named-drawing and harp vertices, slur outline vertices, and complete J output positions; exercise DAT/vector rendering, strict EPS, automatic bounds, Main J, JUST4 and PAGE4; and retain classic pixel and corpus regressions. See the accompanying release verification report for final counts and artifact hashes. This is verification of the documented/tested domains, not a claim of exhaustive equivalence for all parameter combinations.
+Original-executable EPS and saved-score fixtures were collected in an isolated DOSBox-X copy; no installed score/library was modified and no physical printer job was sent. Tests compare named-drawing and harp vertices, slur outline vertices, and complete J output positions; exercise DAT/vector rendering, strict EPS, automatic bounds, Main J, JUST4 and PAGE4; and retain classic pixel and corpus regressions. This is verification of the documented/tested domains, not a claim of exhaustive equivalence for all parameter combinations.
 
 
 ### Unused Code4 auxiliary fields
 
 Original SCOR4 EPS comparisons confirm P8 is unused for hairpins and P15 is unused for straight lines, including signed and fractional values. These retained fields must not block native rendering or automatic bounds measurement. Core/SMX preserve them in the score. This correction is included in Core 0.3.67 and SMX 0.5.81.
+
+
+### PAGE4 reference used for the Parts completion batch
+
+The available PAGE4.EXE identifies as 4.00-540 and hashes to `1BAD0F1AADA60C766EA8D12CD17CE6F381AC573A38B2F6D50D90D160639E8E24`. Fresh extraction and final-record captures cover transposition and cue controls. The 2000 and 4.01 update notes mention a transposition correction without its trigger. No distinct later executable was found, so these captures do not certify the unspecified corrected 4.01 domain. Native measured results remain separate from opt-in modern pitch conservation. DLL 0.3.61.2 adds the latter and logical composite-meter duration; Chapter 06 documents the contracts.

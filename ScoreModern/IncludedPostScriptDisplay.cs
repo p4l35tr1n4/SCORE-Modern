@@ -15,6 +15,7 @@ namespace ScoreModern {
    return Resolve(scoreRoot,musicPath,item,false);
   }
   internal static string Resolve(string scoreRoot,string musicPath,Item item,bool scor4){
+   if(!String.IsNullOrEmpty(item.PartResourcePath)){if(!File.Exists(item.PartResourcePath))throw new FileNotFoundException("Part PostScript resource is missing: "+item.PartResourcePath,item.PartResourcePath);return Path.GetFullPath(item.PartResourcePath);}
    string name=FileName(item);
    if(String.IsNullOrEmpty(name))throw new FileNotFoundException("Included PostScript filename is empty.");
    if(Path.IsPathRooted(name)||name.IndexOf(':')>=0){

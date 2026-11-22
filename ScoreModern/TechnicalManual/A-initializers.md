@@ -1254,13 +1254,13 @@ Line 10
 WaveY={B(0x00000000u),B(0x00000000u),B(0x411AD917u),B(0x41E845A2u),B(0x421AD917u),B(0x421AD917u),B(0x41E845A2u),B(0x411AD917u),B(0x00000000u),B(0x00000000u),B(0x00000000u),B(0x42680000u),B(0x00000000u),B(0xC2680000u)}
 ````
 
-Line 88
+Line 89
 
 ````csharp
 new[]{10,11,14,16,17,18,19,20}
 ````
 
-Line 110
+Line 111
 
 ````csharp
 new[]{i.P(3),i.P(4),i.P(5),i.P(6),i.P(8),i.P(9),p.Scale}
@@ -1720,10 +1720,10 @@ new[]{bend.Body,bend.Arrow}
 
 [Workspace source](../NativeHairpins.cs)
 
-Line 10
+Line 11
 
 ````csharp
-new[]{8,11,12,19,20}
+new[]{11,12,19,20}
 ````
 
 ## NativeInformationNotice.cs
@@ -2513,31 +2513,31 @@ Line 190
 new[]{' ', ',', '\t'}
 ````
 
-Line 197
+Line 198
 
 ````csharp
 new[]{' ', ',', '\t'}
 ````
 
-Line 209
+Line 210
 
 ````csharp
 new[]{' ', ',', '\t'}
 ````
 
-Line 212
+Line 213
 
 ````csharp
 new[]{' ', ',', '\t'}
 ````
 
-Line 217
+Line 218
 
 ````csharp
 new short[]{1,2,3,4,7,8,10,11,12,13,14}
 ````
 
-Line 250
+Line 251
 
 ````csharp
 new[]{' ','\t','/'}
@@ -2595,22 +2595,16 @@ new[]{system}
 
 [Workspace source](../NativePageTurnPlan.cs)
 
-Line 54
+Line 55
 
 ````csharp
 new[]{score}
 ````
 
-Line 56
+Line 57
 
 ````csharp
 new[]{source}
-````
-
-Line 99
-
-````csharp
-new[]{bars}
 ````
 
 ## NativeParameterExport.cs
@@ -2982,13 +2976,13 @@ glyphs={40,10,53,23,54,24,78,76,77,10,28,35,40,58,34,65,75,21,24,48,51,54,0,1,2,
 
 [Workspace source](../NativeScoreIdentity.cs)
 
-Line 21
+Line 15
 
 ````csharp
 new[]{preferred,original}
 ````
 
-Line 21
+Line 15
 
 ````csharp
 new[]{"SCOR3_10.DAT","SCOR4.DAT","SCR4_00.DAT"}
@@ -6673,25 +6667,25 @@ new[]{10,16,24}
 
 [Workspace source](../ScoreModern.cs)
 
-Line 39
+Line 40
 
 ````csharp
 names={"Unknown","Note","Rest","Clef","Line / hairpin","Slur / bracket","Beam","Trill / pedal","Staff","Library symbol","Number","User symbol","Shape","Invisible item","Barline","PostScript","Text","Key signature","Time signature"}
 ````
 
-Line 177
+Line 178
 
 ````csharp
 new[]{0,8,-8,15,88,20,21,22}
 ````
 
-Line 303
+Line 304
 
 ````csharp
 a={"Stem / accidental","Notehead","Duration","Stem length","Dots / flags"}
 ````
 
-Line 308
+Line 309
 
 ````csharp
 codes={1,2,3,4,5,6,8,10,14,17,18}
@@ -6881,6 +6875,46 @@ Line 15
 
 ````csharp
 above={0,5,4,4,5,1}
+````
+
+## InputChromaticPitchCorrection.cs
+
+[Workspace source](../../ScoreReverseEngineering/NativeFragments/InputChromaticPitchCorrection.cs)
+
+Line 7
+
+````csharp
+natural={0,2,4,5,7,9,11}
+````
+
+Line 7
+
+````csharp
+clefOffsets={0,-12,-6,-8}
+````
+
+Line 7
+
+````csharp
+sharps={3,0,4,1,5,2,6}
+````
+
+Line 7
+
+````csharp
+flats={6,2,5,1,4,0,3}
+````
+
+Line 17
+
+````csharp
+new[]{8,9,10,11,12,13,16}
+````
+
+Line 32
+
+````csharp
+new[]{-1,1}
 ````
 
 ## InputEditInverse.cs

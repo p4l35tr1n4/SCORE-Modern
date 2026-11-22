@@ -2,7 +2,7 @@
 
 - [Exact source array initializers](A-initializers.md). This inventory preserves original ordering, literal syntax and source locations.
 - [Decoded external DAT tables](A-dat-tables.md). Raw float bits and signed word values from the local geometry resource.
-- [Captured table evidence](A-captured-tables.md). Machine-readable tables preserved in Markdown code blocks.
+- Captured table evidence. Machine-readable tables preserved in Markdown code blocks.
 - [Routine listings](B-routine-index.md). Review branch literals, inline switch tables and computed or retained tables at their point of use.
 
 ## J compiler workspace
@@ -76,14 +76,3 @@ JUST replacement bits are `0x00001A94` at `0x3886` and `0x4C2D1A94` at `0x388E`.
 | PSC and Type 1 | Font assignments, advances, right extents, and outline programs | [FONTCONV](../FontconvPscModel.cs), [text layout](../NativeTextLayout.cs) |
 | CODE9.DAT | Text terms selected by the Code 9 term control | [term reader](../NativeCode9Terms.cs) |
 | GUITAR.DAT | Named chord entries and fingering data | [grid reader](../NativePrintedChordGrid.cs) |
-
-
-## SCOR4 number-justification constants
-
-| Value | Binary32 bits | Role |
-| --- | --- | --- |
-| .2 | 0x3E4CCCCD | Fixed left allowance before P15 displacement |
-| 4 | 0x40800000 | Fixed right allowance before P15 displacement |
-| 150 | 0x43160000 | Raw horizontal units per SCORE unit for Code11, harp and explicit slur offsets |
-
-The offset/scale division remains extended until the final binary32 allowance assignment. See [SCOR4 controls](07-scor4.md) and `ScoreVersionControls` in the machine/geometry source listings.

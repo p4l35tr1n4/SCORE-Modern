@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace ScoreModern {
  internal static class NativePageTurnPlan {
-  internal static NativePagePreparedPart Prepare(string path,float quarters,int requested,float size,float height,int firstPage,bool centered){
+  internal static NativePagePreparedPart Prepare(string path,float quarters,int requested,float size,float height,int firstPage,bool centered,int linesPerPage=1){
    string source=Path.GetFullPath(path);var score=Score.Load(source);
-   if(firstPage!=1||score.Items.Count(i=>i.Code==8)!=1||score.Items.Any(i=>i.Staff!=1))
-    throw new NotSupportedException("This PAGE turn route is verified for one staff starting at page 1.");
+   var headers=score.Items.Where(i=>i.Code==8).OrderBy(i=>i.Staff).ToArray();int staves=headers.Length;
+   if(staves<1||staves>32||headers.Where((h,n)=>h.Staff!=n+1).Any()||score.Items.Any(i=>i.Staff<1||i.Staff>staves)||linesPerPage<1||linesPerPage>32/staves)
+    throw new NotSupportedException("PAGE turns require one extracted system of consecutive staves and a lines-per-page count within the 32-staff output bank.");
    var raw=NativePageBarPlan.PrepareLayoutFile(score);
    var widths=new short[raw.Widths.Length];var leading=new short[widths.Length];
    for(int n=0;n<widths.Length;n++){
@@ -17,9 +18,9 @@ namespace ScoreModern {
     if(value<1||value>32767)throw new NotSupportedException("PAGE turn bar width leaves the original bank.");
     widths[n]=(short)value;leading[n]=checked((short)Math.Min(raw.Leading[n+1]+raw.Trailing[n],9000));
    }
-   return Assemble(source,score,widths,leading,quarters,requested,size,height,firstPage,centered);
+   return Assemble(source,score,widths,leading,quarters,requested,size,height,firstPage,centered,linesPerPage,staves);
   }
-  internal static NativePagePreparedPart PrepareOld(string path,float quarters,int requested){
+  internal static NativePagePreparedPart PrepareOld(string path,float quarters,int requested,int linesPerPage=1,int firstPage=1){
    path=Path.GetFullPath(path);
    var lines=File.ReadAllLines(path).Where(s=>!String.IsNullOrWhiteSpace(s)).ToArray();
    Func<string,string[]> fields=s=>s.Split((char[])null,StringSplitOptions.RemoveEmptyEntries);
@@ -46,23 +47,23 @@ namespace ScoreModern {
      throw new InvalidDataException("The source score no longer matches the saved bar plan.");
     widths[n]=checked((short)Math.Truncate(Math.Abs((double)weight)*.01f+.5));
    }
-   return Assemble(source,score,widths,gaps,quarters,requested,1,10,1,false);
+   return Assemble(source,score,widths,gaps,quarters,requested,1,10,firstPage,false,linesPerPage);
   }
-  static NativePagePreparedPart Assemble(string source,Score score,short[] widths,short[] leading,float quarters,int requested,float size,float height,int firstPage,bool centered){
-   var plan=NativePageDefaultPartPlan.NumberedPages(Propose(widths,leading,leading,quarters,requested,height),height,firstPage,centered);
+  static NativePagePreparedPart Assemble(string source,Score score,short[] widths,short[] leading,float quarters,int requested,float size,float height,int firstPage,bool centered,int linesPerPage=1,int staves=1){
+   var plan=NativePageDefaultPartPlan.NumberedPages(Propose(widths,leading,leading,quarters,requested,height,linesPerPage,firstPage),height,firstPage,centered);
    var warnings=new List<string>();
-   var pages=NativePagePartPages.AssembleTransposed(new[]{score},1,size,plan,new float[4],1,1,null,warnings.Add,null,0,0,null,true);
+   var pages=NativePagePartPages.AssembleTransposed(new[]{score},staves,size,plan,new float[4],1,1,null,warnings.Add,null,0,0,null,true);
    var writer=new NativePageFileBank(new byte[14200*4]);short measurement=NativeMeasurements.Get(score);
    return new NativePagePreparedPart(plan,pages.Select(p=>writer.Encode(p,measurement)).ToArray(),new[]{source},warnings.AsReadOnly());
   }
   // PAGE 3197:108B..13EF chooses candidate ends and page counts;
   // 0FE6:11CC..137A replans each selected segment.
-  internal static List<int[]> Propose(short[] widths,short[] turns,short[] leading,float quarters,int requested,float height){
+  internal static List<int[]> Propose(short[] widths,short[] turns,short[] leading,float quarters,int requested,float height,int linesPerPage=1,int firstPage=1){
    if(widths==null||turns==null||leading==null||widths.Length<2||widths.Length>1000||turns.Length!=widths.Length||leading.Length!=widths.Length||
-    widths.Any(x=>x<=0)||turns.Any(x=>x<0)||requested<2||requested>99||quarters<=0||quarters>300||Single.IsNaN(quarters))
-    throw new NotSupportedException("PAGE turn planning requires positive one-line page controls and verified bar data.");
+    widths.Any(x=>x<=0)||turns.Any(x=>x<0)||requested<1||requested>99||linesPerPage<1||linesPerPage>32||firstPage<0||firstPage>32767||quarters<=0||quarters>300||Single.IsNaN(quarters))
+    throw new NotSupportedException("PAGE turn planning requires positive page, line and silence controls within the original capacities.");
    var gaps=(short[])turns.Clone();gaps[gaps.Length-1]=30000;
-   int total=widths.Sum(x=>(int)x),start=0,groupPages=1,remaining=requested;
+   int total=widths.Sum(x=>(int)x),start=0,groupPages=firstPage%2==0?2:1,remaining=requested;
    if(total>32767)throw new NotSupportedException("PAGE turn weights exceed the original table.");
    int minimum=(int)((double)quarters*100+.5);if(minimum==0)minimum=200;
    var result=new List<int[]>();var planner=new NativePageAutomaticLayout();
@@ -94,9 +95,9 @@ namespace ScoreModern {
     total-=subtotal;
     if(total<=200)end=widths.Length-1;
     int count=end-start+1;
-    if(count<groupPages)throw new NotSupportedException("SCORE's turn proposal has an empty page.");
-    var layout=planner.Apply(widths.Skip(start).Take(count).ToArray(),leading.Skip(start).Take(count).ToArray(),groupPages,1,height,1);
-    foreach(int bars in layout.Bars)result.Add(new[]{bars});
+    if(count<groupPages*linesPerPage)throw new NotSupportedException("SCORE's turn proposal has an empty page.");
+    var layout=planner.Apply(widths.Skip(start).Take(count).ToArray(),leading.Skip(start).Take(count).ToArray(),groupPages*linesPerPage,linesPerPage,height,1);
+    result.AddRange(NativePageDefaultPartPlan.GroupLines(layout,count));
     start=end+1;groupPages=2;
    }
    return result;

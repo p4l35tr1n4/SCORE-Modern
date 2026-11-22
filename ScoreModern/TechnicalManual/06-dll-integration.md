@@ -1,6 +1,6 @@
 # Using ScoreModern.dll from another program
 
-This guide covers **ScoreModern.dll 0.3.61.1**, shared by current Core and SMX builds. The DLL is a Windows .NET Framework managed assembly. Its public namespace is `ScoreModern.RecoveredFragments`. Load it into your own process and call managed methods directly. There is no running SCORE Modern session to connect to, and the DLL does not provide an IPC endpoint, COM automation object, or native C API.
+This guide covers **ScoreModern.dll 0.3.61.2**, shared by current Core and SMX builds. The DLL is a Windows .NET Framework managed assembly. Its public namespace is `ScoreModern.RecoveredFragments`. Load it into your own process and call managed methods directly. There is no running SCORE Modern session to connect to, and the DLL does not provide an IPC endpoint, COM automation object, or native C API.
 
 The DLL contains recovered calculation and state routines. The Windows executable supplies the application layer, including opening and saving a complete score, selecting external LIB and font resources, preparing a page, running commands, and drawing or exporting a score. Call the DLL for individual calculations or for a workflow whose full inputs you can supply. Use the executable's command line for complete file rendering and export.
 
@@ -158,7 +158,7 @@ float rawDrawingOffset = ScoreVersionControls.DrawingOffset(true, 2f); // 300
 short meterWidthSelector = ScoreVersionControls.MeterThicknessSelector(true, -2f);
 ```
 
-Existing public selector/spacing signatures remain as classic overloads. The new explicit overloads opt into SCOR4. Supply the same version to geometry, bounds and layout; do not infer it from an ordinary MUS trailer. DLL file and informational version are 0.3.61.1; assembly version remains 0.0.0.0. The EXE supplies resource resolution, print state restoration and UI. Build both applications using `-CoreDllPath` with the same canonical binary.
+Existing public selector/spacing signatures remain as classic overloads. The new explicit overloads opt into SCOR4. Supply the same version to geometry, bounds and layout; do not infer it from an ordinary MUS trailer. DLL file and informational version are 0.3.61.2; assembly version remains 0.0.0.0. The EXE supplies resource resolution, print state restoration and UI. Build both applications using `-CoreDllPath` with the same canonical binary.
 
 
 For command-line EPS, select the version explicitly with `--score-profile=scor4` or `--score-profile=311`. If omitted, the saved interface preference is used. For example:
@@ -168,3 +168,12 @@ For command-line EPS, select the version explicitly with `--score-profile=scor4`
 ```
 
 Core uses `ScoreModern.exe` with the same arguments. These flags select process-local rendering semantics and do not rewrite the saved profile or score.
+
+
+## Parts batch: additive DLL 0.3.61.2 APIs
+
+`InputChromaticPitchCorrection.Apply(IList<float[]> before, IList<float[]> after, short staff, short semitones)` is an explicit modern correction after native tonal processing. Array index 0 is Code/P1. It requires preserved row correspondence and standard clefs/conventional note accidentals; it changes output rows only and returns per-note diatonic corrections for attachment repair. Native original-route callers do not opt in. Explicit custom key glyphs retain their positions and spacing hint; note spelling is corrected against their sounding context.
+
+`InputMeterDuration.TryQuarterBeats(float numerator, float denominator, float secondNumerator, float secondDenominator, out float beats)` calculates logical quarter-note duration. It supports numeric, common/cut and composite signatures. A shared second denominator is selected by zero. It returns false for nonfinite/invalid inputs and single-number graphics without a beat unit. No UI, file I/O or global preference state is involved.
+
+The prior 1,548 public declarations remain. Four declarations are added (two types and two methods). Both fragment source trees produce the same 1,552 public declarations. Application-layer Parts state, resource transactions and SMX slur continuation remain outside the DLL.

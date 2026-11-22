@@ -16,6 +16,8 @@ namespace ScoreModern {
     bank.Starts[n]=at+1;bank.Lengths[n]=item.Count+1;Buffer.BlockCopy(item.Bytes,0,bank.Words,at*4,item.Bytes.Length);int start=at;at+=item.Count+1;
     if(left<=bank.Words[start+3]&&bank.Words[start+3]<=right)references.Add((short)(start+4));
     if(item.Count<6||item.Code<4||item.Code>8)continue;
+    // Zero-ended arpeggios/vertical signs keep their discriminator during fitting.
+    if(item.Code==4&&item.P(7)<0&&item.P(6)==0)continue;
     if(item.Code==8&&bank.Words[start+6]==0)bank.Words[start+6]=200;
     Action<int> extra=parameter=>{float value=bank.Words[start+parameter];if(left<=value&&value<=right)references.Add((short)-(start+parameter+1));};
     extra(6);if(item.Code<6||item.Count<8)continue;

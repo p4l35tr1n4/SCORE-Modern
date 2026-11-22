@@ -14,17 +14,16 @@ namespace ScoreModern {
   }
   sealed class WholeMeasure {public Item Item;public float Left,Right;}
   static void ValidateSourceCapacity(Score input){if(input==null)throw new ArgumentNullException("input");if(input.Items.Count>1420||input.Items.Sum(i=>i.Bytes.Length/4)>14200)throw new NotSupportedException("PAGE input exceeds SCORE 3.11's original item/parameter capacities. Split the source before extracting parts; original over-capacity effects are not reproduced.");}
-  static bool OrdinaryCueLine(Item item){return item.Code==4&&item.Count==6&&item.P(4)==item.P(5)&&item.P(6)>item.P(3);}
+  static bool OrdinaryCueWave(Item item){return item.Code==4&&item.Count>=7&&item.P(7)<0&&item.P(6)==0;}
+  static bool OrdinaryCueLine(Item item){return item.Code==4&&item.Count>=6&&item.P(7)>=0&&item.P(6)>item.P(3);}
   static bool OrdinaryGroupedCueSlur(Item item){
-   return item.Code==5&&(item.Count==7||item.Count==8&&item.P(8)>=-4&&
+   return item.Code==5&&(item.Count==7||item.Count>=8&&item.Count<=20&&item.P(8)>=-4&&
     item.P(8)<=-1&&item.P(8)==Math.Truncate(item.P(8)))&&item.P(6)>item.P(3)&&item.P(7)!=0;
   }
   static bool SupportedGroupedCue(Item item,bool upper){
-   if(OrdinaryCueLine(item)||OrdinaryGroupedCueSlur(item))return true;
-   if(item.Code==1)return item.P(7)==4||item.P(7)==2||item.P(7)==1.75f||item.P(7)==1.5f||
-    item.P(7)==1||item.P(7)==.75f||item.P(7)==.5f||item.P(7)==.375f||item.P(7)==1f/3||
-    item.P(7)==.25f||item.P(7)==.125f||item.P(7)==.0625f;
-   if(item.Code==6)return item.Count==7&&item.P(7)==12;
+   if(OrdinaryCueLine(item)||OrdinaryGroupedCueSlur(item)||OrdinaryCueWave(item)||item.Code==9||item.Code==11||item.Code==15)return true;
+   if(item.Code==1)return item.P(7)>0&&!Single.IsNaN(item.P(7))&&!Single.IsInfinity(item.P(7));
+   if(item.Code==6)return item.Count>=7&&item.P(7)>=10&&item.P(7)<=19&&item.P(7)==Math.Truncate(item.P(7));
    if(ShortGroupedCueRest(item))return true;
    return upper&&item.Code==2&&item.P(5)==-2&&item.P(7)==4;
   }
@@ -65,10 +64,10 @@ namespace ScoreModern {
    int position=(int)lowest%100-2;
    return position>1&&position%2!=0?(float)((double)position+.4f):position;
   }
-  static List<Item> CueItems(Score input,Item staff,Item rest,bool upperGrouped=false,ISet<Item> consumed=null,bool allowAlreadyMoved=false,bool grouped=false,bool scor4=false){
+  static List<Item> CueItems(Score input,Item staff,Item rest,bool upperGrouped=false,ISet<Item> consumed=null,bool allowAlreadyMoved=false,bool grouped=false,bool scor4=false,bool modern=false,bool constructor=false,HashSet<int> ancestry=null){
+   if(ancestry==null)ancestry=new HashSet<int>{(int)rest.P(13)};
    bool page4ShortMeasure=scor4&&!grouped&&rest.P(7)==3;
-   bool wholeRestDuration=rest.P(7)==4||page4ShortMeasure;
-   if(rest.P(13)<1||rest.P(13)>32767||rest.P(13)!=Math.Truncate(rest.P(13))||rest.P(4)!=0||rest.P(5)!=-2||!wholeRestDuration||rest.P(8)!=0)throw new NotSupportedException("PAGE cue controls outside the measured whole-rest route.");
+   if(rest.P(13)<1||rest.P(13)>32767||rest.P(13)!=Math.Truncate(rest.P(13))||Single.IsNaN(rest.P(7))||Single.IsInfinity(rest.P(7))||rest.P(7)<=0)throw new NotSupportedException("PAGE cue requires a valid instrument ID and a positive rhythmic duration.");
    var spans=input.Items.Where(i=>i.Code==14&&i.P(3)>0&&i.Staff<=staff.Staff&&i.Staff+i.P(4)>staff.Staff).Select(i=>new{Bottom=i.Staff,Top=i.Staff+(int)i.P(4)-1}).Distinct().ToArray();
    if(spans.Length!=1)throw new NotSupportedException("PAGE cue needs one verified system span.");
    var sources=input.Items.Where(i=>i.Code==8&&i.P(9)==rest.P(13)&&
@@ -79,27 +78,28 @@ namespace ScoreModern {
    // uses the literal 199.6 end instead (source416).
    double left=page4ShortMeasure?(double)rest.P(3)-.4f:rest.P(3);
    foreach(var item in input.Items.Where(i=>i.Staff==sources[0].Staff&&i.Code!=8&&i.Code!=14&&i.P(3)>=left&&(upperGrouped?i.P(3)<=right:i.P(3)<right)&&(consumed==null||!consumed.Contains(i)))){
-    if(item.Code!=1&&item.Code!=2&&item.Code!=6&&item.Code!=16&&!OrdinaryCueLine(item)&&
-     (!grouped||!OrdinaryGroupedCueSlur(item)))throw new NotSupportedException("PAGE cue attachment and structural controls need verification.");
-    if((item.Code==1||item.Code==2)&&(Math.Abs(item.P(4))>=100||item.P(13)!=0))throw new NotSupportedException("PAGE nested or controlled cue needs verification.");
+    if(item.Code!=1&&item.Code!=2&&item.Code!=3&&item.Code!=6&&item.Code!=10&&item.Code!=17&&item.Code!=16&&item.Code!=9&&item.Code!=11&&item.Code!=15&&!OrdinaryCueLine(item)&&!OrdinaryCueWave(item)&&
+     (!(grouped||scor4||modern||constructor)||!OrdinaryGroupedCueSlur(item)))throw new NotSupportedException("PAGE cue attachment and structural controls need verification.");
+    if(modern&&item.Code==2&&item.P(13)!=0){int id=(int)item.P(13);if(ancestry.Contains(id))throw new System.IO.InvalidDataException("Cyclic cue instrument references cannot be extracted.");var next=new HashSet<int>(ancestry);next.Add(id);copies.AddRange(CueItems(input,staff,item,upperGrouped,consumed,allowAlreadyMoved,grouped,scor4,true,constructor,next));continue;}
     var copy=item.Clone();
     copy.Set(2,staff.Staff);
     if(copy.Code==1||copy.Code==2||copy.Code==6)
-     copy.Set(4,(float)((double)copy.P(4)+(copy.P(4)<0?-100:100)));
+     copy.Set(4,(float)((double)(copy.P(4)%100)+(copy.P(4)<0?-100:100)));
     if(copy.Code==1){
      if(copy.P(5)<0||copy.P(5)>=30||copy.P(5)!=Math.Truncate(copy.P(5)))
       throw new NotSupportedException("PAGE cue note direction controls need verification.");
      copy.Set(5,10+(int)copy.P(5)%10);
      if(copy.Count>=8)copy.Set(8,0);
+     if(copy.Count>=11&&copy.P(11)>0)copy.Set(11,-copy.P(11));
     }
     if(copy.Code==6){
-     if(copy.Count!=7||copy.P(7)!=22&&(!grouped||copy.P(7)!=12))
+     if(copy.Count<7||(copy.P(7)<10||copy.P(7)>=30||copy.P(7)!=Math.Truncate(copy.P(7))))
       throw new NotSupportedException("PAGE cue beam controls need verification.");
      if(page4ShortMeasure){
       copy.Set(4,(float)((double)copy.P(4)+1));
       copy.Set(5,(float)((double)copy.P(5)-1));
      }
-     copy.Set(7,12);
+     copy.Set(7,10+(int)copy.P(7)%10);
     }
     if(OrdinaryGroupedCueSlur(copy)&&copy.P(7)>0){
      // Original 09CA:0FD7–10D7 transforms the source before copying it.
@@ -112,25 +112,26 @@ namespace ScoreModern {
     copies.Add(copy);
     if(consumed!=null)consumed.Add(item);
    }
-   if(copies.Count==0&&!allowAlreadyMoved)throw new NotSupportedException("PAGE empty cue needs verification.");return copies;
+   return copies;
   }
   static void Consolidate(Score page,List<WholeMeasure> measures,bool paired=false,bool missingInstrument=false){
    var ordered=measures.OrderBy(m=>m.Left).ToArray();
-   for(int at=0;at<ordered.Length;){int end=at+1;while(end<ordered.Length&&ordered[end-1].Right==ordered[end].Left&&!page.Items.Any(i=>(i.Code==18||i.Code==16||missingInstrument&&(i.Code==5||i.Code==10))&&i.P(3)>=ordered[end].Left&&i.P(3)<ordered[end].Right||i.Code==14&&i.P(3)==ordered[end].Left&&i.P(5)==1))end++;int count=end-at;if(count>1){
+   for(int at=0;at<ordered.Length;){int end=at+1;while(end<ordered.Length&&ordered[end-1].Right==ordered[end].Left&&!page.Items.Any(i=>(i.Code==18||i.Code==16||i.Code==9||missingInstrument&&(i.Code==5||i.Code==10))&&i.P(3)>=ordered[end].Left&&i.P(3)<ordered[end].Right||i.Code==14&&i.P(3)==ordered[end].Left&&i.P(5)>=1&&i.P(5)<=7))end++;int count=end-at;if(count>1){
     float left=ordered[at].Left,right=ordered[end-1].Right;var restSet=new HashSet<Item>(ordered.Skip(at).Take(count).Select(m=>m.Item));
     foreach(var item in page.Items.Where(i=>i.P(3)>=left&&i.P(3)<right&&!restSet.Contains(i))){
      if(item.Code==8)continue;
+     if(item.Code==10||item.Code==9&&item.P(3)<ordered[at].Right)continue;
      if((item.Code==3||item.Code==17||item.Code==18||item.Code==16||missingInstrument&&(item.Code==5||item.Code==10))&&item.P(3)<ordered[at].Right)continue;
-     if(item.Code==14){if(Enumerable.Range(5,Math.Max(0,item.Count-4)).Any(p=>p==12?item.P(p)!=0&&item.P(p)!=1:p==5&&item.P(3)==left?item.P(p)!=0&&item.P(p)!=1&&(!paired||item.P(p)!=8):item.P(p)!=0))throw new NotSupportedException("PAGE rest consolidation across a controlled barline requires verification.");continue;}
+     if(item.Code==14){if(item.P(3)==left)continue;if(Enumerable.Range(5,Math.Max(0,item.Count-4)).Any(p=>p==12?item.P(p)!=0&&item.P(p)!=1:p==5&&item.P(3)==left?item.P(p)!=0&&item.P(p)!=1&&(!paired||item.P(p)!=8):item.P(p)!=0))throw new NotSupportedException("PAGE rest consolidation across a controlled barline requires verification.");continue;}
      throw new NotSupportedException("PAGE rest-run annotations require the remaining assembly stage.");
     }
     var first=ordered[at].Item;
     // DOS PAGE repeats the first measure duration for the entire rest run.
     float duration=0;for(int n=at;n<end;n++)duration=(float)((double)duration+first.P(17));first.Set(5,count>=10?-5:-10-count);first.Set(7,Math.Min(count,6));first.Set(8,count);first.Set(17,duration);
-    page.Items.RemoveAll(i=>restSet.Contains(i)&&!Object.ReferenceEquals(i,first)||i.Code==14&&i.P(3)>left&&i.P(3)<right);
+    page.Items.RemoveAll(i=>i.Code==10&&i.P(3)>=left&&i.P(3)<right||restSet.Contains(i)&&!Object.ReferenceEquals(i,first)||i.Code==14&&i.P(3)>left&&i.P(3)<right);
    }at=end;}
   }
-  static bool Global(Item item){return (item.Code==16||item.Code==10)&&(item.P(6)>=100&&item.P(6)<200||item.P(6)>=300&&item.P(6)<400)||item.Code==5&&(item.P(8)==1||item.P(8)==2)&&item.P(5)>=100&&item.P(5)<200;}
+  static bool Global(Item item){return (item.Code==9||item.Code==16||item.Code==10)&&(item.P(6)>=100&&item.P(6)<200||item.P(6)>=300&&item.P(6)<400)||item.Code==5&&(item.P(8)==1||item.P(8)==2)&&item.P(5)>=100&&item.P(5)<200;}
   static void MoveGroupedEndings(Score output){
    if(!output.Items.Any(item=>item.Code==5&&(item.P(8)==1||item.P(8)==2)))return;
    // 0E71:00AD–0169 scans horizontally from an ending. A note or rest
@@ -176,10 +177,10 @@ namespace ScoreModern {
   public static List<Segment> PrepareStaffGroups(Score input,int instrument,int staffCount,bool omitLeftItems=false){
    return PrepareStaffGroupsWithMissing(input,instrument,staffCount,omitLeftItems,null,true);
   }
-  internal static List<Segment> PrepareStaffGroupsWithMissing(Score input,int instrument,int staffCount,bool omitLeftItems,Func<int,MissingInstrumentOpening> chooseOpening,bool firstSourceSegment,bool scor4=false){
+  internal static List<Segment> PrepareStaffGroupsWithMissing(Score input,int instrument,int staffCount,bool omitLeftItems,Func<int,MissingInstrumentOpening> chooseOpening,bool firstSourceSegment,bool scor4=false,bool modernSystems=false){
    if(staffCount==1)return PrepareSingleStaffWithMissing(input,instrument,omitLeftItems,chooseOpening,firstSourceSegment,scor4);
    ValidateSourceCapacity(input);if(staffCount<2||staffCount>32)throw new NotSupportedException("PAGE staff groups leave the original 1â€“32 staff range.");
-   if(input.Items.Any(i=>(i.Code==16||i.Code==10)&&i.P(6)>=400||i.Code==5&&i.P(8)>0&&i.P(5)>=100&&(i.Count!=8||i.P(8)!=1&&i.P(8)!=2&&i.P(8)!=4||i.P(5)>=300)))throw new NotSupportedException("PAGE grouped global controls outside the verified bands.");
+   if(input.Items.Any(i=>(i.Code==9||i.Code==16||i.Code==10)&&i.P(6)>=400||i.Code==5&&i.P(8)>0&&i.P(5)>=100&&(i.Count!=8||i.P(8)!=1&&i.P(8)!=2&&i.P(8)!=4||i.P(5)>=300)))throw new NotSupportedException("PAGE grouped global controls outside the verified bands.");
    var result=new List<Segment>();
    foreach(var selected in GroupedStaffHeaders(input,instrument,staffCount)){
     var top=selected[0];var bottom=selected[staffCount-1];
@@ -207,19 +208,21 @@ namespace ScoreModern {
      i.Staff+i.P(4)>top.Staff+1||i.P(3)<=0||i.Count>5||(i.P(5)!=0&&i.P(5)!=2)))
      throw new NotSupportedException("PAGE partial bar span or controls need original verification.");
     var requests=input.Items.Where(i=>i.Code==2&&i.Staff>=bottom.Staff&&i.Staff<=top.Staff&&i.P(13)!=0).ToArray();
+    bool independentRequests=requests.Length>1&&requests.Select(c=>c.P(13)).Distinct().Count()==requests.Length&&requests.Select(c=>c.Staff).Distinct().Count()==requests.Length;
+    bool sharedSourceRequests=requests.Length>1&&requests.All(c=>c.P(13)==requests[0].P(13))&&requests.Select(c=>c.Staff).Distinct().Count()==requests.Length;
     bool mixedRequests=requests.Length==2&&requests[0].P(13)==requests[1].P(13)&&
      requests.Count(c=>c.Staff==bottom.Staff)==1;
-    bool sharedRequest=mixedRequests&&requests[0].P(3)==requests[1].P(3);
+    bool sharedRequest=(mixedRequests||sharedSourceRequests)&&requests.All(c=>c.P(3)==requests[0].P(3));
     bool sameUpperStaff=requests.Length==2&&requests[0].Staff!=bottom.Staff&&
      requests[0].Staff==requests[1].Staff&&requests[0].P(13)==requests[1].P(13)&&requests[0].P(3)!=requests[1].P(3);
-    if(requests.Length>1&&!mixedRequests&&!sameUpperStaff&&requests.Any(c=>c.Staff!=bottom.Staff))
+    if(requests.Length>1&&!independentRequests&&!sharedSourceRequests&&!mixedRequests&&!sameUpperStaff&&requests.Any(c=>c.Staff!=bottom.Staff))
      throw new NotSupportedException("PAGE cue requests in this staff group need original verification.");
     var requestsAtPosition=new Dictionary<float,Item>();
     var cueCopies=new Dictionary<Item,List<Item>>();
     var measuredRestCues=new HashSet<Item>();
     // The lower cue rewrites its source records in place. They are no longer
     // on the cue source staff when the later request scans the same measure.
-    var consumed=mixedRequests||sameUpperStaff?new HashSet<Item>():null;
+    var consumed=mixedRequests||sharedSourceRequests||sameUpperStaff?new HashSet<Item>():null;
     foreach(var cue in requests.OrderBy(c=>c.Staff).ThenBy(c=>c.P(3))){
      var target=selected[top.Staff-cue.Staff];bool upper=cue.Staff!=bottom.Staff;
      bool laterSameStaff=sameUpperStaff&&cueCopies.Count!=0;
@@ -230,8 +233,8 @@ namespace ScoreModern {
      bool restCue=(requests.Length==1||mixedRequests&&!sharedRequest||laterSameStaff)&&firstMeasure.Length==1&&firstMeasure[0].Code==2&&
       firstMeasure[0].P(3)==cue.P(3)&&firstMeasure[0].P(4)==100&&
       firstMeasure[0].P(5)==-2&&firstMeasure[0].P(7)==4;
-     if(cue.Count!=13||laterSameStaff&&(!restCue||copies.Count!=0)||copies.Any(i=>!SupportedGroupedCue(i,upper)&&(!restCue||i!=firstMeasure[0]))||
-      !sharedRequest&&requestsAtPosition.ContainsKey(cue.P(3)))
+     if(cue.Count<13||laterSameStaff&&(!restCue||copies.Count!=0)||copies.Any(i=>!SupportedGroupedCue(i,upper)&&(!restCue||i!=firstMeasure[0]))||
+      !sharedRequest&&!independentRequests&&requestsAtPosition.ContainsKey(cue.P(3)))
       throw new NotSupportedException("PAGE grouped cue attachment, rhythm or measure needs original verification.");
      // The source measure contains a matching whole rest. DOS retains the
      // ordinary rest on each staff and can still emit later cue notes.
@@ -240,8 +243,6 @@ namespace ScoreModern {
      cueCopies.Add(cue,copies);
     }
     foreach(var staff in selected.Reverse()){
-     if(Enumerable.Range(13,Math.Max(0,staff.Count-12)).Any(p=>staff.P(p)!=0))
-      throw new NotSupportedException("PAGE extended staff parameters beyond P12 need verification.");
      // Part extraction constructs a new seven-parameter staff header.
      // The original discards tiling, absolute placement, thickness and
      // numbering controls from the source staff.
@@ -249,8 +250,8 @@ namespace ScoreModern {
      Action<bool> addCue=fitAttachments=>{
       foreach(var cue in requests.Where(c=>c.Staff==staff.Staff)){
        var copies=cueCopies[cue];
-       foreach(var copy in copies.Where(i=>i.Code==1||i.Code==6||OrdinaryCueLine(i)||
-        ShortGroupedCueRest(i)||OrdinaryGroupedCueSlur(i))){
+       foreach(var copy in copies.Where(i=>i.Code==1||i.Code==6||OrdinaryCueLine(i)||OrdinaryCueWave(i)||
+        ShortGroupedCueRest(i)||OrdinaryGroupedCueSlur(i)||i.Code==9||i.Code==11||i.Code==15)){
         var item=copy.Clone();item.Set(2,mapped);
         if(fitAttachments&&item.Code==6)FitGroupedCueBeam(item,copies);
         if(fitAttachments&&item.Code==5)FitGroupedCueSlur(item,copies);
@@ -268,34 +269,37 @@ namespace ScoreModern {
       if(omitLeftItems&&(double)source.P(3)<(double)staff.P(3)-1)continue;
       // 09CA:0192..0229 is the selected part pass; the caller's
       // 2F7A:0AFE..0D73 scan adds eligible records from the other staves.
-      if((source.Code==10||source.Code==16)&&source.P(6)>=200&&!topGlobals.Contains(source)&&!repeatedGlobals.Contains(source))continue;
+      if((source.Code==9||source.Code==10||source.Code==16)&&source.P(6)>=200&&!topGlobals.Contains(source)&&!repeatedGlobals.Contains(source))continue;
       if(source.Code==5&&(source.P(8)==1||source.P(8)==2||source.P(8)==4)&&source.P(5)>=200)continue;
       var item=source.Clone();item.Set(2,mapped);
       if(measuredRestCues.Contains(source)){
        item.Set(13,0);
        if(mapped==1)item.Set(4,100);
       }
-      if((item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
+      if((item.Code==9||item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
       if(item.Code==14){item.Set(4,staffCount);if(item.P(3)==0)item.Set(3,staff.P(3));}
       // The grouped constructor copies the cue at the request and again
       // when it processes the source staff. Canonicalization keeps the
       // lower request rest, deleting an adjacent matching upper rest.
       Item request;
-      if(source.Code==2&&requestsAtPosition.TryGetValue(source.P(3),out request)){
-       if(source.P(5)!=-2||source.P(7)!=4)throw new NotSupportedException("PAGE grouped cue with a different simultaneous rest needs verification.");
+      if(source.Code==2&&source.P(9)<=0&&requests.Contains(source)){item.Set(4,-8);records.Add(item);continue;}
+      if(source.Code==2&&requestsAtPosition.TryGetValue(source.P(3),out request)&&(source==request&&source.P(9)>0||source.Count<13&&fullBars.Any(b=>b.P(3)>source.P(3)&&b.P(3)<199.6f)&&source.P(9)>0&&source.P(5)==-2&&source.P(7)==4)){
+
        if(source==request){if(mapped==1){item.Set(4,-8);records.Add(item);}continue;}
        if(mapped==1)records.Add(item);
        continue;
       }
       if(item.Code==2&&item.P(5)==-2){var bars=fullBars.Where(i=>i.P(3)>0).Select(i=>i.P(3)).OrderBy(x=>x).ToArray();var ends=bars.Where(x=>x>item.P(3)).ToArray();if(ends.Length==0)throw new NotSupportedException("PAGE grouped whole rest lacks ending bar.");float right=ends[0],left=bars.Where(x=>x<=item.P(3)).DefaultIfEmpty(staff.P(3)).Max();if(!input.Items.Any(i=>i.Code==1&&i.Staff>=bottom.Staff&&i.Staff<=top.Staff&&i.P(3)>=left&&i.P(3)<right)){
-       var paired=input.Items.Where(i=>i.Code==2&&i.Staff>=bottom.Staff&&i.Staff<=top.Staff&&i.P(3)>=left&&i.P(3)<right).ToArray();
-       if(paired.Length!=staffCount||paired.Select(i=>i.Staff).Distinct().Count()!=staffCount||paired.Any(i=>i.P(4)!=0||i.P(5)!=-2||i.P(6)!=0||i.P(7)!=3&&i.P(7)!=4||i.P(8)!=0||Enumerable.Range(10,Math.Max(0,i.Count-9)).Any(p=>i.P(p)!=0&&(p!=13||!measuredRestCues.Contains(i)))))throw new NotSupportedException("PAGE controlled grouped whole rests need verification.");
        // A cue copied past its opening measure suppresses upper rests
-       // in each measure it reaches. The lowest rest remains ordinary.
+       // in each eligible measure it reaches. PAGE preserves extended
+       // request-bank records and the final 199.6/200-unit span.
+       // The lowest rest remains ordinary.
        if(cueCopies.Values.Any(copies=>copies.Any(note=>note.Code==1&&note.P(3)>=left&&note.P(3)<right))){
-        if(mapped==1)records.Add(item);
+        if(mapped==1||source.Count>=13||source.P(9)<=0||right>=199.6f)records.Add(item);
         continue;
        }
+       var paired=input.Items.Where(i=>i.Code==2&&i.Staff>=bottom.Staff&&i.Staff<=top.Staff&&i.P(3)>=left&&i.P(3)<right).ToArray();
+       if(paired.Length!=staffCount||paired.Select(i=>i.Staff).Distinct().Count()!=staffCount||paired.Any(i=>i.P(4)!=0||i.P(5)!=-2||i.P(6)!=0||i.P(7)!=3&&i.P(7)!=4||i.P(8)!=0||Enumerable.Range(10,Math.Max(0,i.Count-9)).Any(p=>i.P(p)!=0&&(p!=13||!measuredRestCues.Contains(i)))))throw new NotSupportedException("PAGE controlled grouped whole rests need verification.");
        item.Set(7,2);item.Set(8,1);item.Set(9,-1);item.Set(17,source.P(7));wholeMeasures.Add(new WholeMeasure{Item=item,Left=left,Right=right});
       }}
       records.Add(item);
@@ -360,7 +364,7 @@ namespace ScoreModern {
    }
    return spans;
   }
-  internal static List<Segment> PrepareSingleStaffWithMissing(Score input,int instrument,bool omitLeftItems,Func<int,MissingInstrumentOpening> chooseOpening,bool firstSourceSegment,bool scor4=false){
+  internal static List<Segment> PrepareSingleStaffWithMissing(Score input,int instrument,bool omitLeftItems,Func<int,MissingInstrumentOpening> chooseOpening,bool firstSourceSegment,bool scor4=false,bool modernSystems=false){
    ValidateSourceCapacity(input);if(instrument<1||instrument>32767)throw new NotSupportedException("PAGE instrument ID is outside the verified signed-word domain.");
    foreach(var item in input.Items){
     if(item.Code==5&&item.P(5)>=100&&(item.P(5)>=300||item.P(8)!=1&&item.P(8)!=2&&item.P(8)!=4))throw new NotSupportedException("PAGE bracket/slur inclusion controls outside the measured ending routes.");
@@ -387,9 +391,9 @@ namespace ScoreModern {
    }
    staves=staves.Where(i=>!skippedInstrumentStaves.Contains(i.Staff)).ToArray();
    foreach(var staff in staves){
-    if(staff.Staff<1||staff.Staff>32||Enumerable.Range(13,Math.Max(0,staff.Count-12)).Any(p=>staff.P(p)!=0))
-     throw new NotSupportedException("PAGE single-staff controls outside the measured header range.");
-    if(Single.IsNaN(staff.P(5))||Single.IsInfinity(staff.P(5))||staff.P(5)<=0)throw new NotSupportedException("PAGE extraction with a nonpositive/nonfinite source staff size requires verification.");
+    if(staff.Staff<1||staff.Staff>32)
+     throw new NotSupportedException("PAGE staff number must be between 1 and 32.");
+    if(Single.IsNaN(staff.P(5))||Single.IsInfinity(staff.P(5))||staff.P(5)<0)throw new NotSupportedException("PAGE extraction requires a nonnegative finite source staff size; zero uses SCORE's default size.");
     // Original PAGE writes its initial .9 size into the extracted segment;
     // the later S setting belongs to final page assembly, not this file.
     var page=new Score{Trailer=(byte[])input.Trailer.Clone()};var header=Item.Make(8,1,staff.P(3),0,.9f,staff.P(6),staff.P(7));page.Items.Add(header);var wholeMeasures=new List<WholeMeasure>();
@@ -408,26 +412,35 @@ namespace ScoreModern {
     var inheritedBars=new HashSet<Item>(page4SixEightCues?
      coveringBars.Where(i=>ReferenceEquals(i,closingSystemBar)):coveringBars);
     var sourceItems=input.Items.Where(i=>i.Code!=8&&(i.Staff==staff.Staff||inheritedBars.Contains(i)||Global(i)&&i.Staff>=groupBottom&&i.Staff<=groupTop)).ToList();
-    foreach(var rest in sourceItems.Where(i=>i.Code==2&&i.P(13)!=0).ToArray()){
-     var cues=CueItems(input,staff,rest,scor4:scor4);
-     if(page4SixEightCues)sourceItems.InsertRange(sourceItems.IndexOf(rest),cues);
-     else sourceItems.AddRange(cues);
+    var fittedCueCopies=new HashSet<Item>();var emptyCueRequests=new HashSet<Item>();var cueQueue=new Queue<Tuple<Item,HashSet<int>>>();foreach(var request in sourceItems.Where(i=>i.Code==2&&i.P(13)!=0))cueQueue.Enqueue(Tuple.Create(request,new HashSet<int>{(int)request.P(13)}));
+    while(cueQueue.Count>0){var queued=cueQueue.Dequeue();var rest=queued.Item1;
+     bool cueConstructor=staff.Staff==staves.Min(h=>h.Staff);var cues=CueItems(input,staff,rest,scor4:scor4,modern:modernSystems,constructor:cueConstructor,ancestry:queued.Item2);
+     if(cues.Count==0)emptyCueRequests.Add(rest);
+     if((cueConstructor||modernSystems)&&!page4SixEightCues){
+      // The first selected staff takes PAGE's constructor pass before the
+      // following copy pass. Modern Parts emits one fitted copy per request.
+      var fitted=cues.Select(i=>i.Clone()).ToList();foreach(var cue in fitted){if(cue.Code==6)FitGroupedCueBeam(cue,cues);if(cue.Code==5)FitGroupedCueSlur(cue,cues);fittedCueCopies.Add(cue);}
+      sourceItems.InsertRange(sourceItems.IndexOf(rest),fitted);if(!modernSystems)sourceItems.AddRange(cues);
+     }else sourceItems.InsertRange(sourceItems.IndexOf(rest),cues);
+     if(!modernSystems)foreach(var child in cues.Where(i=>i.Code==2&&i.P(13)!=0)){int id=(int)child.P(13);if(queued.Item2.Contains(id))throw new System.IO.InvalidDataException("Cyclic cue instrument references cannot be extracted.");var next=new HashSet<int>(queued.Item2);next.Add(id);cueQueue.Enqueue(Tuple.Create(child,next));}
+     if(sourceItems.Count>1420||sourceItems.Sum(i=>i.Bytes.Length/4)>14200)throw new NotSupportedException("Expanded cues exceed the original SCORE item/parameter capacity.");
     }
     if(!sourceItems.Any(i=>i.Code==18)){
      var meterSpans=input.Items.Where(i=>i.Code==14&&i.P(3)>0&&i.Staff<=staff.Staff&&i.Staff+i.P(4)>staff.Staff).Select(i=>new{Bottom=i.Staff,Top=i.Staff+(int)i.P(4)-1}).Distinct().ToArray();
      if(meterSpans.Length==1){var inherited=input.Items.Where(i=>i.Code==18&&i.Staff>=meterSpans[0].Bottom&&i.Staff<=meterSpans[0].Top).ToArray();if(inherited.Length>1)throw new NotSupportedException("PAGE competing inherited meter records require verification.");if(inherited.Length==1)sourceItems.Add(inherited[0]);}
     }
     foreach(var source in sourceItems.OrderBy(i=>i.P(3))){
-     if((source.Code==16||source.Code==10)&&source.P(6)>=200&&source.P(6)<300)continue;
+     if((source.Code==9||source.Code==16||source.Code==10)&&source.P(6)>=200&&source.P(6)<300)continue;
+     if(source.Code==9&&source.P(6)>=300&&source.Staff==staff.Staff)continue;
      // With a repeated instrument ID, DOS extracts the first staff and
      // copies +300 items from the other staves in that system (1700/1701).
-     if((source.Code==16||source.Code==10)&&source.P(6)>=300&&source.Staff==staff.Staff&&repeatedInstrumentOwners.Contains(staff.Staff))continue;
+     if((source.Code==9||source.Code==16||source.Code==10)&&source.P(6)>=300&&source.Staff==staff.Staff&&repeatedInstrumentOwners.Contains(staff.Staff))continue;
      if(source.Code==5&&source.P(8)>0&&source.P(5)>=200&&source.P(5)<300)continue;
      if(Single.IsNaN(source.P(3))||Single.IsInfinity(source.P(3)))throw new NotSupportedException("PAGE nonfinite item position is not supported.");
      if(omitLeftItems&&(double)source.P(3)<(double)staff.P(3)-1)continue;
      if(source.Code==14&&source.P(3)==0&&source.P(5)!=4)continue;
      var item=source.Clone();item.Set(2,1);
-     if(source.Code==2&&source.P(13)!=0){item.Set(4,-8);}
+     if(source.Code==2&&source.P(13)!=0){if(!fittedCueCopies.Contains(source))item.Set(4,-8);if(emptyCueRequests.Contains(source)){if(modernSystems)item.Set(4,0);item.Set(13,0);item.Set(7,2);item.Set(8,1);item.Set(9,-1);item.Set(17,source.P(7));}}
      else if(source.Code==2&&source.P(5)<0&&source.P(5)!=-1){
       var bars=input.Items.Where(i=>i.Code==14&&i.Staff<=staff.Staff&&i.Staff+i.P(4)>staff.Staff&&i.P(3)>0).Select(i=>i.P(3)).Distinct().OrderBy(x=>x).ToArray();
       var ends=bars.Where(x=>x>source.P(3)).ToArray();if(ends.Length==0)throw new NotSupportedException("PAGE bounded rest has no verified ending bar.");
@@ -436,7 +449,7 @@ namespace ScoreModern {
       if(!shared){
        float duration=source.P(7);
        if(source.Count<7||source.P(5)!=-2||source.P(4)!=0||source.P(6)!=0||
-        duration!=.5f&&duration!=1&&duration!=1.5f&&duration!=2&&duration!=2.5f&&duration!=3&&duration!=3.5f&&duration!=4&&duration!=5&&duration!=6||
+        duration!=.5f&&duration!=1&&duration!=1.5f&&duration!=2&&duration!=2.5f&&duration!=3&&duration!=3.5f&&duration!=4&&duration!=5&&duration!=6&&duration!=8||
         source.P(8)!=0||
         Single.IsNaN(source.P(9))||Single.IsInfinity(source.P(9))||
         Enumerable.Range(10,Math.Max(0,source.Count-9)).Any(p=>source.P(p)!=0))
@@ -447,7 +460,7 @@ namespace ScoreModern {
        wholeMeasures.Add(new WholeMeasure{Item=item,Left=left,Right=right});
       }
      }
-     if((item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
+     if((item.Code==9||item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
      if(item.Code==14){
       float span=item.P(4);
       if(span==0||span<short.MinValue||span>short.MaxValue||span!=Math.Truncate(span))throw new NotSupportedException("PAGE bar span requires a signed nonzero word.");
@@ -519,7 +532,7 @@ namespace ScoreModern {
    var sharedRecords=new HashSet<Item>();
    foreach(var source in globals){
     var item=source.Clone();item.Set(2,1);
-    if((item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
+    if((item.Code==9||item.Code==10||item.Code==16)&&item.P(6)>=300)item.Set(6,0);
     sharedRecords.Add(item);page.Items.Add(item);
    }
    var measures=new List<WholeMeasure>();

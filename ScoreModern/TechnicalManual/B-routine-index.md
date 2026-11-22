@@ -1,6 +1,6 @@
 # Appendix B. Routine and evidence index
 
-- [Recovered input, spacing and layout listings](B-layout-and-input-listings.md) · 90 source modules
+- [Recovered input, spacing and layout listings](B-layout-and-input-listings.md) · 92 source modules
 - [Recovered machine, geometry and output listings](B-machine-and-engraving-listings.md) · 88 source modules
 - [SCORE Modern caller and engraving listings](B-native-integration-listings.md) · 142 source modules
 
@@ -54,6 +54,7 @@
 | InputChordLayout | [Source](../../ScoreReverseEngineering/NativeFragments/InputChordLayout.cs) |
 | InputChordPitchRecords | [Source](../../ScoreReverseEngineering/NativeFragments/InputChordPitchRecords.cs) |
 | InputChordRhythmRecords | [Source](../../ScoreReverseEngineering/NativeFragments/InputChordRhythmRecords.cs) |
+| InputChromaticPitchCorrection | [Source](../../ScoreReverseEngineering/NativeFragments/InputChromaticPitchCorrection.cs) |
 | InputDynamics | [Source](../../ScoreReverseEngineering/NativeFragments/InputDynamics.cs) |
 | InputEditInverse | [Source](../../ScoreReverseEngineering/NativeFragments/InputEditInverse.cs) |
 | InputEndpointProjection | [Source](../../ScoreReverseEngineering/NativeFragments/InputEndpointProjection.cs) |
@@ -63,6 +64,7 @@
 | InputMainNoteReconstruction | [Source](../../ScoreReverseEngineering/NativeFragments/InputMainNoteReconstruction.cs) |
 | InputMarksCompiler | [Source](../../ScoreReverseEngineering/NativeFragments/InputMarksCompiler.cs) |
 | InputMarkText | [Source](../../ScoreReverseEngineering/NativeFragments/InputMarkText.cs) |
+| InputMeterDuration | [Source](../../ScoreReverseEngineering/NativeFragments/InputMeterDuration.cs) |
 | InputPitchRecords | [Source](../../ScoreReverseEngineering/NativeFragments/InputPitchRecords.cs) |
 | InputPitchToken | [Source](../../ScoreReverseEngineering/NativeFragments/InputPitchToken.cs) |
 | InputRealReader | [Source](../../ScoreReverseEngineering/NativeFragments/InputRealReader.cs) |
@@ -191,4 +193,3 @@
 
 | Evidence set | Notes |
 | --- | --- |
-| NativeFragments | [Notes](../../ScoreReverseEngineering/NativeFragments/README.md) |

@@ -27,6 +27,7 @@ namespace ScoreModern {
   internal static List<List<Item>> AssembleTransposed(IList<Score> parts,int staves,float size,IList<NativePagePartPage> pages,float[] afterSymbol,float control43E0,short control43E4,Action<int,string,IList<Item>> observe,Action<string> warnings,NativePageMeasureNumbers numbering,int skip,int take,NativePageTranspose transpose,bool preserveInstrumentIds=false,float[] savedPositions=null,bool scor4=false){
    if(staves<1||staves>32||parts==null||parts.Count==0||parts.Any(part=>part.Items.Any(item=>item.Staff<1||item.Staff>staves)))throw new NotSupportedException("PAGE assembly leaves its original staff bank.");
    if(pages==null||pages.Count==0||pages.Any(page=>page.Bars==null||page.Bars.Length==0||page.Bars.Any(n=>n<1)||page.Left==null||page.Left.Length!=page.Bars.Length||page.Indents!=null&&page.Indents.Length!=page.Bars.Length)||afterSymbol==null||afterSymbol.Length!=4)throw new ArgumentException("PAGE requires explicit page, line and after-symbol controls.");
+   if(transpose!=null)transpose.ReportWarning=warnings;
    var plan=NativePagePartWeightCollection.Prepare(parts).BarPlan;int total=plan.FileBars.Sum();
    if(take==0)take=total;
    if(skip<0||take<1||skip>total-take||pages.Sum(page=>page.Bars.Sum())!=take)throw new ArgumentException("PAGE layout must account for every planned bar.");

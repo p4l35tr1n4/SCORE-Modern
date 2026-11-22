@@ -1,2 +1,0 @@
-27cbad59b0dfc644402a66aebd29efdefc84edeccef58c83d0fd19183e576a1d  ScoreModern.exe
-2dd218890743676d04a7a4d76518f7b0d853c22da2b1f5d692fc9c89984b4676  ScoreModern.dll

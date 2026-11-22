@@ -8,7 +8,7 @@ namespace ScoreModern {
     Single.IsNaN(outline)||outline<-32768||outline>32767||outline!=(int)outline)
     throw new NotSupportedException("Printed Code11 thickness control outside the verified range.");
    int selector;
-   var glyph=NativeDatUserDrawings.Load(item,library,out selector);
+   var glyph=NativeDatUserDrawings.Load(item,library,out selector,page.SourceScore==null?null:page.SourceScore.SourcePath);
    var buffer=NativeDatUserDrawings.Prepare(item,page,library,false);
    if(copies>0&&(long)buffer.Count*(1+2*((int)copies/100+(int)copies%100))>30000)
     throw new NotSupportedException("Printed Code11 thickness exceeds the verified buffer domain.");

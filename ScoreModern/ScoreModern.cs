@@ -15,6 +15,7 @@ public sealed class Item {
     public byte[] Bytes;
     internal int ConsumedCenteringParameterCount;
     internal bool ExternalDrawingResetResolved,EditingExternalDrawingReset;
+    internal string PartResourcePath;
     internal string ExternalDrawingNameOverride;internal float[] ExternalPostScriptBoxOverride;
     public Item(byte[] b) { Bytes=b; }
     public int Count { get { return Bytes.Length/4-1; } }
@@ -35,7 +36,7 @@ public sealed class Item {
     internal void RestoreShortDrawingPadding() {
         for(int at=76;at<80;at++)Bytes[at]=32;
     }
-    public Item Clone() { return new Item((byte[])Bytes.Clone()){ConsumedCenteringParameterCount=ConsumedCenteringParameterCount,ExternalDrawingResetResolved=ExternalDrawingResetResolved,EditingExternalDrawingReset=EditingExternalDrawingReset,ExternalDrawingNameOverride=ExternalDrawingNameOverride,ExternalPostScriptBoxOverride=ExternalPostScriptBoxOverride==null?null:(float[])ExternalPostScriptBoxOverride.Clone()}; }
+    public Item Clone() { return new Item((byte[])Bytes.Clone()){ConsumedCenteringParameterCount=ConsumedCenteringParameterCount,ExternalDrawingResetResolved=ExternalDrawingResetResolved,EditingExternalDrawingReset=EditingExternalDrawingReset,PartResourcePath=PartResourcePath,ExternalDrawingNameOverride=ExternalDrawingNameOverride,ExternalPostScriptBoxOverride=ExternalPostScriptBoxOverride==null?null:(float[])ExternalPostScriptBoxOverride.Clone()}; }
     public static string Name(int code) { string[] names={"Unknown","Note","Rest","Clef","Line / hairpin","Slur / bracket","Beam","Trill / pedal","Staff","Library symbol","Number","User symbol","Shape","Invisible item","Barline","PostScript","Text","Key signature","Time signature"}; return code>=0&&code<names.Length?names[code]:"Code "+code; }
 }
 public sealed class Score {
@@ -63,7 +64,7 @@ public sealed class Score {
             s.Items.Add(item); o+=r.Length;
         }
         if(b.Length-o!=20&&b.Length-o!=24)throw new InvalidDataException("Unsupported footer.");
-        s.Trailer=new byte[b.Length-o]; Array.Copy(b,o,s.Trailer,0,s.Trailer.Length);s.OriginalFilePayload=new byte[b.Length-2];Array.Copy(b,2,s.OriginalFilePayload,0,s.OriginalFilePayload.Length);s.RawStorageLayoutVerified=true; return s;
+        s.Trailer=new byte[b.Length-o]; Array.Copy(b,o,s.Trailer,0,s.Trailer.Length);s.OriginalFilePayload=new byte[b.Length-2];Array.Copy(b,2,s.OriginalFilePayload,0,s.OriginalFilePayload.Length);s.RawStorageLayoutVerified=true;NativePartResourceIndex.Bind(s,path); return s;
     }
     public byte[] Encode() { using(var m=new MemoryStream())using(var w=new BinaryWriter(m)) { int words=(Items.Sum(i=>i.Bytes.Length)+Trailer.Length)/4; if(words>65535)throw new InvalidDataException("Score exceeds this format's 16-bit word count."); w.Write((ushort)words); foreach(var i in Items)w.Write(i.Bytes); w.Write(Trailer); return m.ToArray(); } }
     public Score Clone() { return new Score {SourcePath=SourcePath,OriginalFilePayload=OriginalFilePayload,CancelledSaveRecords=CancelledSaveRecords==null?null:CancelledSaveRecords.Select(i=>i.Clone()).ToList(),CancelledSaveBaseline=CancelledSaveBaseline==null?null:(byte[])CancelledSaveBaseline.Clone(),CancelledSaveUndefinedWord=CancelledSaveUndefinedWord==null?null:(byte[])CancelledSaveUndefinedWord.Clone(),CancelledSaveValid=CancelledSaveValid,Items=Items.Select(i=>i.Clone()).ToList(),Trailer=(byte[])Trailer.Clone()}; }

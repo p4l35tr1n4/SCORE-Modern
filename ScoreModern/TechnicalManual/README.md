@@ -3,14 +3,13 @@
 
 This manual describes the original SCORE executable and its related DOS utilities as reconstructed in SCORE Modern. It covers storage, numeric precision, staff coordinates, layout and justification, engraving, device output, and resource files. The accompanying appendices give the literal values and implementation details needed to reproduce the recovered routines.
 
-Chapters 01–05 use SCORE 3.11 as the baseline. Chapter 07 gives the measured changes in the supplied SCORE 4.01 executable and its companion utilities. It also identifies the routines and resource choices selected by the SCOR4 profile in SCORE Modern Core.
+Chapters 01–03 and 05 use SCORE 3.11 as the baseline. Chapter 07 gives the measured changes in the supplied SCORE 4.01 executable and its companion utilities. It also identifies the routines and resource choices selected by the SCOR4 profile in SCORE Modern Core.
 
 | Chapter | Contents |
 | --- | --- |
 | [01. Storage, arithmetic and coordinates](01-coordinates.md) | MUS and DRW records, packed controls, binary32, x87 conversion, staff tables, display and print units |
 | [02. Spacing and justification](02-spacing.md) | F2, SP, LI/LJ/L, J, JT, VJ, staff height, ripple, page assembly and tiling |
 | [03. Engraving, text and output](03-engraving.md) | Item routes, stems, beams, slurs, text metrics, DAT, vector buffers, clipping, print and EPS |
-| [04. Verification and limits](04-evidence.md) | Evidence hierarchy, reproducible checks, configuration and unrecovered areas |
 | [05. Pitch, editing, and retained state](05-pitch-and-editing.md) | TR/TRK, TAB, edit and selection math, display histories, decimal formatting |
 | [06. Integrating ScoreModern.dll](06-dll-integration.md) | Managed assembly setup, tested examples, data contracts and whole-score automation |
 | [07. SCORE 4.01 and its DOS utilities](07-scor4.md) | Version and resources, viewport arithmetic, input state, record editing, beam calculation, spacing, PAGE4 and utility comparisons |
@@ -31,6 +30,6 @@ The term **raw coordinate** means a SCORE internal drawing coordinate before pro
 The chapter and appendix links work within the manual folder. Direct links to original source and evidence refer to the SCORE Modern workspace. The expanded routine listings are included with the manual.
 
 
-The current shared-DLL SCOR4 controls, API flags, formulas and rounding details are documented in the final section of [Chapter 07](07-scor4.md). The DLL API index is regenerated for file version 0.3.61.1.
+The current shared-DLL SCOR4 controls, API flags, formulas and rounding details are documented in the final section of [Chapter 07](07-scor4.md). The DLL API index is regenerated for file version 0.3.61.2.
 
 Source links target the development checkout. The routine-listing appendices reproduce the implementation for reading with a binary release package. External DAT and captured-table appendices remain unchanged; the source listings, initializer inventory and API index have been refreshed.
